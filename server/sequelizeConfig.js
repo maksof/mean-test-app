@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 
 // sequelize = new Sequelize('database Name','database username','database pass',{
-sequelize = new Sequelize('restaurant','root','',{
+sequelize = new Sequelize('mean-app','root','',{
 	// host : 'host name',
 	host : 'localhost',
 	port : 3306,
