@@ -1,0 +1,21 @@
+.mainLogCon{
+	background: rgb(241, 237, 237);
+	min-height: 100vh;
+	width: 100vw;
+	display: flex;
+	display: -webkit-flex;
+	color: #000;
+	padding: 0 2rem;
+}
+.loginCon{
+	text-align: center;
+	min-width: 320px;
+	width: 35%;
+	max-width: 500px;
+	border-radius: 0.25rem;
+	margin: auto;
+	padding: 2em 1.5em;
+	background: #fff;
+	box-shadow: 0 0 0.5em #8e8e8e;
+	color: #000;
+}
