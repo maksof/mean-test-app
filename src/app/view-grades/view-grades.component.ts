@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'app-excersice',
-	templateUrl: './excersice.component.html',
-	styleUrls: ['./excersice.component.css']
+	selector: 'app-view-grades',
+	templateUrl: './view-grades.component.html',
+	styleUrls: ['./view-grades.component.css']
 })
-export class ExcersiceComponent implements OnInit {
+export class ViewGradesComponent implements OnInit {
 
 	constructor() { }
 
@@ -13,9 +13,8 @@ export class ExcersiceComponent implements OnInit {
 
 	ngOnInit() {
 	}
-
+	
 	toggleMainSec(){
 		this.mainToggle = !this.mainToggle;
 	}
-
 }
