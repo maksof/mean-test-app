@@ -20,6 +20,8 @@ import { ExcersiceComponent } from './excersice/excersice.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     SignUpComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,    
+    HttpClientModule,
+    HttpModule,
     BrowserAnimationsModule,
     MatAutocompleteModule,
     MatBadgeModule,
