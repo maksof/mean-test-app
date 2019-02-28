@@ -17,6 +17,9 @@ export class SharedService {
 	getTestApi(){
 		return this.appService.get("functionName");
 	}
+	registerUser(obj){
+		return this.appService.post("registerUser",obj);
+	}
 	postTestApi(obj){
 		return this.appService.post("functionName",obj);
 	}
