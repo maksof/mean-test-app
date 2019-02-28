@@ -1,21 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'app-settings',
-	templateUrl: './settings.component.html',
-	styleUrls: ['./settings.component.css']
+	selector: 'app-user-suggestions',
+	templateUrl: './user-suggestions.component.html',
+	styleUrls: ['./user-suggestions.component.css']
 })
-export class SettingsComponent implements OnInit {
+export class UserSuggestionsComponent implements OnInit {
 
 	constructor() { }
-
 	mainToggle:boolean = true;
 
 	ngOnInit() {
 	}
-
 	toggleMainSec(){
 		this.mainToggle = !this.mainToggle;
 	}
-
 }
