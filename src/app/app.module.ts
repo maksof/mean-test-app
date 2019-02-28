@@ -6,10 +6,13 @@ import {MatAutocompleteModule, MatBadgeModule, MatBottomSheetModule, MatButtonMo
 import { ChartsModule } from 'ng2-charts';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+
 // Services
 import { AppService } from './app.service';
 import { SharedService } from './shared.service';
 import { CommonService } from './common.service';
+
 // Components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -46,7 +49,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ForgotPasswordComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,    
+    HttpClientModule,
+    HttpModule,
     BrowserAnimationsModule,
     MatAutocompleteModule,
     MatBadgeModule,
