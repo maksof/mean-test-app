@@ -4,32 +4,32 @@
 		<div class="row">
 			<div class="form-group col-6">
 				<mat-form-field class="w-100">
-					<input matInput type="text" name="firstName" placeholder="First Name">
+					<input matInput type="text" name="firstName" placeholder="First Name" [(ngModel)]="user.firstName" required>
 				</mat-form-field>
 			</div>
 			<div class="form-group col-6">
 				<mat-form-field class="w-100">
-					<input matInput type="text" name="lastName" placeholder="Last Name">
+					<input matInput type="text" name="lastName" placeholder="Last Name" [(ngModel)]="user.lastName" required>
 				</mat-form-field>
 			</div>
 			<div class="form-group col-12">
 				<mat-form-field class="w-100">
-					<input matInput type="email" name="Email" placeholder="Email">
+					<input matInput type="email" name="Email" placeholder="Email" [(ngModel)]="user.Email" required>
 				</mat-form-field>
 			</div>
 			<div class="form-group col-12">
 				<mat-form-field class="w-100">
-					<input matInput type="text" name="username" placeholder="Username">
+					<input matInput type="text" name="username" placeholder="Username" [(ngModel)]="user.username" required>
 				</mat-form-field>
 			</div>
 			<div class="form-group col-6">
 				<mat-form-field class="w-100">
-					<input matInput type="password" name="password" placeholder="Password">
+					<input matInput type="password" name="password" placeholder="Password" [(ngModel)]="user.password" required>
 				</mat-form-field>
 			</div>
 			<div class="form-group col-6">
 				<mat-form-field class="w-100">
-					<input matInput type="password" name="confirmPassword" placeholder="Confirm Password">
+					<input matInput type="password" name="confirmPassword" placeholder="Confirm Password" [(ngModel)]="user.confirmPassword" required>
 				</mat-form-field>
 			</div>
 			<div class="row mx-0 w-100">

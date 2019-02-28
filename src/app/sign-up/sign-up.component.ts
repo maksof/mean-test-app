@@ -8,6 +8,7 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 	styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+	user = {firstName:'' ,lastName:'' ,Email:'' ,username:'' ,password:'' ,confirmPassword:''};
 
 	constructor(public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService) { }
 	userDetails = {fatherName:""};
@@ -15,7 +16,11 @@ export class SignUpComponent implements OnInit {
 	ngOnInit() {
 	}
 	registerUser(){
-		
+		if (this.commonService.required(this.user.firstName) && this.commonService.required(this.user.lastName) && this.commonService.required(this.user.Email) && this.commonService.required(this.user.username) && this.commonService.required(this.user.password) && this.commonService.required(this.user.confirmPassword)) {
+			
+		}else{
+			this.notificationService.error('Error','Please fill all the required fields');
+		}
 		this.sharedService.registerUser(this.userDetails).subscribe(res =>{
 			this.data = res.data;
 			console.log(res);

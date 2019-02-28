@@ -6,6 +6,21 @@ import { SharedService } from './shared.service';
   providedIn: 'root'
 })
 export class CommonService {
-
   constructor(private httpService: AppService, public sharedService:SharedService) { }
+
+  checkValidEmail(email) {
+  	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+  		return true;
+  	} else {
+  		return false;
+  	}
+  }
+
+  required(data){
+  	if (data == undefined || data == null || data == "") {
+  		return false;
+  	}else{
+  		return true;
+  	}
+  }
 }
