@@ -4,7 +4,7 @@ module.exports = function(sequelize,DataType){
 		id : {
 			type : DataType.DOUBLE,
 			allownull : true,
-			PrimaryKey : true
+			primaryKey : true
 		},
 		first_name : {
 			type : DataType.STRING,
