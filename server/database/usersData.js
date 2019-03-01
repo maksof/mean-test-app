@@ -1,10 +1,10 @@
 var Sequelize = require('sequelize');
-var models = require("models/models.js");
-
-
-
+var models = require("../models/models.js")();
 var usermodels = models.usersmodel;
 
 
 
-exports.insertusersData = function(req,res)
+exports.createUser = function(data){
+	return usermodels.create(data);
+}
+
