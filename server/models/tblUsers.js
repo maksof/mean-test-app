@@ -50,7 +50,7 @@ module.exports = function(sequelize,DataType){
             allowNull : false
         },
     },{
-        	tableName : "administrator"
+        	tableName : "tblUsers"
 
 	});
 }
