@@ -1,0 +1,50 @@
+<app-header (headerClassChange)="toggleMainSec()"></app-header>
+<section class="transition3ms UP_mainCon" [ngClass]="{'open': mainToggle}">
+	<div class="UP_con">
+		<h2 class="text-left"><i class="fa fa-calendar headIcon"></i>Movies</h2>
+		<hr class="headSep">
+		<div class="row">
+			<div class="col-md-6"></div>
+			<div class="col-md-6 text-right">
+				<mat-form-field>
+					<input matInput [matDatepicker]="yearFilter" placeholder="Select Date">
+					<mat-datepicker-toggle matSuffix [for]="yearFilter"></mat-datepicker-toggle>
+					<mat-datepicker #yearFilter></mat-datepicker>
+				</mat-form-field>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="table-responsive">
+					<table class="table text-center">
+						<thead>
+							<tr>
+								<th>Due Date</th>
+								<th>In Time</th>
+								<th>Out Time</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>12/09/2018</td>
+								<td>10:14:15 PM</td>
+								<td>12:00:15 PM</td>
+							</tr>
+							<tr>
+								<td>12/09/2018</td>
+								<td>10:14:15 PM</td>
+								<td>12:00:15 PM</td>
+							</tr>
+							<tr>
+								<td>12/09/2018</td>
+								<td>10:14:15 PM</td>
+								<td>12:00:15 PM</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<app-footer></app-footer>
+</section>

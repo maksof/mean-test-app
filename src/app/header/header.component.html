@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-md shadow bg-white fixed-top navbar-light" style="z-index: 2">
+	<button mat-icon-button class="mr-3" (click)="toggleSideBar()" style="font-size: 1.25rem;"><i class="fa fa-bars th-text-primary"></i></button>
+	<a class="navbar-brand th-text-primary" href="#">Maksof <span class="text-dark">TestApp</span></a>	
+	<div class="navbar-collapse collapse show">
+		<ul class="navbar-nav ml-auto text-dark">
+			<li class="nav-item position-relative">
+				<button class="nav-link ppImageBtn" (click)="openDropDown()" [ngClass]="{'active': dropState}"><img src="assets/images/avatar.jpg" alt="User Profile"></button>
+				<ul class="UP_ppDropDownCon list-unstyled transition3ms" [ngClass]="{'open': dropState}">
+					<span></span>
+					<li><a class="transition3ms">Username</a></li>
+					<li><a class="transition3ms">Sign out<i class="fa fa-sign-out float-right mt-1"></i></a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</nav>
+<div class="UP_SideBar transition3ms" [ngClass]="{'active':sideBarBool}">
+	<div>
+		<ul class="list-unstyled sideBarUl" *ngIf="!admin">
+			<li><a [routerLink]="['/dashboard']" class="transition3ms" [ngClass]="{'active': router.url == '/dashboard'}">Dashboard</a></li>
+			<li><a [routerLink]="['/movies']" class="transition3ms" [ngClass]="{'active': router.url == '/movies'}">Movies</a></li>
+			<li><a [routerLink]="['/favorites']" class="transition3ms" [ngClass]="{'active': router.url == '/favorites'}">Favorites</a></li>
+			<li><a [routerLink]="['/suggest-movie']" class="transition3ms" [ngClass]="{'active': router.url == '/suggest-movie'}">Suggest Movie</a></li>
+		</ul>
+		<ul class="list-unstyled sideBarUl" *ngIf="admin">
+			<li><a [routerLink]="['/admin']" class="transition3ms" [ngClass]="{'active': router.url == '/admin'}">Dashboard</a></li>
+			<li><a [routerLink]="['/add-categories']" class="transition3ms" [ngClass]="{'active': router.url == '/add-categories'}">Add Categories</a></li>
+			<li><a [routerLink]="['/add-movies']" class="transition3ms" [ngClass]="{'active': router.url == '/add-movies'}">Add Movies</a></li>
+			<li><a [routerLink]="['/suggested-movies']" class="transition3ms" [ngClass]="{'active': router.url == '/suggested-movies'}">Suggested Movies</a></li>
+			<li><a [routerLink]="['/view-grades']" class="transition3ms" [ngClass]="{'active': router.url == '/view-grades'}">View Grades</a></li>
+		</ul>
+	</div>
+</div>
