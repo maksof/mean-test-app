@@ -4,8 +4,7 @@ var usermodels = models.usersmodel;
 
 
 
-exports.insertusersData = function(data){
-	console.log(data);
+exports.createUser = function(data){
 	return usermodels.create(data);
 }
 

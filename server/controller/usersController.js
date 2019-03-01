@@ -9,11 +9,10 @@ var usermodels = models.usersmodel;
 var usersData = require('../database/usersData.js');
 
 // api of Sign up of users
-exports.insertusersData = function(req,res){
-          var data = req.body;
-          console.log(data);   
-	    usersData.insertusersData(data)
-	    .then(function(data){
+exports.createUser = function(req,res){
+        var data = req.body;   
+	    usersData.createUser(data)
+	        .then(function(data){
 	    	res.send({
 	    		data : data
 	    	});

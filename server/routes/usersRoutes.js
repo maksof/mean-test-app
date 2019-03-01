@@ -8,8 +8,7 @@ var usersController = require('../controller/usersController.js');
 var router = function(){
 	accrouter.route('/createusersdata')
 	.post(function(req,res){
-		console.log("reached in UsersController function");
-		return usersController.insertusersData(req,res);
+		return usersController.createUser(req,res);
 	});
 
     return accrouter;
