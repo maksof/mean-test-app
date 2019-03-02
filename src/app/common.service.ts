@@ -9,12 +9,12 @@ export class CommonService {
   constructor(private httpService: AppService, public sharedService:SharedService) { }
 
   checkValidEmail(email) {
-  	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-  		return true;
-  	} else {
-  		return false;
-  	}
-  }
+       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+           return true;
+       } else {
+         return false;
+       }
+   }
 
   required(data){
   	if (data == undefined || data == null || data == "") {
@@ -23,4 +23,23 @@ export class CommonService {
   		return true;
   	}
   }
+
+  checkValidMobileNumber(mobileNumber) {
+       if(mobileNumber){
+
+	       if(mobileNumber.toString().length == 10){
+	        	return true;
+	       }else{ 
+	       		return false;
+	   		}
+       }
+	}
+
+  matchPassword(user){
+  	if (user.password != user.confirmPassword) {
+  		return false;
+ 	}else{
+ 		return true;
+ 	}
+  }	
 }

@@ -1,6 +1,6 @@
 <div class="mainLogCon">
 	<div class="loginCon">
-		<h2 class="mb-4">Log In</h2>
+		<h2 class="mb-4">Sign Up</h2>
 		<div class="row">
 			<div class="form-group col-6">
 				<mat-form-field class="w-100">
@@ -12,6 +12,11 @@
 					<input matInput type="text" name="lastName" placeholder="Last Name" [(ngModel)]="user.lastName" required>
 				</mat-form-field>
 			</div>
+			<div class="form-group col-12">
+                <mat-form-field class="w-100">
+                    <input matInput type="number" name="number"  placeholder="Phone Number" [(ngModel)]="user.mobileNumber">
+                </mat-form-field>
+            </div>
 			<div class="form-group col-12">
 				<mat-form-field class="w-100">
 					<input matInput type="email" name="Email" placeholder="Email" [(ngModel)]="user.Email" required>
@@ -41,10 +46,10 @@
 				</div>
 			</div>
 			<div class="form-group col-12">
-				<button mat-raised-button class="mt-2 thBtn w-100" color="primary">Login</button>
+				<button mat-raised-button class="mt-2 thBtn w-100" color="primary" (click)="registerUser()">register</button>
 			</div>
 			<div class="form-group col-12 text-left">
-				<p>Don't have a account? <a class="thLink" href="/signUp" title="Sign Up">Signup</a></p>
+				<p>Already have an account? <a class="thLink" href="/login" title="Sign Up">login</a></p>
 			</div>
 		</div>
 	</div>
