@@ -256,3 +256,11 @@ button.mat-raised-button {
 	color: rgb(167, 160, 160);
 	font-weight: 600;
 }
+.descNowRap{
+	width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 0.9em;
+	display: inline-block;
+}
