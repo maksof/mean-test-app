@@ -19,7 +19,7 @@ export class AppService {
 	constructor(private http: Http, public router: Router, public notificationService: NotificationsService,) { }
 
 	get(url) {
-		const headers = new Headers({ 'Content-Type': 'application/json', 'token': localStorage.getItem('token'), 'appkey': localStorage.getItem('appkey') });
+		const headers = new Headers({ 'Content-Type': 'application/json', 'token': localStorage.getItem('token') });
 		const options = new RequestOptions({ headers: headers });
 
 		return this.http.get(this.urlBase + url, options)
@@ -35,7 +35,7 @@ export class AppService {
 	}
 
 	post(url, data) {
-		const headers = new Headers({ 'Content-Type': 'application/json', 'token': localStorage.getItem('token'), 'appkey': localStorage.getItem('appkey') });
+		const headers = new Headers({ 'Content-Type': 'application/json', 'token': localStorage.getItem('token') });
 		const options = new RequestOptions({ headers: headers });
 
 		return this.http.post(this.urlBase + '' + url, data, options)
@@ -50,7 +50,7 @@ export class AppService {
 		});
 	}
 	put(url, data) {
-		const headers = new Headers({ 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*", 'token': localStorage.getItem('token'), 'appkey': localStorage.getItem('appkey') });
+		const headers = new Headers({ 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*", 'token': localStorage.getItem('token') });
 		const options = new RequestOptions({ headers: headers });
 
 		return this.http.put(this.urlBase + '' + url, data, options) 
@@ -60,7 +60,7 @@ export class AppService {
 	}
 
 	delete(url) {
-		const headers = new Headers({ 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*", 'token': localStorage.getItem('token'), 'appkey': localStorage.getItem('appkey') });
+		const headers = new Headers({ 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*", 'token': localStorage.getItem('token') });
 		const options = new RequestOptions({ headers: headers });
 
 		return this.http.delete(this.urlBase + '' + url, options) 
