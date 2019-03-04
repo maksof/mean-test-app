@@ -28,7 +28,6 @@ export class SignUpComponent implements OnInit {
 					}else{
 						this.sharedService.registerUser(this.signupObj).subscribe(res =>{
 						this.data = res.data;
-						console.log(res);
 						this.notificationService.success("Success", "Successfully login");
 						},(error)=>{
 						this.notificationService.error("Error", "Internal Server Error.");
