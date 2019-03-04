@@ -1,5 +1,5 @@
 module.exports = function(sequelize,DataType){
-	return sequelize.define('tblUsers',{
+	return sequelize.define('tbl_user',{
 
 		id : {
 			type : DataType.DOUBLE,
@@ -14,7 +14,7 @@ module.exports = function(sequelize,DataType){
         	type : DataType.STRING,
         	allownull : true
         },
-        Password : {
+        password : {
         	type : DataType.STRING,
         	allownull : true
         },
@@ -27,17 +27,17 @@ module.exports = function(sequelize,DataType){
         	allownull : true
         },
         email : {
-        	type : DataType.DOUBLE,
+        	type : DataType.STRING,
         	allownull : true,
         	PrimaryKey : true
         },
-         phone : {
+        phone : {
             type : DataType.STRING,
             allownull : true,
             PrimaryKey : true
         }, 
-         role : {
-            type : DataType.DOUBLE,
+        role : {
+            type : DataType.STRING,
             allownull : true,
             PrimaryKey : true
         },
@@ -48,9 +48,9 @@ module.exports = function(sequelize,DataType){
         registerDate : {
             type : DataType.DATE,
             allowNull : false
-        },
-    },{
-        	tableName : "tblUsers"
-
-	});
+        }
+    },{ 
+        tableName : "tbl_user",
+        timestamps: false, 
+    });
 }

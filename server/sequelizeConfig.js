@@ -1,19 +1,27 @@
 var Sequelize = require('sequelize');
+var config = require( __dirname + '/../config' );
 
-// sequelize = new Sequelize('database Name','database username','database pass',{
-sequelize = new Sequelize('mean-app','root','',{
-	// host : 'host name',
-	host : 'localhost',
-	port : 3306,
-	dialect : 'mysql',
-	dialectOptions : { 
-		timeout : 3000 
-	},
-	pool : {
-		max : 5,
-		min : 0,
-		idle : 10000
-	},
-})
+var db_cred = {
+    db: config.db.database,
+    user: config.db.username,
+    pass: config.db.password,
+    host: config.db.host
+};
 
-module.exports.sequelizeConfig = sequelize;
+if(config.db.connect) {
+
+    var sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, {
+        host: config.db.host,
+        port: config.db.port,
+        dialect: config.db.dialect,
+        dialectOptions: {
+            timeout: 3000
+        },
+        pool: {
+            max: 5,
+            min: 0,
+            idle: 10000
+        },
+    });
+    module.exports.sequelizeConfig = sequelize;
+}
