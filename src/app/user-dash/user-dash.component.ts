@@ -10,8 +10,9 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 export class UserDashComponent implements OnInit {
 	constructor(public sharedService:SharedService, public commonService:CommonService, public notificationService:NotificationsService) { }
 	// bar chart Varibales
-	public barChartOptions:any = {
-		scaleShowVerticalLines: false,
+	public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+		scaleShowVerticalLines: false;
+	public lineChartOptions:any = {
 		responsive: true,
 		legend: false,
 		scales: {
@@ -25,7 +26,9 @@ export class UserDashComponent implements OnInit {
 					color: "rgba(210, 210, 210, 0.75)",
 				}   
 			}]
-		},
+		}, line : { 
+			tension : 0 
+		} 
 	};
 	public chartColors: Array<any> = [
 	{ // first color
@@ -35,23 +38,11 @@ export class UserDashComponent implements OnInit {
 		pointBorderColor: '#fff',
 		pointHoverBackgroundColor: '#fff',
 		pointHoverBorderColor: 'rgba(225,10,24,0.2)'
-	},
-	{ // second color
-		backgroundColor: 'rgba(225,10,24,0.2)',
-		borderColor: 'rgba(225,10,24,0.2)',
-		pointBackgroundColor: 'rgba(225,10,24,0.2)',
-		pointBorderColor: '#fff',
-		pointHoverBackgroundColor: '#fff',
-		pointHoverBorderColor: 'rgba(225,10,24,0.2)'
-	}];
-	public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-	public barChartType:string = 'bar';
-	public barChartLegend:boolean = true;
-	public barChartData: any[] = [
-	{data: [20,10,50,60,60,20,11], label: 'Quiz', backgroundColor: ['#163293',]}
-	/*{data: [], label: 'Articles', backgroundColor: ["#02abec"]},*/
-	/*{data: [], label: 'Smiulation', backgroundColor: ["#89a0b0"]},*/
-	];
+	}	];
+	public lineChartType:string = 'line';
+	public lineChartLegend:boolean  = true;
+	 // lineChart
+	public lineChartData:Array<any> = [{data: [6500, 5900, 8000, 8100, 5600, 5500, 4000, 900, 9500 , 10005, 5400, 6500], label: 'Ranking'}];
 	// pie chart Varibales
 	public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
 	public pieChartData:number[] = [300, 500, 100];
