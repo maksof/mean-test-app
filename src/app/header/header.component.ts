@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
 
 	constructor(public router: Router) { }
 	@Output() headerClassChange = new EventEmitter();
-	admin:boolean = false;
+	admin:boolean = true;
 	dropState:boolean = false;
 	sideBarBool:boolean = true;
 	ngOnInit() {
