@@ -35,8 +35,8 @@ export class CommonService {
         }
 	}
 
-  	matchPassword(user){
-  		if (user.password != user.confirmPassword) {
+  	matchPassword(signupObj){
+  		if (signupObj.password != signupObj.confirmPassword) {
   			return false;
  		}else{
  			return true;

@@ -8,34 +8,35 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 	styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-	user = {firstName:'' ,lastName:'' ,Email:'', mobileNumber:"" ,username:'' ,password:'' ,confirmPassword:''};
+	signupObj = {firstName:'' ,lastName:'' ,Email:'', mobileNumber:'' ,username:'' ,password:'' ,confirmPassword:''};
 
 	constructor(public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService) { }
+
 	public data : any;
+
 	ngOnInit() {
 	}
 	registerUser(){
-		console.log(this.user);
-		 if (this.commonService.required(this.user.firstName) && this.commonService.required(this.user.lastName) && this.commonService.required(this.user.Email) && this.commonService.required(this.user.username) && this.commonService.required(this.user.password) && this.commonService.required(this.user.confirmPassword)) {
+		 if (this.commonService.required(this.signupObj.firstName) && this.commonService.required(this.signupObj.lastName) && this.commonService.required(this.signupObj.Email) && this.commonService.required(this.signupObj.username) && this.commonService.required(this.signupObj.password) && this.commonService.required(this.signupObj.confirmPassword)) {
 		
-		 	if(this.commonService.checkValidEmail(this.user.Email)){
+		 	if(this.commonService.checkValidEmail(this.signupObj.Email)){
 				
-				if(this.commonService.checkValidMobileNumber(this.user.mobileNumber)) {
+				if(this.commonService.checkValidMobileNumber(this.signupObj.mobileNumber)) {
 
-					if (this.commonService.matchPassword(this.user)) {
-					
+					if (this.signupObj.password != this.signupObj.confirmPassword) {
+						this.notificationService.error('Error','Password not matched');
 					}else{
-						alert('not match');
+						return true;
 					}
 					
 				}else{
-					this.notificationService.error('Error','Invalid mobilenumber');
+					this.notificationService.error('Error','Please enter a valid mobile number of 10 digits');
 				}
-		 	}else{
-		 		this.notificationService.error('Error','Invalid email');
+			}else{
+		 		this.notificationService.error('Error','Please enter a valid email address');
 			}
 		 }else{
-		 	this.notificationService.error('Error','Please fill all the required fields');
+		 	this.notificationService.error('Error','Please fill all the required (*) fields.');
 		}
 
 		// this.sharedService.registerUser(this.user).subscribe(res =>{
