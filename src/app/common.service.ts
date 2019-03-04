@@ -6,7 +6,7 @@ import { SharedService } from './shared.service';
   providedIn: 'root'
 })
 export class CommonService {
-  constructor(private httpService: AppService, public sharedService:SharedService) { }
+	constructor(private httpService: AppService, public sharedService:SharedService) { }
 
   	checkValidEmail(email){
        	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -19,27 +19,18 @@ export class CommonService {
    	required(data){
   		if (data == undefined || data == null || data == "") {
   			return false;
-  		}else{
+  		} else {
   			return true;
   		}
   	}
 
   	checkValidMobileNumber(mobileNumber) {
        	if(mobileNumber){
-
 	       	if(mobileNumber.toString().length == 10){
 	        	return true;
-	       	}else{ 
+	       	} else { 
 	       		return false;
 	   		}
         }
-	}
-
-  	matchPassword(signupObj){
-  		if (signupObj.password != signupObj.confirmPassword) {
-  			return false;
- 		}else{
- 			return true;
- 		}
-  	}	
+	}	
 }
