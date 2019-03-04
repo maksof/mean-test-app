@@ -8,7 +8,7 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 	styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-	signupObj = {firstName:'' ,lastName:'' ,Email:'', mobileNumber:'' ,username:'' ,password:'' ,confirmPassword:''};
+	signupObj:any = {};
 
 	constructor(public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService) { }
 
@@ -26,7 +26,13 @@ export class SignUpComponent implements OnInit {
 					if (this.signupObj.password != this.signupObj.confirmPassword) {
 						this.notificationService.error('Error','Password not matched');
 					}else{
-						return true;
+						this.sharedService.registerUser(this.signupObj).subscribe(res =>{
+						this.data = res.data;
+						console.log(res);
+						this.notificationService.success("Success", "Successfully login");
+						},(error)=>{
+						this.notificationService.error("Error", "Internal Server Error.");
+						})
 					}
 					
 				}else{
@@ -38,13 +44,5 @@ export class SignUpComponent implements OnInit {
 		 }else{
 		 	this.notificationService.error('Error','Please fill all the required (*) fields.');
 		}
-
-		// this.sharedService.registerUser(this.user).subscribe(res =>{
-		// 	this.data = res.data;
-		// 	console.log(res);
-		// 	this.notificationService.success("Success", "Successfully login");
-		// },(error)=>{
-		// 	this.notificationService.error("Error", "Internal Server Error.");
-		// })
 	}
 }
