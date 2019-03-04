@@ -1,65 +1,53 @@
 <app-header (headerClassChange)="toggleMainSec()"></app-header>
 <section class="transition3ms UP_mainCon" [ngClass]="{'open': mainToggle}">
 	<div class="UP_con">
-		<h2 class="text-left"><i class="fa fa-cogs headIcon"></i>Settings</h2>
+		<h2 class="text-left"><i class="fa fa-cogs headIcon"></i>Suggest Movie</h2>
 		<hr class="headSep">
 		<div class="card shadow py-3 my-4">
 			<div class="row mx-0">
-				<div class="col-md-6">
+				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="name" name="name" placeholder="Name">
+						<input matInput type="name" name="Title" placeholder="Movie Title">
 					</mat-form-field>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="name" name="fName" placeholder="Father's Name
-						">
+						<input matInput type="number" name="Year" maxlength="4" placeholder="Year">
+						<mat-hint align="start">Please Enter the Releasing Year of the Movie</mat-hint>
 					</mat-form-field>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="number" name="mobile" placeholder="Mobile Number
-						">
+						<input matInput type="text" name="director" placeholder="Director's Name">
 					</mat-form-field>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="address" name="address" placeholder="Address
-						">
+						<mat-select placeholder="Category">
+							<mat-option value="0">Romantic</mat-option>
+							<mat-option  value="1">Comedy</mat-option>
+							<mat-option  value="2">Action</mat-option>
+						</mat-select>
 					</mat-form-field>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6 form-group">
+					<mat-form-field class="w-100">
+						<input matInput type="text" name="distribution" placeholder="Distibution">
+					</mat-form-field>
+				</div>
+				<div class="col-md-6 form-group">
 					<label for="profileImage" class="border-bottom py-1 w-100 pointer">
 						<a mat-flat-button color="primary">Choose File</a>
 					</label>
 					<input type="file" name="image" class="d-none" id="profileImage">
 				</div>
-				<div class="col-md-6 text-right">
+				<div class="col-md-6 form-group">
+					<mat-form-field class="w-100">
+						<textarea matInput type="text" name="Description" placeholder="Description"></textarea>
+					</mat-form-field>
+				</div>
+				<div class="col-md-6 form-group text-right">
 					<button mat-raised-button color="primary" class="mt-2">Update</button>
-				</div>
-			</div>
-		</div>
-		<h2 class="text-left"><i class="fa fa-key headIcon"></i>Change Password</h2>
-		<hr class="headSep">
-		<div class="card shadow py-3 my-4">
-			<div class="row mx-0">
-				<div class="col-md-6">
-					<mat-form-field class="w-100">
-						<input matInput type="password" name="oldPassword" placeholder="Old Password">
-					</mat-form-field>
-				</div>
-				<div class="col-md-6">
-					<mat-form-field class="w-100">
-						<input matInput type="password" name="oldPassword" placeholder="New Password">
-					</mat-form-field>
-				</div>
-				<div class="col-md-6">
-					<mat-form-field class="w-100">
-						<input matInput type="password" name="oldPassword" placeholder="Confirm Password">
-					</mat-form-field>
-				</div>
-				<div class="col-md-6 text-right">
-					<button mat-raised-button color="primary" class="mt-2">Update Password</button>
 				</div>
 			</div>
 		</div>
