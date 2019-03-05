@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2019 at 02:15 PM
+-- Generation Time: Mar 05, 2019 at 01:29 PM
 -- Server version: 5.6.37
 -- PHP Version: 7.2.10
 
@@ -25,22 +25,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblcategories`
+-- Table structure for table `tbl_categories`
 --
 
-CREATE TABLE `tblcategories` (
+CREATE TABLE `tbl_categories` (
   `id` int(11) NOT NULL,
   `categoryName` varchar(50) NOT NULL,
   `isDeleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tbl_categories`
+--
+
+INSERT INTO `tbl_categories` (`id`, `categoryName`, `isDeleted`) VALUES
+(1, '', 1),
+(2, 'Comedy', 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblgrades`
+-- Table structure for table `tbl_grades`
 --
 
-CREATE TABLE `tblgrades` (
+CREATE TABLE `tbl_grades` (
   `id` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
   `movieId` int(11) NOT NULL,
@@ -51,10 +59,10 @@ CREATE TABLE `tblgrades` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblmovies`
+-- Table structure for table `tbl_movies`
 --
 
-CREATE TABLE `tblmovies` (
+CREATE TABLE `tbl_movies` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `year` varchar(10) NOT NULL,
@@ -69,27 +77,21 @@ CREATE TABLE `tblmovies` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbltimeperiods`
+-- Table structure for table `tbl_time_periods`
 --
 
-CREATE TABLE `tbltimeperiods` (
+CREATE TABLE `tbl_time_periods` (
   `id` int(11) NOT NULL,
   `timePeriod` varchar(20) NOT NULL,
   `isDeleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `tbluserfavorites`
+-- Dumping data for table `tbl_time_periods`
 --
 
-CREATE TABLE `tbluserfavorites` (
-  `id` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
-  `movieId` int(11) NOT NULL,
-  `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `tbl_time_periods` (`id`, `timePeriod`, `isDeleted`) VALUES
+(1, '2010-2019', 1);
 
 -- --------------------------------------------------------
 
@@ -111,39 +113,46 @@ CREATE TABLE `tbl_user` (
   `registerDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user_favorites`
+--
+
+CREATE TABLE `tbl_user_favorites` (
+  `id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `movieId` int(11) NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tblcategories`
+-- Indexes for table `tbl_categories`
 --
-ALTER TABLE `tblcategories`
+ALTER TABLE `tbl_categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tblgrades`
+-- Indexes for table `tbl_grades`
 --
-ALTER TABLE `tblgrades`
+ALTER TABLE `tbl_grades`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tblmovies`
+-- Indexes for table `tbl_movies`
 --
-ALTER TABLE `tblmovies`
+ALTER TABLE `tbl_movies`
   ADD PRIMARY KEY (`id`,`categoryId`),
   ADD KEY `FK_Categoryid` (`categoryId`);
 
 --
--- Indexes for table `tbltimeperiods`
+-- Indexes for table `tbl_time_periods`
 --
-ALTER TABLE `tbltimeperiods`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbluserfavorites`
---
-ALTER TABLE `tbluserfavorites`
+ALTER TABLE `tbl_time_periods`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -153,38 +162,38 @@ ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`id`,`email`);
 
 --
+-- Indexes for table `tbl_user_favorites`
+--
+ALTER TABLE `tbl_user_favorites`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `tblcategories`
+-- AUTO_INCREMENT for table `tbl_categories`
 --
-ALTER TABLE `tblcategories`
+ALTER TABLE `tbl_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_grades`
+--
+ALTER TABLE `tbl_grades`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tblgrades`
+-- AUTO_INCREMENT for table `tbl_movies`
 --
-ALTER TABLE `tblgrades`
+ALTER TABLE `tbl_movies`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tblmovies`
+-- AUTO_INCREMENT for table `tbl_time_periods`
 --
-ALTER TABLE `tblmovies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tbltimeperiods`
---
-ALTER TABLE `tbltimeperiods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tbluserfavorites`
---
-ALTER TABLE `tbluserfavorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tbl_time_periods`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
@@ -193,14 +202,20 @@ ALTER TABLE `tbl_user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tbl_user_favorites`
+--
+ALTER TABLE `tbl_user_favorites`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `tblmovies`
+-- Constraints for table `tbl_movies`
 --
-ALTER TABLE `tblmovies`
-  ADD CONSTRAINT `FK_Categoryid` FOREIGN KEY (`categoryId`) REFERENCES `tblcategories` (`id`);
+ALTER TABLE `tbl_movies`
+  ADD CONSTRAINT `FK_Categoryid` FOREIGN KEY (`categoryId`) REFERENCES `tbl_categories` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

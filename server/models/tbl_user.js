@@ -33,13 +33,11 @@ module.exports = function(sequelize,DataType){
         },
         phone : {
             type : DataType.STRING,
-            allownull : true,
-            PrimaryKey : true
+            allownull : true
         }, 
         role : {
             type : DataType.STRING,
-            allownull : true,
-            PrimaryKey : true
+            allownull : true
         },
         isDeleted : {
             type : DataType.BOOLEAN,
