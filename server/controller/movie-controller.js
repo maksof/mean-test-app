@@ -125,3 +125,218 @@ exports.deleteTimePeriod = function (request, response) {
         common.sendResponseBack(response, 'FAIL', 'Please enter the time period id.', null);
     }
 }
+
+/**
+ * @api {post} movies/addMovie Add Movie API
+ * @apiName Add Movie API
+ * @apiGroup Movies
+ *
+ * @apiParam {string} title Title
+ * @apiParam {string} year Year
+ * @apiParam {string} director Director Name
+ * @apiParam {string} categoryId Category Id
+ * @apiParam {string} distribution Distribution
+ * @apiParam {string} photoUrl Photo Url
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.addMovie = function (request, response) {
+
+    var movie = request.body;
+    if(common.required(movie.title) && common.required(movie.year) && common.required(movie.director) && common.required(movie.categoryId) && common.required(movie.distribution) && common.required(movie.photoUrl) ) {
+        //if exist, send response back
+        tbl_movies.findAll({ where: { title: movie.title } }).then(function (res) {
+            if(res.length > 0) {
+                common.sendResponseBack(response, 'FAIL', 'This movie is already present, Please check the name and try again!', null);
+            } else {
+                movie.isDeleted = 0;
+                movie.isApproved = 1;
+                tbl_movies.build(movie).save().then(function(result) {
+                    common.sendResponseBack(response, 'OK', 'New movie is added successfully!', null);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });
+            }
+        });
+    } else {
+        common.sendResponseBack(response, 'FAIL', 'Please pass all the fields.', null);
+    }
+}
+
+/**
+ * @api {post} movies/updateMovie Update Movie API
+ * @apiName Update Movie API
+ * @apiGroup Movies
+ *
+ * @apiParam {number} id Movie Id
+ * @apiParam {string} title Title
+ * @apiParam {string} year Year
+ * @apiParam {string} director Director Name
+ * @apiParam {string} categoryId Category Id
+ * @apiParam {string} distribution Distribution
+ * @apiParam {string} photoUrl Photo Url
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.updateMovie = function (request, response) {
+
+    var movie = request.body;
+    var movieId = movie.id;
+    delete movie.id;
+    if(common.required(movieId) && common.required(movie.title) && common.required(movie.year) && common.required(movie.director) && common.required(movie.categoryId) && common.required(movie.distribution) && common.required(movie.photoUrl) ) {
+        //if exist, send response back
+        tbl_movies.findAll({ where: { id: movieId } }).then(function (res) {
+            if(res.length > 0) {
+                movie.isDeleted = res[0].isDeleted;
+                movie.isApproved = res[0].isApproved;
+                tbl_movies.update(movie, { where: { 'id': movieId } }).then(function (res) {
+                    if(res[0] == 1) common.sendResponseBack(response, 'OK', 'Movie is updated successfully!', null);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });                
+            } else {
+                common.sendResponseBack(response, 'FAIL', 'Incorrect Movie Id, Please try again with correct movie id!', null);
+            }
+        });
+    } else {
+        common.sendResponseBack(response, 'FAIL', 'Please pass all the fields.', null);
+    }
+}
+
+/**
+ * @api {get} movies/deleteMovie Delete Movie API
+ * @apiName Delete Movie API
+ * @apiGroup Movies
+ *
+ * @apiParam {number} movieId Movie Id
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.deleteMovie = function (request, response) {
+
+    var movieId = request.query.movieId;
+    if(common.required(movieId)) {
+        //if exist, send response back
+        tbl_movies.findAll({ where: { id: movieId } }).then(function (res) {
+            if(res.length > 0) {
+                tbl_movies.update({isDeleted: 1}, { where: { 'id': movieId } }).then(function (res) {
+                    if(res[0] == 1) common.sendResponseBack(response, 'OK', 'Movie is deleted successfully!', null);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });                
+            } else {
+                common.sendResponseBack(response, 'FAIL', 'Incorrect Movie Id, Please try again with correct movie id!', null);
+            }
+        });
+    } else {
+        common.sendResponseBack(response, 'FAIL', 'Please pass the movie id!', null);
+    }
+}
+
+/**
+ * @api {post} movies/suggestMovie Suggest New Movie API For User
+ * @apiName Suggest New Movie API For User
+ * @apiGroup Movies
+ *
+ * @apiParam {string} title Title
+ * @apiParam {string} year Year
+ * @apiParam {string} director Director Name
+ * @apiParam {string} categoryId Category Id
+ * @apiParam {string} distribution Distribution
+ * @apiParam {string} photoUrl Photo Url
+ * @apiParam {string} isDeleted Is Deleted Key
+ * @apiParam {string} isApproved Is Approved Key
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.suggestMovie = function (request, response) {
+
+    var movie = request.body;
+    if(common.required(movie.title) && common.required(movie.year) && common.required(movie.director) && common.required(movie.categoryId) && common.required(movie.distribution) && common.required(movie.photoUrl) ) {
+        //if exist, send response back
+        tbl_movies.findAll({ where: { title: movie.title } }).then(function (res) {
+            if(res.length > 0) {
+                common.sendResponseBack(response, 'FAIL', 'This movie is already present, Please check the name and try again!', null);
+            } else {
+                movie.isDeleted = 0;
+                movie.isApproved = 0;
+                tbl_movies.build(movie).save().then(function(result) {
+                    common.sendResponseBack(response, 'OK', 'New movie is added successfully!', null);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });
+            }
+        });
+    } else {
+        common.sendResponseBack(response, 'FAIL', 'Please pass all the fields.', null);
+    }
+}
+
+
+/**
+ * @api {get} movies/acceptSuggestedMovie Accept Suggested Movie API
+ * @apiName Accept Suggested Movie API
+ * @apiGroup Movies
+ *
+ * @apiParam {number} movieId Movie Id
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.acceptSuggestedMovie = function (request, response) {
+
+    var movieId = request.query.movieId;
+    if(common.required(movieId)) {
+        tbl_movies.findAll({ where: { 'id': movieId } }).then(function(movie) {
+            movie = movie[0];
+            if(movie.isApproved == 0) {
+                tbl_movies.update({ isApproved: 1 }, { where: { 'id': movieId } }).then(function (res) {
+                    if(res[0] == 1) common.sendResponseBack(response, 'OK', 'Movie is accepted successfully!', null);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });                
+            } else common.sendResponseBack(response, 'OK', 'Movie is accepted successfully!', null);
+        });
+    } else {
+        common.sendResponseBack(response, 'FAIL', 'Please pass the movie id.', null);
+    }
+}
+
+/**
+ * @api {get} movies/rejectSuggestedMovie Reject Suggested Movie API
+ * @apiName Reject Suggested Movie API
+ * @apiGroup Movies
+ *
+ * @apiParam {number} movieId Movie Id
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.rejectSuggestedMovie = function (request, response) {
+
+    var movieId = request.query.movieId;
+    if(common.required(movieId)) {
+        tbl_movies.findAll({ where: { 'id': movieId } }).then(function(movie) {
+            movie = movie[0];
+            if(movie.isDeleted == 0) {
+                tbl_movies.update({ isDeleted: 1 }, { where: { 'id': movieId } }).then(function (res) {
+                    if(res[0] == 1) common.sendResponseBack(response, 'OK', 'Movie is rejected successfully!', null);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });                
+            } else common.sendResponseBack(response, 'OK', 'Movie is rejected successfully!', null);
+        });
+    } else {
+        common.sendResponseBack(response, 'FAIL', 'Please pass the movie id.', null);
+    }
+}
