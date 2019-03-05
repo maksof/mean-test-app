@@ -46,7 +46,9 @@ exports.signup = function (request, response) {
 			    });
             }
         });
-	}
+	} else {
+        common.sendResponseBack(response, 'FAIL', 'Please fill all the fields first.', null);
+    }
 }
 
 /**

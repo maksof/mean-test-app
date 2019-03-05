@@ -52,7 +52,7 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-app.get(['/', 'login', 'signUp', 'forgotPassword', 'dashboard', 'suggest-movie', 'favorites', 'movies', 'admin', 'add-categories', 'add-movies', 'suggested-movies', 'view-grades'], function ( req, res ) {
+app.get(['/', 'login', 'signUp', 'dashboard', 'suggest-movie', 'favorites', 'movies', 'admin', 'add-categories', 'add-movies', 'suggested-movies', 'view-grades'], function ( req, res ) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
