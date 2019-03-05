@@ -7,23 +7,23 @@
 			<div class="row mx-0">
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="name" name="Title" placeholder="Movie Title">
+						<input matInput [(ngModel)]="moviesObj.title" type="name" name="Title" placeholder="Movie Title">
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="number" name="Year" maxlength="4" placeholder="Year">
+						<input matInput [(ngModel)]="moviesObj.year" type="number" name="Year" maxlength="4" placeholder="Year">
 						<mat-hint align="start">Please Enter the Releasing Year of the Movie</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="text" name="director" placeholder="Director's Name">
+						<input matInput [(ngModel)]="moviesObj.director" type="text" name="director" placeholder="Director's Name">
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<mat-select placeholder="Category">
+						<mat-select [(ngModel)]="moviesObj.category" placeholder="Category">
 							<mat-option value="0">Romantic</mat-option>
 							<mat-option  value="1">Comedy</mat-option>
 							<mat-option  value="2">Action</mat-option>
@@ -32,22 +32,23 @@
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="text" name="distribution" placeholder="Distibution">
+						<input matInput [(ngModel)]="moviesObj.distribution" type="text" name="distribution" placeholder="Distibution">
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="profileImage" class="border-bottom py-1 w-100 pointer">
 						<a mat-flat-button color="primary">Choose File</a>
+						<span>{{labImg}}</span>
 					</label>
-					<input type="file" name="image" class="d-none" id="profileImage">
+					<input type="file" name="image" [(ngModel)]="labImg" (change)="saveImage($event)" class="d-none" id="profileImage" accept="image/x-png,image/gif,image/jpeg">
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<textarea matInput type="text" name="Description" placeholder="Description"></textarea>
+						<textarea matInput [(ngModel)]="moviesObj.description" type="text" name="Description" placeholder="Description"></textarea>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group text-right">
-					<button mat-raised-button color="primary" class="mt-2">Update</button>
+					<button mat-raised-button (click)="addMovies()" color="primary" class="mt-2">Update</button>
 				</div>
 			</div>
 		</div>

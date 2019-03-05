@@ -29,4 +29,13 @@ export class SharedService {
 	updateTestApi(obj){
 		return this.appService.post("functionName",obj);
 	}
+	addNewCategory(data){
+		return this.appService.post("",data);
+	}
+	addTimePeriod(data){
+		return this.appService.post("",data);
+	}
+	addMovies(obj){
+		return this.appService.post("",obj);
+	}
 }
