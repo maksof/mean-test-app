@@ -14,7 +14,7 @@ var tbl_time_periods = models.tbl_time_periods;
 /**
  * @api {post} movies/addCategory Add Category API
  * @apiName Add Category API
- * @apiGroup Movies
+ * @apiGroup Category
  *
  * @apiParam {string} categoryName Category Name
  *
@@ -47,7 +47,7 @@ exports.addCategory = function (request, response) {
 /**
  * @api {get} movies/deleteCategory Delete Category API
  * @apiName Delete Category API
- * @apiGroup Movies
+ * @apiGroup Category
  *
  * @apiParam {number} categoryId Category Id
  *
@@ -72,7 +72,7 @@ exports.deleteCategory = function (request, response) {
 /**
  * @api {post} movies/addTimePeriod Add Time Period API
  * @apiName Add Time Period API
- * @apiGroup Movies
+ * @apiGroup Time Period
  *
  * @apiParam {string} timePeriod Time Period
  *
@@ -104,7 +104,7 @@ exports.addTimePeriod = function (request, response) {
 /**
  * @api {get} movies/deleteTimePeriod Delete Time Period API
  * @apiName Delete Time Period API
- * @apiGroup Movies
+ * @apiGroup Time Period
  *
  * @apiParam {number} timePeriodId Time Period Id
  *
@@ -339,4 +339,42 @@ exports.rejectSuggestedMovie = function (request, response) {
     } else {
         common.sendResponseBack(response, 'FAIL', 'Please pass the movie id.', null);
     }
+}
+
+/**
+ * @api {get} movies/getAllCategories Get All Categories API
+ * @apiName Get All Categories API
+ * @apiGroup Category
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.getAllCategories = function (request, response) {
+
+    tbl_categories.findAll({ attributes: ['id', 'categoryName'], where: { 'isDeleted': 0 } }).then(function(categories) {
+        if(categories.length > 0) common.sendResponseBack(response, 'OK', 'Categories fetched successfully!', categories);
+        else common.sendResponseBack(response, 'OK', 'No records found!', null);
+    }, (error) => {
+        common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+        logger.error( 'Error occured on '+new Date()+' with reason' + error);
+    });
+}
+
+/**
+ * @api {get} movies/getAllTimePeriods Get All Time Periods API
+ * @apiName Get All Time Periods API
+ * @apiGroup Time Period
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.getAllTimePeriods = function (request, response) {
+
+    tbl_time_periods.findAll({ attributes: ['id', 'timePeriod'], where: { 'isDeleted': 0 } }).then(function(timePeriods) {
+        if(timePeriods.length > 0) common.sendResponseBack(response, 'OK', 'Time periods fetched successfully!', timePeriods);
+        else common.sendResponseBack(response, 'OK', 'No records found!', null);
+    }, (error) => {
+        common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+        logger.error( 'Error occured on '+new Date()+' with reason' + error);
+    });
 }

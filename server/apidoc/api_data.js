@@ -1,19 +1,19 @@
 define({ "api": [
   {
-    "type": "get",
-    "url": "movies/acceptSuggestedMovie",
-    "title": "Accept Suggested Movie API",
-    "name": "Accept_Suggested_Movie_API",
-    "group": "Movies",
+    "type": "post",
+    "url": "movies/addCategory",
+    "title": "Add Category API",
+    "name": "Add_Category_API",
+    "group": "Category",
     "parameter": {
       "fields": {
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "number",
+            "type": "string",
             "optional": false,
-            "field": "movieId",
-            "description": "<p>Movie Id</p>"
+            "field": "categoryName",
+            "description": "<p>Category Name</p>"
           }
         ]
       }
@@ -40,23 +40,96 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "controller/movie-controller.js",
-    "groupTitle": "Movies"
+    "groupTitle": "Category"
   },
   {
-    "type": "post",
-    "url": "movies/addCategory",
-    "title": "Add Category API",
-    "name": "Add_Category_API",
+    "type": "get",
+    "url": "movies/deleteCategory",
+    "title": "Delete Category API",
+    "name": "Delete_Category_API",
+    "group": "Category",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "categoryId",
+            "description": "<p>Category Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Category"
+  },
+  {
+    "type": "get",
+    "url": "movies/getAllCategories",
+    "title": "Get All Categories API",
+    "name": "Get_All_Categories_API",
+    "group": "Category",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Category"
+  },
+  {
+    "type": "get",
+    "url": "movies/acceptSuggestedMovie",
+    "title": "Accept Suggested Movie API",
+    "name": "Accept_Suggested_Movie_API",
     "group": "Movies",
     "parameter": {
       "fields": {
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "string",
+            "type": "number",
             "optional": false,
-            "field": "categoryName",
-            "description": "<p>Category Name</p>"
+            "field": "movieId",
+            "description": "<p>Movie Id</p>"
           }
         ]
       }
@@ -164,92 +237,6 @@ define({ "api": [
     "groupTitle": "Movies"
   },
   {
-    "type": "post",
-    "url": "movies/addTimePeriod",
-    "title": "Add Time Period API",
-    "name": "Add_Time_Period_API",
-    "group": "Movies",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "timePeriod",
-            "description": "<p>Time Period</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "string",
-            "optional": false,
-            "field": "status",
-            "description": "<p>Status of the request.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "string",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Message corresponding to request.</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "controller/movie-controller.js",
-    "groupTitle": "Movies"
-  },
-  {
-    "type": "get",
-    "url": "movies/deleteCategory",
-    "title": "Delete Category API",
-    "name": "Delete_Category_API",
-    "group": "Movies",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "number",
-            "optional": false,
-            "field": "categoryId",
-            "description": "<p>Category Id</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "string",
-            "optional": false,
-            "field": "status",
-            "description": "<p>Status of the request.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "string",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Message corresponding to request.</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "controller/movie-controller.js",
-    "groupTitle": "Movies"
-  },
-  {
     "type": "get",
     "url": "movies/deleteMovie",
     "title": "Delete Movie API",
@@ -264,49 +251,6 @@ define({ "api": [
             "optional": false,
             "field": "movieId",
             "description": "<p>Movie Id</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "string",
-            "optional": false,
-            "field": "status",
-            "description": "<p>Status of the request.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "string",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Message corresponding to request.</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "controller/movie-controller.js",
-    "groupTitle": "Movies"
-  },
-  {
-    "type": "get",
-    "url": "movies/deleteTimePeriod",
-    "title": "Delete Time Period API",
-    "name": "Delete_Time_Period_API",
-    "group": "Movies",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "number",
-            "optional": false,
-            "field": "timePeriodId",
-            "description": "<p>Time Period Id</p>"
           }
         ]
       }
@@ -554,6 +498,122 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "controller/movie-controller.js",
     "groupTitle": "Movies"
+  },
+  {
+    "type": "post",
+    "url": "movies/addTimePeriod",
+    "title": "Add Time Period API",
+    "name": "Add_Time_Period_API",
+    "group": "Time_Period",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "timePeriod",
+            "description": "<p>Time Period</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Time_Period"
+  },
+  {
+    "type": "get",
+    "url": "movies/deleteTimePeriod",
+    "title": "Delete Time Period API",
+    "name": "Delete_Time_Period_API",
+    "group": "Time_Period",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "timePeriodId",
+            "description": "<p>Time Period Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Time_Period"
+  },
+  {
+    "type": "get",
+    "url": "movies/getAllTimePeriods",
+    "title": "Get All Time Periods API",
+    "name": "Get_All_Time_Periods_API",
+    "group": "Time_Period",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Time_Period"
   },
   {
     "type": "get",

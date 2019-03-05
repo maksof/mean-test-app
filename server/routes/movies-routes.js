@@ -14,6 +14,11 @@ var router = function(){
 			return movieController.deleteCategory(req, res);
 		});
 
+	movieRoute.route('/getAllCategories')
+		.get(function(req,res) {
+			return movieController.getAllCategories(req, res);
+		});
+
 	movieRoute.route('/addTimePeriod')
 		.post(function(req,res) {
 			return movieController.addTimePeriod(req, res);
@@ -22,6 +27,11 @@ var router = function(){
 	movieRoute.route('/deleteTimePeriod')
 		.get(function(req,res) {
 			return movieController.deleteTimePeriod(req, res);
+		});
+
+	movieRoute.route('/getAllTimePeriods')
+		.get(function(req,res) {
+			return movieController.getAllTimePeriods(req, res);
 		});
 
 	movieRoute.route('/addMovie')
