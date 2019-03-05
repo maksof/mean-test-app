@@ -1,5 +1,48 @@
 define({ "api": [
   {
+    "type": "get",
+    "url": "movies/acceptSuggestedMovie",
+    "title": "Accept Suggested Movie API",
+    "name": "Accept_Suggested_Movie_API",
+    "group": "Movies",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "movieId",
+            "description": "<p>Movie Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Movies"
+  },
+  {
     "type": "post",
     "url": "movies/addCategory",
     "title": "Add Category API",
@@ -14,6 +57,84 @@ define({ "api": [
             "optional": false,
             "field": "categoryName",
             "description": "<p>Category Name</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Movies"
+  },
+  {
+    "type": "post",
+    "url": "movies/addMovie",
+    "title": "Add Movie API",
+    "name": "Add_Movie_API",
+    "group": "Movies",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "year",
+            "description": "<p>Year</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "director",
+            "description": "<p>Director Name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "categoryId",
+            "description": "<p>Category Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "distribution",
+            "description": "<p>Distribution</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "photoUrl",
+            "description": "<p>Photo Url</p>"
           }
         ]
       }
@@ -130,6 +251,49 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "movies/deleteMovie",
+    "title": "Delete Movie API",
+    "name": "Delete_Movie_API",
+    "group": "Movies",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "movieId",
+            "description": "<p>Movie Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Movies"
+  },
+  {
+    "type": "get",
     "url": "movies/deleteTimePeriod",
     "title": "Delete Time Period API",
     "name": "Delete_Time_Period_API",
@@ -143,6 +307,226 @@ define({ "api": [
             "optional": false,
             "field": "timePeriodId",
             "description": "<p>Time Period Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Movies"
+  },
+  {
+    "type": "get",
+    "url": "movies/rejectSuggestedMovie",
+    "title": "Reject Suggested Movie API",
+    "name": "Reject_Suggested_Movie_API",
+    "group": "Movies",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "movieId",
+            "description": "<p>Movie Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Movies"
+  },
+  {
+    "type": "post",
+    "url": "movies/suggestMovie",
+    "title": "Suggest New Movie API For User",
+    "name": "Suggest_New_Movie_API_For_User",
+    "group": "Movies",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "year",
+            "description": "<p>Year</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "director",
+            "description": "<p>Director Name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "categoryId",
+            "description": "<p>Category Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "distribution",
+            "description": "<p>Distribution</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "photoUrl",
+            "description": "<p>Photo Url</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "isDeleted",
+            "description": "<p>Is Deleted Key</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "isApproved",
+            "description": "<p>Is Approved Key</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Movies"
+  },
+  {
+    "type": "post",
+    "url": "movies/updateMovie",
+    "title": "Update Movie API",
+    "name": "Update_Movie_API",
+    "group": "Movies",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Movie Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "year",
+            "description": "<p>Year</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "director",
+            "description": "<p>Director Name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "categoryId",
+            "description": "<p>Category Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "distribution",
+            "description": "<p>Distribution</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "photoUrl",
+            "description": "<p>Photo Url</p>"
           }
         ]
       }
