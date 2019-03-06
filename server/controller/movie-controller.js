@@ -10,6 +10,7 @@ var models = require('../models/models.js')();
 var tbl_movies = models.tbl_movies;
 var tbl_categories = models.tbl_categories;
 var tbl_time_periods = models.tbl_time_periods;
+var tbl_user_favorites = models.tbl_user_favorites;
 
 /**
  * @api {post} movies/addCategory Add Category API
@@ -134,6 +135,7 @@ exports.deleteTimePeriod = function (request, response) {
  * @apiParam {string} title Title
  * @apiParam {string} year Year
  * @apiParam {string} director Director Name
+ * @apiParam {string} description Description
  * @apiParam {string} categoryId Category Id
  * @apiParam {string} distribution Distribution
  * @apiParam {string} photoUrl Photo Url
@@ -144,7 +146,7 @@ exports.deleteTimePeriod = function (request, response) {
 exports.addMovie = function (request, response) {
 
     var movie = request.body;
-    if(common.required(movie.title) && common.required(movie.year) && common.required(movie.director) && common.required(movie.categoryId) && common.required(movie.distribution) && common.required(movie.photoUrl) ) {
+    if(common.required(movie.title) && common.required(movie.year) && common.required(movie.director) && common.required(movie.categoryId) && common.required(movie.distribution) && common.required(movie.photoUrl) && common.required(movie.description)) {
         //if exist, send response back
         tbl_movies.findAll({ where: { title: movie.title } }).then(function (res) {
             if(res.length > 0) {
@@ -372,6 +374,132 @@ exports.getAllTimePeriods = function (request, response) {
 
     tbl_time_periods.findAll({ attributes: ['id', 'timePeriod'], where: { 'isDeleted': 0 } }).then(function(timePeriods) {
         if(timePeriods.length > 0) common.sendResponseBack(response, 'OK', 'Time periods fetched successfully!', timePeriods);
+        else common.sendResponseBack(response, 'OK', 'No records found!', null);
+    }, (error) => {
+        common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+        logger.error( 'Error occured on '+new Date()+' with reason' + error);
+    });
+}
+
+/**
+ * @api {post} movies/addMovieToFavorites Add Movie to Favorites API
+ * @apiName Add Movie to Favorites API
+ * @apiGroup Favorites
+ *
+ * @apiParam {number} userId User Id
+ * @apiParam {number} movieId Movie Id
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.addMovieToFavorites = function (request, response) {
+
+    var data = request.body;
+    if(common.required(data.userId) && common.required(data.movieId)) {
+        //if exist, send response back
+        tbl_user_favorites.findAll({ where: { userId: data.userId, movieId: data.movieId } }).then(function (res) {
+            if(res.length > 0) {
+                common.sendResponseBack(response, 'FAIL', 'This movie is already added to your favorite list!', null);
+            } else {
+                data.date = new Date();
+                tbl_user_favorites.build(data).save().then(function(result) {
+                    common.sendResponseBack(response, 'OK', 'Movie is added to your favorite list successfully!', null);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });
+            }
+        });
+    } else {
+        common.sendResponseBack(response, 'FAIL', 'Please pass all the required fields.', null);
+    }
+}
+
+/**
+ * @api {post} movies/removeMovieFromFavorites Remove Movie From Favorites API
+ * @apiName Remove Movie From Favorites API
+ * @apiGroup Favorites
+ *
+ * @apiParam {number} userId User Id
+ * @apiParam {number} movieId Movie Id
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.removeMovieFromFavorites = function (request, response) {
+
+    var data = request.body;
+    if(common.required(data.userId) && common.required(data.movieId)) {
+        //if exist, send response back
+        tbl_user_favorites.findAll({ where: { userId: data.userId, movieId: data.movieId } }).then(function (res) {
+            if(res.length == 0) {
+                common.sendResponseBack(response, 'FAIL', 'Incorrect details passed, please check and try again!', null);
+            } else {
+                tbl_user_favorites.destroy({ where: { userId: data.userId, movieId: data.movieId } }).then(function(result) {
+                    common.sendResponseBack(response, 'OK', 'Movie is removed from favorite list successfully!', null);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });
+            }
+        });
+    } else {
+        common.sendResponseBack(response, 'FAIL', 'Please pass all the required fields.', null);
+    }
+}
+
+/**
+ * @api {get} movies/getAllFavoritesMoviesOfUser Get All Favorites Movie of User API
+ * @apiName Get All Favorites Movie of User API
+ * @apiGroup Favorites
+ *
+ * @apiParam {number} userId User Id
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.getAllFavoritesMoviesOfUser = function (request, response) {
+    var userId = request.query.userId;
+    if(common.required(userId)) {
+        tbl_user_favorites.findAll({attributes:['movieId'], where: { 'userId': userId } }).then(function(favorites) {
+            if(favorites.length > 0) {
+                var movieIdArr = [];
+                favorites.forEach(function(id) {movieIdArr.push(id.movieId);})
+                tbl_movies.findAll({where: {id: movieIdArr}}).then(function(movies){
+                    common.sendResponseBack(response, 'OK', 'Favorites movies fetched successfully!', movies);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);        
+                })
+            } else common.sendResponseBack(response, 'OK', 'No records found!', null);
+        }, (error) => {
+            common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+            logger.error( 'Error occured on '+new Date()+' with reason' + error);
+        });
+    } else common.sendResponseBack(response, 'FAIL', 'Please pass the user id.', null);
+}
+
+/**
+ * @api {get} movies/getMovies Get Movies API
+ * @apiName Get Movies API
+ * @apiGroup Movies
+ *
+ * @apiParam {number} categoryId Category Id
+ * @apiParam {string} title Title
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.getMovies = function (request, response) {
+
+    var whereClause = {'isDeleted': 0, 'isApproved': 1};
+    var categoryId = request.query.categoryId ? request.query.categoryId : '';
+    var title = request.query.title ? request.query.title : '';
+    if(categoryId) whereClause.categoryId = categoryId;
+    if(title) whereClause.title = { $like: title };
+
+    tbl_movies.findAll({where: whereClause}).then(function(movies) {
+        if(movies.length > 0) common.sendResponseBack(response, 'OK', 'Movies fetched successfully!', movies);
         else common.sendResponseBack(response, 'OK', 'No records found!', null);
     }, (error) => {
         common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);

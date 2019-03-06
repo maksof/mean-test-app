@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 05, 2019 at 01:29 PM
+-- Generation Time: Mar 06, 2019 at 09:19 AM
 -- Server version: 5.6.37
 -- PHP Version: 7.2.10
 
@@ -40,7 +40,9 @@ CREATE TABLE `tbl_categories` (
 
 INSERT INTO `tbl_categories` (`id`, `categoryName`, `isDeleted`) VALUES
 (1, '', 1),
-(2, 'Comedy', 1);
+(2, 'Comedy', 0),
+(3, '', 1),
+(4, 'Horror', 0);
 
 -- --------------------------------------------------------
 
@@ -69,10 +71,19 @@ CREATE TABLE `tbl_movies` (
   `director` varchar(50) NOT NULL,
   `categoryId` int(11) NOT NULL,
   `distribution` int(11) NOT NULL,
+  `description` varchar(300) NOT NULL,
   `photoUrl` varchar(50) NOT NULL,
   `isDeleted` tinyint(1) NOT NULL,
   `isApproved` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_movies`
+--
+
+INSERT INTO `tbl_movies` (`id`, `title`, `year`, `director`, `categoryId`, `distribution`, `description`, `photoUrl`, `isDeleted`, `isApproved`) VALUES
+(1, 'ashar film', '2010-2019', 'test', 1, 0, '', 'test', 1, 0),
+(2, 'ashar film 1', '2010-2019', 'test', 1, 0, '', 'test', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -91,7 +102,8 @@ CREATE TABLE `tbl_time_periods` (
 --
 
 INSERT INTO `tbl_time_periods` (`id`, `timePeriod`, `isDeleted`) VALUES
-(1, '2010-2019', 1);
+(1, '2010-2019', 1),
+(2, '1997-2000', 0);
 
 -- --------------------------------------------------------
 
@@ -112,6 +124,13 @@ CREATE TABLE `tbl_user` (
   `isDeleted` tinyint(1) NOT NULL DEFAULT '0',
   `registerDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_user`
+--
+
+INSERT INTO `tbl_user` (`id`, `first_name`, `last_name`, `password`, `gender`, `age`, `email`, `phone`, `role`, `isDeleted`, `registerDate`) VALUES
+(1, 'Ashar', 'Khalid', '098f6bcd4621d373cade4e832627b4', 'male', 23, 'assd@asd.com', '3442534317', 'USER', 0, '2019-03-06');
 
 -- --------------------------------------------------------
 
@@ -175,7 +194,7 @@ ALTER TABLE `tbl_user_favorites`
 -- AUTO_INCREMENT for table `tbl_categories`
 --
 ALTER TABLE `tbl_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_grades`
@@ -187,25 +206,25 @@ ALTER TABLE `tbl_grades`
 -- AUTO_INCREMENT for table `tbl_movies`
 --
 ALTER TABLE `tbl_movies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_time_periods`
 --
 ALTER TABLE `tbl_time_periods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_user_favorites`
 --
 ALTER TABLE `tbl_user_favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

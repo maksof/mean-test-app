@@ -116,6 +116,149 @@ define({ "api": [
     "groupTitle": "Category"
   },
   {
+    "type": "post",
+    "url": "movies/addMovieToFavorites",
+    "title": "Add Movie to Favorites API",
+    "name": "Add_Movie_to_Favorites_API",
+    "group": "Favorites",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "movieId",
+            "description": "<p>Movie Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Favorites"
+  },
+  {
+    "type": "get",
+    "url": "movies/getAllFavoritesMoviesOfUser",
+    "title": "Get All Favorites Movie of User API",
+    "name": "Get_All_Favorites_Movie_of_User_API",
+    "group": "Favorites",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Favorites"
+  },
+  {
+    "type": "post",
+    "url": "movies/removeMovieFromFavorites",
+    "title": "Remove Movie From Favorites API",
+    "name": "Remove_Movie_From_Favorites_API",
+    "group": "Favorites",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "movieId",
+            "description": "<p>Movie Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Favorites"
+  },
+  {
     "type": "get",
     "url": "movies/acceptSuggestedMovie",
     "title": "Accept Suggested Movie API",
@@ -192,6 +335,13 @@ define({ "api": [
             "group": "Parameter",
             "type": "string",
             "optional": false,
+            "field": "description",
+            "description": "<p>Description</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
             "field": "categoryId",
             "description": "<p>Category Id</p>"
           },
@@ -251,6 +401,56 @@ define({ "api": [
             "optional": false,
             "field": "movieId",
             "description": "<p>Movie Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Movies"
+  },
+  {
+    "type": "get",
+    "url": "movies/getMovies",
+    "title": "Get Movies API",
+    "name": "Get_Movies_API",
+    "group": "Movies",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "categoryId",
+            "description": "<p>Category Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Title</p>"
           }
         ]
       }
@@ -614,56 +814,6 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "controller/movie-controller.js",
     "groupTitle": "Time_Period"
-  },
-  {
-    "type": "get",
-    "url": "user/login",
-    "title": "Login API",
-    "name": "Login_API",
-    "group": "User",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "password",
-            "description": "<p>Password</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "email",
-            "description": "<p>Email Address</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "string",
-            "optional": false,
-            "field": "status",
-            "description": "<p>Status of the request.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "string",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Message corresponding to request.</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "controller/user-controller.js",
-    "groupTitle": "User"
   },
   {
     "type": "post",
