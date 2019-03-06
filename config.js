@@ -11,7 +11,7 @@ config.app.user = {}
 config.app.errorUrl   = '/error';
 config.app.mode.DEVELOPMENT = 'development';
 config.app.mode.PRODUCTION = 'production';
-config.app.mode.current = config.app.mode.DEVELOPMENT;
+config.app.mode.current = config.app.mode.PRODUCTION;
 
 // HTTP server configuration
 config.http = {}
