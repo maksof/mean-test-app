@@ -447,3 +447,34 @@ exports.removeMovieFromFavorites = function (request, response) {
         common.sendResponseBack(response, 'FAIL', 'Please pass all the required fields.', null);
     }
 }
+
+/**
+ * @api {get} movies/getAllFavoritesMoviesOfUser Get All Favorites Movie of User API
+ * @apiName Get All Favorites Movie of User API
+ * @apiGroup Favorites
+ *
+ * @apiParam {number} userId User Id
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.getAllFavoritesMoviesOfUser = function (request, response) {
+    var userId = request.query.userId;
+    if(common.required(userId)) {
+        tbl_user_favorites.findAll({attributes:['movieId'], where: { 'userId': userId } }).then(function(favorites) {
+            if(favorites.length > 0) {
+                var movieIdArr = [];
+                favorites.forEach(function(id) {movieIdArr.push(id.movieId);})
+                tbl_movies.findAll({where: {id: movieIdArr}}).then(function(movies){
+                    common.sendResponseBack(response, 'OK', 'Favorites movies fetched successfully!', movies);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);        
+                })
+            } else common.sendResponseBack(response, 'OK', 'No records found!', null);
+        }, (error) => {
+            common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+            logger.error( 'Error occured on '+new Date()+' with reason' + error);
+        });
+    } else common.sendResponseBack(response, 'FAIL', 'Please pass the user id.', null);
+}

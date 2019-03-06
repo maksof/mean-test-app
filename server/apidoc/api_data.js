@@ -166,6 +166,49 @@ define({ "api": [
     "groupTitle": "Favorites"
   },
   {
+    "type": "get",
+    "url": "movies/getAllFavoritesMoviesOfUser",
+    "title": "Get All Favorites Movie of User API",
+    "name": "Get_All_Favorites_Movie_of_User_API",
+    "group": "Favorites",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Favorites"
+  },
+  {
     "type": "post",
     "url": "movies/removeMovieFromFavorites",
     "title": "Remove Movie From Favorites API",

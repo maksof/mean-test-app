@@ -74,6 +74,11 @@ var router = function(){
 			return movieController.removeMovieFromFavorites(req, res);
 		});
 
+	movieRoute.route('/getAllFavoritesMoviesOfUser')
+		.get(function(req,res) {
+			return movieController.getAllFavoritesMoviesOfUser(req, res);
+		});
+
     return movieRoute;
 }
 
