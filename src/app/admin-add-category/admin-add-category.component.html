@@ -51,10 +51,10 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td class="align-middle">Action</td>
+										<tr *ngFor="let cRow of allCategories">
+											<td class="align-middle">{{cRow.categoryName}}</td>
 											<td class="align-middle">
-												<button mat-mini-fab color="warn" (click)="categoryDeleteModal('1')">
+												<button mat-mini-fab color="warn" (click)="categoryDeleteModal(cRow.id)">
 													<i class="fa fa-trash"></i>
 												</button>
 											</td>
@@ -79,10 +79,10 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td class="align-middle">2012-2013</td>
+										<tr *ngFor="let tRow of allTimePeriod">
+											<td class="align-middle">{{tRow.timePeriod}}</td>
 											<td class="align-middle">
-												<button mat-mini-fab color="warn" (click)="timeDeleteModal('1')">
+												<button mat-mini-fab color="warn" (click)="timeDeleteModal(tRow.id)">
 													<i class="fa fa-trash"></i>
 												</button>
 											</td>
@@ -150,3 +150,6 @@
 	<button id="accessTimeDeleteModal" class="d-none" data-toggle="modal" data-target="#deleteTime"></button>
 	<app-footer></app-footer>
 </section>
+<div *ngIf="showLoader" style="position: fixed; z-index: 1003; left: 0; top: 0; bottom: 0; right: 0; background: #bfbfbf75; opacity: 1;">
+	<img id="loadinggif" src="assets/images/load.gif" style="width: 100px; height: 100px; position: absolute; top: 50%; left: 50%; margin: -28px 0 0 -25px;">
+</div>
