@@ -64,6 +64,16 @@ var router = function(){
 			return movieController.rejectSuggestedMovie(req, res);
 		});
 
+	movieRoute.route('/addMovieToFavorites')
+		.post(function(req,res) {
+			return movieController.addMovieToFavorites(req, res);
+		});
+
+	movieRoute.route('/removeMovieFromFavorites')
+		.post(function(req,res) {
+			return movieController.removeMovieFromFavorites(req, res);
+		});
+
     return movieRoute;
 }
 
