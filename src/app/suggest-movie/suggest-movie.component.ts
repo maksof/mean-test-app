@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./suggest-movie.component.css']
 })
 export class SuggestMovieComponent implements OnInit {
+	suggestMovieObj:any = {};
 
 	constructor() { }
 	mainToggle:boolean = true;
