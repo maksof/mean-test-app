@@ -23,7 +23,7 @@ var router = function(){
 		});
 
 	userRoute.route('/login')
-		.get(function(req,res) {
+		.post(function(req,res) {
 			return userController.login(req, res);
 		});
 

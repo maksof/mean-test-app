@@ -1,4 +1,3 @@
-
 var fs = require('fs');
 var Common = require(__dirname + '/common-controller');
 var logger = require( '../logger' );
@@ -62,7 +61,7 @@ exports.signup = function (request, response) {
 */
 exports.login = function (request, response) {
     
-    var user = request.query;
+    var user = request.body;
     tbl_user.findAll({ where: { email: user.email, password: user.password } }).then(function (res){
          if(res.length > 0) {
                 common.sendResponseBack(response, 'PASS', 'YOUR EMAIL AND PASSWORD ARE CORRECT WAIT FEW SECONDS', null);
