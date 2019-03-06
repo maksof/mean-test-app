@@ -39,7 +39,7 @@ exports.signup = function (request, response) {
             	user.registerDate = new Date();
             	user.password = md5(user.password);
             	tbl_user.build(user).save().then(function(result) {
-			    	common.sendResponseBack(response, 'OK', 'User signup successfully!', result);
+			    	common.sendResponseBack(response, 'OK', 'User signup successfully!', null);
 			    }, (error) => {
 			    	common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
                     logger.error( 'Error occured on '+new Date()+' with reason' + error);
@@ -49,19 +49,4 @@ exports.signup = function (request, response) {
 	} else {
         common.sendResponseBack(response, 'FAIL', 'Please fill all the fields first.', null);
     }
-}
-
-/**
- * @api {get} user/login Login API
- * @apiName Login API
- * @apiGroup User
- *
- * @apiParam {string} password Password
- * @apiParam {string} email Email Address
- *
- * @apiSuccess {string} status Status of the request.
- * @apiSuccess {string} message Message corresponding to request.
-*/
-exports.signup = function (request, response) {
-
 }
