@@ -10,7 +10,7 @@
 						<div class="col-12">
 							<div class="">
 								<mat-form-field class="w-100">
-									<input matInput [(ngModel)]="categoryName" type="name" name="name" placeholder="Category Name">
+									<input matInput [(ngModel)]="categoryName.categoryName" type="name" name="name" placeholder="Category Name">
 								</mat-form-field>
 							</div>
 							<div class="text-center">
@@ -26,7 +26,7 @@
 						<div class="col-12">
 							<div class="">
 								<mat-form-field class="w-100">
-									<input matInput [(ngModel)]="timePeriod" type="name" name="name" placeholder="Time Period">
+									<input matInput [(ngModel)]="timePeriod.timePeriod" type="name" name="name" placeholder="Time Period">
 								</mat-form-field>
 							</div>
 							<div class="text-center">
@@ -54,7 +54,7 @@
 										<tr>
 											<td class="align-middle">Action</td>
 											<td class="align-middle">
-												<button mat-mini-fab color="warn">
+												<button mat-mini-fab color="warn" (click)="categoryDeleteModal('1')">
 													<i class="fa fa-trash"></i>
 												</button>
 											</td>
@@ -82,7 +82,7 @@
 										<tr>
 											<td class="align-middle">2012-2013</td>
 											<td class="align-middle">
-												<button mat-mini-fab color="warn">
+												<button mat-mini-fab color="warn" (click)="timeDeleteModal('1')">
 													<i class="fa fa-trash"></i>
 												</button>
 											</td>
@@ -96,5 +96,57 @@
 			</div>
 		</div>
 	</div>
+	<!-- Delete Category -->
+	<div class="modal fade" id="deleteCateg">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Delete Category</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<p>Are you sure, You want to delete this Category?</p>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn shadow btn-primary" (click)="deleteCategory()">Confirm</button>
+					<button id="closeDeleteCat" type="button" class="btn shadow btn-light" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- Delete Time Period -->
+	<div class="modal fade" id="deleteTime">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Delete Time Period</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<p>Are you sure, You want to delete this Time Period?</p>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn shadow btn-primary" (click)="deleteTimePeriod()">Confirm</button>
+					<button id="closeDeleteTime" type="button" class="btn shadow btn-light" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<button id="accessCatDeleteModal" class="d-none" data-toggle="modal" data-target="#deleteCateg"></button>
+	<button id="accessTimeDeleteModal" class="d-none" data-toggle="modal" data-target="#deleteTime"></button>
 	<app-footer></app-footer>
 </section>
