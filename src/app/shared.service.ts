@@ -23,10 +23,33 @@ export class SharedService {
 	postTestApi(obj){
 		return this.appService.post("functionName",obj);
 	}
+	getAllCategories(){
+		return this.appService.get("movies/getAllCategories");
+	}
+	getAllTimePeriod(){
+		return this.appService.get("movies/getAllTimePeriods");
+	}
 	deleteTestApi(){
 		return this.appService.delete("");
 	}
 	updateTestApi(obj){
 		return this.appService.post("functionName",obj);
+	}
+	addNewCategory(data){
+		return this.appService.post("movies/addCategory",data);
+	}
+	addTimePeriod(data){
+		return this.appService.post("movies/addTimePeriod",data);
+	}
+	deleteCategory(id){
+		var catId = parseInt(id);
+		return this.appService.get("movies/deleteCategory?categoryId="+catId);
+	}
+	deleteTimePeriod(id){
+		var timeId = parseInt(id);
+		return this.appService.get("movies/deleteTimePeriod?timePeriodId="+timeId);
+	}
+	addMovies(obj){
+		return this.appService.post("",obj);
 	}
 }
