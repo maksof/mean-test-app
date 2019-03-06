@@ -478,3 +478,31 @@ exports.getAllFavoritesMoviesOfUser = function (request, response) {
         });
     } else common.sendResponseBack(response, 'FAIL', 'Please pass the user id.', null);
 }
+
+/**
+ * @api {get} movies/getMovies Get Movies API
+ * @apiName Get Movies API
+ * @apiGroup Movies
+ *
+ * @apiParam {number} categoryId Category Id
+ * @apiParam {string} title Title
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.getMovies = function (request, response) {
+
+    var whereClause = {'isDeleted': 0, 'isApproved': 1};
+    var categoryId = request.query.categoryId ? request.query.categoryId : '';
+    var title = request.query.title ? request.query.title : '';
+    if(categoryId) whereClause.categoryId = categoryId;
+    if(title) whereClause.title = { $like: title };
+
+    tbl_movies.findAll({where: whereClause}).then(function(movies) {
+        if(movies.length > 0) common.sendResponseBack(response, 'OK', 'Movies fetched successfully!', movies);
+        else common.sendResponseBack(response, 'OK', 'No records found!', null);
+    }, (error) => {
+        common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+        logger.error( 'Error occured on '+new Date()+' with reason' + error);
+    });
+}

@@ -4,3 +4,4 @@
 {"message":"Error occured on Mon Mar 04 2019 18:08:58 GMT+0500 (Pakistan Standard Time) with reasonSequelizeValidationError: notNull Violation: isDeleted cannot be null","level":"error"}
 {"message":"Error occured on Wed Mar 06 2019 14:50:05 GMT+0500 (Pakistan Standard Time) with reasonTypeError: val.replace is not a function","level":"error"}
 {"message":"Error occured on Wed Mar 06 2019 14:50:39 GMT+0500 (Pakistan Standard Time) with reasonTypeError: val.replace is not a function","level":"error"}
+{"message":"Error occured on Wed Mar 06 2019 15:56:05 GMT+0500 (Pakistan Standard Time) with reasonSequelizeDatabaseError: ER_BAD_FIELD_ERROR: Unknown column 'tbl_movies.gallery_id' in 'where clause'","level":"error"}
