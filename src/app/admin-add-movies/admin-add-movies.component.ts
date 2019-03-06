@@ -13,15 +13,22 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AdminAddMoviesComponent implements OnInit {
 
 	constructor(public commonService:CommonService, private notificationsService:NotificationsService, private sharedService:SharedService, public http: HttpClient) { }
-	moviesObj:any = {};
 	allCategories:any = [];
+	allMovies:any = [];
+
+	moviesObj:any = {};
+
 	image:File = null;
 	imagePreview:any = '';
+	deleteMovieId = '';
+	UpdateMovieId = '';
 	labImg:any;
 	mainToggle:boolean = true;
 	showLoader:boolean = false;
+
 	ngOnInit() {
-		this.getAllCategory()
+		this.getAllCategory();
+		this.getAllMovies();
 	}
 	
 	toggleMainSec(){
@@ -75,5 +82,48 @@ export class AdminAddMoviesComponent implements OnInit {
 			data => {
 				alert(data)
 			});
+	}
+	getAllMovies(){
+		this.showLoader = true;
+		this.sharedService.getAllMovies().subscribe(res=>{
+			var movies = this.setCategoryName(res.data);
+			this.allMovies = movies;
+			this.showLoader = false;
+		},(error)=>{
+			this.showLoader = false;
+			this.notificationsService.error("Error!","Internal Server Error.");
+		});
+	}
+	setCategoryName(data){
+		var self = this;
+		data.forEach(function(row){
+			self.allCategories.forEach(function(cat){
+				if (row.categoryId == cat.id) {
+					row.category = cat;
+				}
+			});
+		});
+		return data;
+	}
+	deleteMovieModal(id){
+		this.deleteMovieId = id
+		document.getElementById("accessModalDeleteModal").click();
+	}
+	deleteMovie(){
+		this.showLoader = true;
+		if (this.commonService.required(this.deleteMovieId)) {
+			this.sharedService.deleteMovie(this.deleteMovieId).subscribe(res=>{
+				document.getElementById("closeDeleteMovie").click();
+				this.showLoader = false;
+				if (res.status == "OK") {
+					this.getAllMovies();
+					this.notificationsService.info("Success","Movie Successfully Deleted.");
+				}
+			},(error)=>{
+				document.getElementById("closeDeleteMovie").click();
+				this.showLoader = false;
+				this.notificationsService.error("Error!","Internal Service Error.");
+			})
+		}
 	}
 }

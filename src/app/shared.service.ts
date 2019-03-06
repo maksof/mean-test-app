@@ -52,4 +52,13 @@ export class SharedService {
 	addMovies(obj){
 		return this.appService.post("",obj);
 	}
+	getAllMovies(){
+		return this.appService.get("movies/getMovies");
+	}
+	deleteMovie(id){
+		return this.appService.get("movies/deleteMovie?movieId="+id);
+	}
+	updateMovie(obj){
+		return this.appService.post("movies/updateMovie",obj);
+	}
 }
