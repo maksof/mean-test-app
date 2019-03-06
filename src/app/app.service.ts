@@ -15,7 +15,7 @@ import 'rxjs/add/observable/throw';
 	providedIn: 'root'
 })
 export class AppService {
-	urlBase = 'http://localhost:8081/api/';
+	urlBase = 'http://localhost:3000/api/';
 	constructor(private http: Http, public router: Router, public notificationService: NotificationsService,) { }
 
 	get(url) {

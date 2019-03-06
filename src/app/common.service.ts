@@ -30,7 +30,15 @@ export class CommonService {
 	        	return true;
 	       	} else { 
 	       		return false;
-	   		}
+          }
         }
-	}	
+      }
+      
+    checkValidLoginUser(loginObj){
+    if (loginObj.userName != loginObj.password) {
+      return false;
+    } else {
+      return true;
+    }
+  }   	
 }
