@@ -49,7 +49,7 @@ exports.signup = function (request, response) {
 }
 
 /**
- * @api {get} user/login Login API
+ * @api {post} user/login Login API
  * @apiName Login API
  * @apiGroup User
  *
