@@ -12,8 +12,8 @@ export class AdminAddCategoryComponent implements OnInit {
 	constructor(public commonService:CommonService, private notificationsService:NotificationsService, private sharedService:SharedService) { }
 	categoryName:any = {};
 	timePeriod:any = {};
-	allCategories:any = {};
-	allTimePeriod:any = {};
+	allCategories:any = [];
+	allTimePeriod:any = [];
 	categoryId:string = '';
 	timePeriodId:string = '';
 	mainToggle:boolean = true;

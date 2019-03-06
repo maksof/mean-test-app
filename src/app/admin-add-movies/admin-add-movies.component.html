@@ -12,7 +12,7 @@
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput [(ngModel)]="moviesObj.year" type="number" name="Year" maxlength="4" placeholder="Year">
+						<input matInput [(ngModel)]="moviesObj.year" type="text" name="Year" maxlength="4" OnlyNumber="true" placeholder="Year">
 						<mat-hint align="start">Please Enter the Releasing Year of the Movie</mat-hint>
 					</mat-form-field>
 				</div>
@@ -23,10 +23,8 @@
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<mat-select [(ngModel)]="moviesObj.category" placeholder="Category">
-							<mat-option value="0">Romantic</mat-option>
-							<mat-option  value="1">Comedy</mat-option>
-							<mat-option  value="2">Action</mat-option>
+						<mat-select [(ngModel)]="moviesObj.categoryId" placeholder="Category">
+							<mat-option *ngFor="let cRow of allCategories" value="{{cRow.id}}">{{cRow.categoryName}}</mat-option>
 						</mat-select>
 					</mat-form-field>
 				</div>
