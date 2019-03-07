@@ -17,11 +17,10 @@ export class AdminAddMoviesComponent implements OnInit {
 	allMovies:any = [];
 
 	moviesObj:any = {};
-
+	updateMovieData:any = {};
 	image:File = null;
 	imagePreview:any = '';
 	deleteMovieId = '';
-	UpdateMovieId = '';
 	labImg:any;
 	mainToggle:boolean = true;
 	showLoader:boolean = false;
@@ -86,7 +85,15 @@ export class AdminAddMoviesComponent implements OnInit {
 	getAllMovies(){
 		this.showLoader = true;
 		this.sharedService.getAllMovies().subscribe(res=>{
-			var movies = this.setCategoryName(res.data);
+			var self = this;
+			var movies = res.data;
+			movies.forEach(function(row){
+				self.allCategories.forEach(function(cat){
+					if (row.categoryId == cat.id) {
+						row.category = cat;
+					}
+				});
+			});
 			this.allMovies = movies;
 			this.showLoader = false;
 		},(error)=>{
@@ -94,20 +101,19 @@ export class AdminAddMoviesComponent implements OnInit {
 			this.notificationsService.error("Error!","Internal Server Error.");
 		});
 	}
-	setCategoryName(data){
-		var self = this;
-		data.forEach(function(row){
-			self.allCategories.forEach(function(cat){
-				if (row.categoryId == cat.id) {
-					row.category = cat;
-				}
-			});
-		});
-		return data;
-	}
 	deleteMovieModal(id){
-		this.deleteMovieId = id
+		this.deleteMovieId = id;
 		document.getElementById("accessModalDeleteModal").click();
+	}
+	updateMovieModal(id){
+		var self = this;
+		this.allMovies.forEach(function(row){
+			if (row.id == id) {
+				self.updateMovieData = row;
+			}
+		});
+		console.log(this.updateMovieData);
+		document.getElementById("accessMovieUpdateModal").click();
 	}
 	deleteMovie(){
 		this.showLoader = true;
@@ -124,6 +130,25 @@ export class AdminAddMoviesComponent implements OnInit {
 				this.showLoader = false;
 				this.notificationsService.error("Error!","Internal Service Error.");
 			})
+		}
+	}
+	updateMovie(){
+		// this.showLoader = true;
+		console.log(this.updateMovieData);
+		if (this.commonService.required(this.updateMovieData.title) && this.commonService.required(this.updateMovieData.year) && this.commonService.required(this.updateMovieData.director) && this.commonService.required(this.updateMovieData.categoryId) && this.commonService.required(this.updateMovieData.description)) {
+			if (this.checkMovieYear(this.updateMovieData.year)) {
+				this.showLoader = false;
+			}else{
+				this.notificationsService.error('Error',"Please enter a valid year.");
+			}
+			// this.sharedService.addNewCategory(this.updateMovieData).subscribe(res=> {
+				// 	console.log(res);
+				// 	this.notificationsService.success('Success','New category created successfully.');
+				// }, (error)=>{
+					// 	this.notificationsService.error('Error','Internal server error.');
+					// });
+			}else{
+				this.notificationsService.error('Error','Please fill all the required fields.');
 		}
 	}
 }
