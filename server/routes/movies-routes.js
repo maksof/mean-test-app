@@ -4,6 +4,7 @@ var movieController = require('../controller/movie-controller');
 
 var router = function(){
 
+	/*CATEGORY APIS*/
 	movieRoute.route('/addCategory')
 		.post(function(req,res) {
 			return movieController.addCategory(req, res);
@@ -19,6 +20,7 @@ var router = function(){
 			return movieController.getAllCategories(req, res);
 		});
 
+	/*TIME PERIOD APIS*/
 	movieRoute.route('/addTimePeriod')
 		.post(function(req,res) {
 			return movieController.addTimePeriod(req, res);
@@ -34,6 +36,7 @@ var router = function(){
 			return movieController.getAllTimePeriods(req, res);
 		});
 
+	/*MOVIE APIS*/
 	movieRoute.route('/addMovie')
 		.post(function(req,res) {
 			return movieController.addMovie(req, res);
@@ -48,6 +51,11 @@ var router = function(){
 		.get(function(req,res) {
 			return movieController.deleteMovie(req, res);
 		});
+
+	movieRoute.route('/getMovies')
+	.get(function(req,res) {
+		return movieController.getMovies(req, res);
+	});
 
 	movieRoute.route('/suggestMovie')
 		.post(function(req,res) {
