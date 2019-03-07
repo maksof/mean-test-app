@@ -62,17 +62,20 @@ exports.signup = function (request, response) {
 exports.login = function (request, response) {
     
     var user = request.body;
-    tbl_user.findAll({ where: { email: user.email, password: user.password } }).then(function (res){
-        if(res.length > 0) {
-            common.sendResponseBack(response, 'OK', 'User logged in successfully', null);
+    if(common.required(user.email) && common.required(user.password)) {
+        tbl_user.findAll({ where: { email: user.email, password: user.password } }).then(function (res){
+            if(res.length > 0) {
+            common.sendResponseBack(response, 'OK', 'User logged in successfully.', null);
         } else {
-            common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
+            common.sendResponseBack(response,'FAIL','Incorrect email or password.',null);
             logger.error( 'Error occured on '+new Date()+' with reason' + error);
         }
     }, (error) => {
         common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
         logger.error( 'Error occured on '+new Date()+' with reason' + error);
     });
+
+    }
 }
 
 /**
@@ -88,17 +91,20 @@ exports.login = function (request, response) {
 */
 exports.changePassword = function (request,response) {
     var user = request.body;
-    tbl_user.findAll({where : {email : user.email}}).then(function(res) {
-        if(res.length > 0) {
+    if(common.required(user.email) && common.required(user.password)){
+        tbl_user.findAll({where : {email : user.email}}).then(function(res) {
+            if(res.length > 0) {
             tbl_user.update({password : user.password},{where : {email : user.email}}).then(function(result) {
-                common.sendResponseBack(response, 'OK', 'Your password has been updated successfully', result);
+                common.sendResponseBack(response, 'OK', 'Your password has been updated successfully.', result);
             });
         } else {
-            common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
+            common.sendResponseBack(response,'FAIL','Incorrect email or password.',null);
             logger.error( 'Error occured on '+new Date()+' with reason' + error);
         }
     }, (error) =>{
          common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
          logger.error( 'Error occured on '+new Date()+' with reason' + error);
     });
+    }
 }
+
