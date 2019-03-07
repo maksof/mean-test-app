@@ -12,7 +12,7 @@
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput [(ngModel)]="moviesObj.year" type="number" name="Year" maxlength="4" placeholder="Year">
+						<input matInput [(ngModel)]="moviesObj.year" type="text" name="Year" maxlength="4" OnlyNumber="true" placeholder="Year">
 						<mat-hint align="start">Please Enter the Releasing Year of the Movie</mat-hint>
 					</mat-form-field>
 				</div>
@@ -23,10 +23,8 @@
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<mat-select [(ngModel)]="moviesObj.category" placeholder="Category">
-							<mat-option value="0">Romantic</mat-option>
-							<mat-option  value="1">Comedy</mat-option>
-							<mat-option  value="2">Action</mat-option>
+						<mat-select [(ngModel)]="moviesObj.categoryId" placeholder="Category">
+							<mat-option *ngFor="let cRow of allCategories" value="{{cRow.id}}">{{cRow.categoryName}}</mat-option>
 						</mat-select>
 					</mat-form-field>
 				</div>
@@ -36,11 +34,9 @@
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
-					<label for="profileImage" class="border-bottom py-1 w-100 pointer">
-						<a mat-flat-button color="primary">Choose File</a>
-						<span>{{labImg}}</span>
-					</label>
-					<input type="file" name="image" [(ngModel)]="labImg" (change)="saveImage($event)" class="d-none" id="profileImage" accept="image/x-png,image/gif,image/jpeg">
+					<mat-form-field class="w-100">
+						<input matInput [(ngModel)]="moviesObj.photoUrl" type="text" name="url" placeholder="Photo Url">
+					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
@@ -48,7 +44,7 @@
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group text-right">
-					<button mat-raised-button (click)="addMovies()" color="primary" class="mt-2">Update</button>
+					<button mat-raised-button (click)="addMovies()" color="primary" class="mt-2">Add Movie</button>
 				</div>
 			</div>
 		</div>
@@ -63,53 +59,137 @@
 								<th>Director's Name</th>
 								<th>Category</th>
 								<th>Distribution</th>
+								<th>Description</th>
 								<th>Movie's Poster</th>
 								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td class="align-middle">Venom</td>
-								<td class="align-middle">2018</td>
-								<td class="align-middle">Ruben Fleischer</td>
-								<td class="align-middle">Thriller</td>
-								<td class="align-middle">abc, xyz</td>
+							<tr *ngFor="let mRow of allMovies">
+								<td class="align-middle">{{mRow.title}}</td>
+								<td class="align-middle">{{mRow.year}}</td>
+								<td class="align-middle">{{mRow.director}}</td>
+								<td class="align-middle">{{mRow.category.categoryName}}</td>
+								<td class="align-middle">{{mRow.distribution}}</td>
 								<td class="align-middle">
-									<img src="assets/images/venom.jpg" class="img-fluid" style="height: 120px;width: 100px;" alt="Movies Poster">
+									<span class="descNowRap pointer" matTooltip="{{mRow.description}}">{{mRow.description}}
+									</span>
 								</td>
 								<td class="align-middle">
-									<button mat-mini-fab color="warn" class="mr-3">
-										<i class="fa fa-trash"></i>
-									</button>
-									<button mat-mini-fab color="primary">
+									<img src="{{mRow.photoUrl}}" class="img-fluid" style="height: 120px;width: 100px;" alt="Movies Poster">
+								</td>
+								<td class="align-middle">
+									<button mat-mini-fab class="mb-3" color="primary" (click)="updateMovieModal(mRow.id)">
 										<i class="fa fa-pencil"></i>
 									</button>
-								</td>
-							</tr>
-							<tr>
-								<td class="align-middle">Avengers Infinity War II</td>
-								<td class="align-middle">2019</td>
-								<td class="align-middle">Anthony Russo, Joe Russo</td>
-								<td class="align-middle">Fantasy</td>
-								<td class="align-middle">abc, xyz</td>
-								<td class="align-middle">
-									<img src="assets/images/avengers.jpg" class="img-fluid" style="height: 120px;width: 100px;" alt="Movies Poster">
-								</td>
-								<td class="align-middle">
-									<button mat-mini-fab color="warn" class="mr-3">
+									<button mat-mini-fab color="warn" (click)="deleteMovieModal(mRow.id)">
 										<i class="fa fa-trash"></i>
-									</button>
-									<button mat-mini-fab color="primary">
-										<i class="fa fa-pencil"></i>
 									</button>
 								</td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="7" *ngIf="allMovies.length <= 0">No Records Found</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- Delete Movies -->
+	<div class="modal fade" id="deleteMovie">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Delete Movie</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<p>Are you sure, You want to delete this Movie?</p>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn shadow btn-primary" (click)="deleteMovie()">Confirm</button>
+					<button id="closeDeleteMovie" type="button" class="btn shadow btn-light" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- Update Movie -->
+	<div class="modal fade dropModal" id="UpdateMovie">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Update Movie</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="col-12">
+						<div class="row">
+							<div class="col-md-6">
+								<mat-form-field>
+									<input matInput  [(ngModel)]="updateMovieData.title" type="text" name="" placeholder="Title">
+								</mat-form-field>
+							</div>
+							<div class="col-md-6">
+								<mat-form-field>
+									<input matInput [(ngModel)]="updateMovieData.year" type="text" name="" placeholder="Year" maxlength="4" OnlyNumber="true">
+									<mat-hint align="start">Please Enter the Releasing Year of the Movie</mat-hint>
+								</mat-form-field>
+							</div>
+							<div class="col-md-6">
+								<mat-form-field>
+									<input matInput [(ngModel)]="updateMovieData.director" type="text" name="" placeholder="Director's Name">
+								</mat-form-field>
+							</div>
+							<div class="col-md-6">
+								<mat-form-field>
+									<mat-select [(ngModel)]="updateMovieData.categoryId" placeholder="Category">
+										<mat-option *ngFor="let cRow of allCategories" [value]="cRow.id">{{cRow.categoryName}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+							<div class="col-md-6">
+								<mat-form-field>
+									<input matInput [(ngModel)]="updateMovieData.distribution" type="text" name="" placeholder="Distribution">
+								</mat-form-field>
+							</div>
+							<div class="col-md-6">
+								<mat-form-field>
+									<input matInput type="text" [(ngModel)]="updateMovieData.photoUrl" placeholder="Photo Url">
+								</mat-form-field>
+							</div>
+							<div class="col-md-6">
+								<mat-form-field>
+									<textarea matInput [(ngModel)]="updateMovieData.description" rows="4"  name="desc" placeholder="Description"></textarea> 
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn shadow btn-primary" (click)="updateMovie()">Update</button>
+					<button id="closeUpdateMovie" type="button" class="btn shadow btn-light" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<button id="accessModalDeleteModal" class="d-none" data-toggle="modal" data-target="#deleteMovie"></button>
+	<button id="accessMovieUpdateModal" class="d-none" data-toggle="modal" data-target="#UpdateMovie"></button>
 	<app-footer></app-footer>
 </section>
 <div *ngIf="showLoader" style="position: fixed; z-index: 1003; left: 0; top: 0; bottom: 0; right: 0; background: #bfbfbf75; opacity: 1;">
