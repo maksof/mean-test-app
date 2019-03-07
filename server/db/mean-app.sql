@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2019 at 09:19 AM
+-- Generation Time: Mar 06, 2019 at 02:24 PM
 -- Server version: 5.6.37
 -- PHP Version: 7.2.10
 
@@ -70,7 +70,7 @@ CREATE TABLE `tbl_movies` (
   `year` varchar(10) NOT NULL,
   `director` varchar(50) NOT NULL,
   `categoryId` int(11) NOT NULL,
-  `distribution` int(11) NOT NULL,
+  `distribution` varchar(50) NOT NULL,
   `description` varchar(300) NOT NULL,
   `photoUrl` varchar(50) NOT NULL,
   `isDeleted` tinyint(1) NOT NULL,
@@ -82,8 +82,8 @@ CREATE TABLE `tbl_movies` (
 --
 
 INSERT INTO `tbl_movies` (`id`, `title`, `year`, `director`, `categoryId`, `distribution`, `description`, `photoUrl`, `isDeleted`, `isApproved`) VALUES
-(1, 'ashar film', '2010-2019', 'test', 1, 0, '', 'test', 1, 0),
-(2, 'ashar film 1', '2010-2019', 'test', 1, 0, '', 'test', 1, 1);
+(1, 'ashar film', '2010-2019', 'test', 1, '0', '', 'test', 0, 1),
+(2, 'ashar film 1', '2010-2019', 'test', 1, '0', '', 'test', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -144,6 +144,14 @@ CREATE TABLE `tbl_user_favorites` (
   `movieId` int(11) NOT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_user_favorites`
+--
+
+INSERT INTO `tbl_user_favorites` (`id`, `userId`, `movieId`, `date`) VALUES
+(2, 1, 1, '2019-03-06 09:46:42'),
+(3, 1, 2, '2019-03-06 09:46:42');
 
 --
 -- Indexes for dumped tables
@@ -224,7 +232,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_user_favorites`
 --
 ALTER TABLE `tbl_user_favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

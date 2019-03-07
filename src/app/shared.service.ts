@@ -50,6 +50,24 @@ export class SharedService {
 		return this.appService.get("movies/deleteTimePeriod?timePeriodId="+timeId);
 	}
 	addMovies(obj){
-		return this.appService.post("",obj);
+		return this.appService.post("movies/addMovie",obj);
+	}
+	getAllMovies(){
+		return this.appService.get("movies/getMovies");
+	}
+	deleteMovie(id){
+		return this.appService.get("movies/deleteMovie?movieId="+id);
+	}
+	updateMovie(obj){
+		return this.appService.post("movies/updateMovie",obj);
+	}
+	getSuggestedMovies(){
+		return this.appService.get("movies/getSuggestedMovie");
+	}
+	acceptSuggestedMovies(id){
+		return this.appService.get("movies/acceptSuggestedMovie?movieId="+id);
+	}
+	rejectSuggestedMovies(id){
+		return this.appService.get("movies/rejectSuggestedMovie?movieId="+id);
 	}
 }

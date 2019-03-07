@@ -481,6 +481,36 @@
   },
   {
     "type": "get",
+    "url": "movies/getSuggestedMovie",
+    "title": "Get Suggested Movie API",
+    "name": "Get_Suggested_Movie_API",
+    "group": "Movies",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Movies"
+  },
+  {
+    "type": "get",
     "url": "movies/rejectSuggestedMovie",
     "title": "Reject Suggested Movie API",
     "name": "Reject_Suggested_Movie_API",

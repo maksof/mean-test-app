@@ -11,31 +11,131 @@ import { NotificationsService } from 'angular2-notifications';
 export class AdminAddMoviesComponent implements OnInit {
 
 	constructor(public commonService:CommonService, private notificationsService:NotificationsService, private sharedService:SharedService) { }
+	allCategories:any = [];
+	allMovies:any = [];
 	moviesObj:any = {};
+	updateMovieData:any = {};
+	deleteMovieId = '';
+
 	mainToggle:boolean = true;
-	labImg:any;
+	showLoader:boolean = false;
 
 	ngOnInit() {
+		this.getAllCategory();
+		this.getAllMovies();
 	}
 	
 	toggleMainSec(){
 		this.mainToggle = !this.mainToggle;
 	}
+	getAllCategory(){
+		this.showLoader = true;
+		this.sharedService.getAllCategories().subscribe(res =>{
+			this.showLoader = false;
+			this.allCategories = res.data;
+		},(error)=>{
+			this.showLoader = false;
+			this.notificationsService.error("Error!","Internal Server Error.");
+		})
+	}
 	addMovies(){
-		console.log(this.moviesObj);
-		if (this.commonService.required(this.moviesObj.title)) {
-			// this.sharedService.addNewCategory(this.moviesObj).subscribe(res=> {
-			// 	console.log(res);
-			// 	this.notificationsService.success('Success','New category created successfully.');
-			// }, (error)=>{
-			// 	this.notificationsService.error('Error','Internal server error.');
-			// });
-		}else{
-			this.notificationsService.error('Error','Please fill all the required fields.');
+		if (this.commonService.required(this.moviesObj.title) && this.commonService.required(this.moviesObj.year) && this.commonService.required(this.moviesObj.director) && this.commonService.required(this.moviesObj.categoryId) && this.commonService.required(this.moviesObj.description)) {
+			if (this.checkMovieYear(this.moviesObj.year)) {
+				this.sharedService.addMovies(this.moviesObj).subscribe(res=> {
+					this.showLoader = false;
+					if (res.status == "OK") {
+						this.getAllMovies();
+						this.moviesObj = {};
+						this.notificationsService.success('Success','Movie successfully added.');
+					}
+				}, (error)=>{
+					this.notificationsService.error('Error','Internal server error.');
+				});
+			}else{
+				this.notificationsService.error('Error',"Please enter a valid year.");
+			}
+			}else{
+				this.notificationsService.error('Error','Please fill all the required fields.');
 		}
 	}
-	saveImage(event){
-		console.log(this.labImg);
-		console.log(event);
+	checkMovieYear(year){
+		var crntyear = this.commonService.getCurrentYear();
+		if (year <= crntyear && year >= "1901") {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	getAllMovies(){
+		this.showLoader = true;
+		this.sharedService.getAllMovies().subscribe(res=>{
+			var self = this;
+			var movies = res.data;
+			movies.forEach(function(row){
+				self.allCategories.forEach(function(cat){
+					if (row.categoryId == cat.id) {
+						row.category = cat;
+					}
+				});
+			});
+			this.allMovies = movies;
+			this.showLoader = false;
+		},(error)=>{
+			this.showLoader = false;
+			this.notificationsService.error("Error!","Internal Server Error.");
+		});
+	}
+	deleteMovieModal(id){
+		this.deleteMovieId = id;
+		document.getElementById("accessModalDeleteModal").click();
+	}
+	updateMovieModal(id){
+		var self = this;
+		this.allMovies.forEach(function(row){
+			if (row.id == id) {
+				self.updateMovieData = row;
+			}
+		});
+		console.log(this.updateMovieData);
+		document.getElementById("accessMovieUpdateModal").click();
+	}
+	deleteMovie(){
+		this.showLoader = true;
+		if (this.commonService.required(this.deleteMovieId)) {
+			this.sharedService.deleteMovie(this.deleteMovieId).subscribe(res=>{
+				document.getElementById("closeDeleteMovie").click();
+				this.showLoader = false;
+				if (res.status == "OK") {
+					this.getAllMovies();
+					this.notificationsService.info("Success","Movie Successfully Deleted.");
+				}
+			},(error)=>{
+				document.getElementById("closeDeleteMovie").click();
+				this.showLoader = false;
+				this.notificationsService.error("Error!","Internal Service Error.");
+			})
+		}
+	}
+	updateMovie(){
+		if (this.commonService.required(this.updateMovieData.title) && this.commonService.required(this.updateMovieData.year) && this.commonService.required(this.updateMovieData.director) && this.commonService.required(this.updateMovieData.categoryId) && this.commonService.required(this.updateMovieData.description) && this.commonService.required(this.updateMovieData.photoUrl)) {
+			if (this.checkMovieYear(this.updateMovieData.year)) {
+				this.showLoader = true;
+				this.sharedService.updateMovie(this.updateMovieData).subscribe(res=> {
+					this.showLoader = false;
+					if (res.status == "OK") {
+						this.getAllMovies();
+						document.getElementById("closeUpdateMovie").click();
+						this.notificationsService.success('Success','Movie updated successfully.');
+					}
+				}, (error)=>{
+					this.notificationsService.error('Error','Internal server error.');
+				});
+			}else{
+				this.notificationsService.error('Error',"Please enter a valid year.");
+			}
+			}else{
+				this.notificationsService.error('Error','Please fill all the required fields.');
+		}
 	}
 }

@@ -16,6 +16,15 @@
 	font-family: Montserrat;
 }
 /* common Element Style */
+.dropModal{
+	z-index: 999;
+}
+.modal-backdrop{z-index: 998;}
+mat-form-field.mat-form-field{
+	width: 100%;
+	max-width: 100%;
+	min-width: 100%;
+}
 .th-text-primary{color: #0062cc !important; }
 a.thLink{color: #3f51b5; }
 .pointer{

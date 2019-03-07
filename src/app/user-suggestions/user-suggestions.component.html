@@ -22,38 +22,21 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td class="align-middle">Venom</td>
-										<td class="align-middle">2018</td>
-										<td class="align-middle">Ruben Fleischer</td>
-										<td class="align-middle">Thriller</td>
-										<td class="align-middle">abc, xyz</td>
+									<tr *ngFor="let sRow of allSuggestedMovies">
+										<td class="align-middle">{{sRow.title}}</td>
+										<td class="align-middle">{{sRow.year}}</td>
+										<td class="align-middle">{{sRow.director}}</td>
+										<td class="align-middle">{{sRow.category.categoryName}}</td>
+										<td class="align-middle">{{sRow.distribution}}</td>
 										<td class="align-middle">
-											<span class="descNowRap pointer" matTooltip="Journalist Eddie Brock is trying to take down Carlton Drake, the notorious and brilliant founder of the Life Foundation. While investigating one of Drake's experiments, Eddie's body merges with the alien Venom -- leaving him with superhuman strength and power. Twisted, dark and fueled by rage, Venom tries to control the new and dangerous abilities that Eddie finds so intoxicating.">Journalist Eddie Brock is trying to take down Carlton Drake, the notorious and brilliant founder of the Life Foundation. While investigating one of Drake's experiments, Eddie's body merges with the alien Venom -- leaving him with superhuman strength and power. Twisted, dark and fueled by rage, Venom tries to control the new and dangerous abilities that Eddie finds so intoxicating.</span>
+											<span class="descNowRap pointer" matTooltip="{{sRow.description}}">{{sRow.description}}</span>
 										</td>
 										<td class="align-middle">
-											<img src="assets/images/venom.jpg" class="img-fluid" style="height: 120px;width: 100px;" alt="Movies Poster">
+											<img src="{{sRow.photoUrl}}" class="img-fluid" style="height: 120px;width: 100px;" alt="Movies Poster">
 										</td>
 										<td class="align-middle">
-											<button mat-raised-button  class="mr-2 mb-2 bg-success text-white">Accept</button>
-											<button mat-raised-button color="warn" class="mb-2">Decline</button>
-										</td>
-									</tr>
-									<tr>
-										<td class="align-middle">Avengers Infinity War II</td>
-										<td class="align-middle">2019</td>
-										<td class="align-middle">Anthony Russo, Joe Russo</td>
-										<td class="align-middle">Fantasy</td>
-										<td class="align-middle">abc, xyz</td>
-										<td class="align-middle">
-											<span class="descNowRap pointer" matTooltip="Journalist Eddie Brock is trying to take down Carlton Drake, the notorious and brilliant founder of the Life Foundation. While investigating one of Drake's experiments, Eddie's body merges with the alien Venom -- leaving him with superhuman strength and power. Twisted, dark and fueled by rage, Venom tries to control the new and dangerous abilities that Eddie finds so intoxicating.">Journalist Eddie Brock is trying to take down Carlton Drake, the notorious and brilliant founder of the Life Foundation. While investigating one of Drake's experiments, Eddie's body merges with the alien Venom -- leaving him with superhuman strength and power. Twisted, dark and fueled by rage, Venom tries to control the new and dangerous abilities that Eddie finds so intoxicating.</span>
-										</td>
-										<td class="align-middle">
-											<img src="assets/images/avengers.jpg" class="img-fluid" style="height: 120px;width: 100px;" alt="Movies Poster">
-										</td>
-										<td class="align-middle text-center">
-											<button mat-raised-button  class="mr-2 mb-2 bg-success text-white">Accept</button>
-											<button mat-raised-button color="warn" class="mb-2">Decline</button>
+											<button mat-raised-button class="mr-2 mb-2 bg-success text-white" (click)="AcceptMovieModal(sRow.id)">Accept</button>
+											<button mat-raised-button color="warn" class="mb-2" (click)="RejectMovieModal(sRow.id)">Decline</button>
 										</td>
 									</tr>
 								</tbody>
@@ -64,5 +47,57 @@
 			</div>
 		</div>	
 	</div>
+	<!-- Decline Movie -->
+	<div class="modal fade" id="decMovie">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Decline Movie</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<p>Are you sure, You want to decline this Movie?</p>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn shadow btn-primary" (click)="rejectMovie()">Confirm</button>
+					<button id="closeDeclineMovie" type="button" class="btn shadow btn-light" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- Accept Movie -->
+	<div class="modal fade" id="accMovie">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Accept Movie</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<p>Are you sure, You want to accept this Movie?</p>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn shadow btn-primary" (click)="acceptMovie()">Confirm</button>
+					<button id="closeaccMovie" type="button" class="btn shadow btn-light" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<button id="accessRejMovieModal" class="d-none" data-toggle="modal" data-target="#decMovie"></button>
+	<button id="accessAccMovieModal" class="d-none" data-toggle="modal" data-target="#accMovie"></button>
 	<app-footer></app-footer>
 </section>
