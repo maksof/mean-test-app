@@ -21,7 +21,11 @@ export class SuggestMovieComponent implements OnInit {
 	}
 
 	getAllCategories(){
-
+		// if (this.commonService.required(this.suggestMovieObj.title) && this.commonService.required(this.suggestMovieObj.year) && this.commonService.required(this.suggestMovieObj.director) && this.commonService.required(this.suggestMovieObj.distribution) && this.commonService.required(this.suggestMovieObj.description) && this.commonService.required(this.suggestMovieObj.categoryId)) {
+			
+		// } else {
+		// 	this.notificationService.error('Error','Please fill all the required (*) fields.')
+		// }
 		this.sharedService.getAllCategories().subscribe(res=>{
 			this.allCategories = res.data;
 		},(error)=>{

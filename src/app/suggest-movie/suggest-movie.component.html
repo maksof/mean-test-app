@@ -23,10 +23,8 @@
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<mat-select placeholder="Category">
-							<mat-option value="0">Romantic</mat-option>
-							<mat-option  value="1">Comedy</mat-option>
-							<mat-option  value="2">Action</mat-option>
+						<mat-select placeholder="Category" [(ngModel)]="suggestMovieObj.categoryId" >
+							<mat-option *ngFor = "let c of allCategories" value="0">{{c.categoryName}}</mat-option>
 						</mat-select>
 					</mat-form-field>
 				</div>
@@ -47,7 +45,7 @@
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group text-right">
-					<button mat-raised-button color="primary" class="mt-2">Update</button>
+					<button mat-raised-button color="primary" class="mt-2" (click)="getAllCategories()">Update</button>
 				</div>
 			</div>
 		</div>
