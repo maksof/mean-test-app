@@ -15,13 +15,10 @@ export class AdminAddMoviesComponent implements OnInit {
 	constructor(public commonService:CommonService, private notificationsService:NotificationsService, private sharedService:SharedService, public http: HttpClient) { }
 	allCategories:any = [];
 	allMovies:any = [];
-
 	moviesObj:any = {};
 	updateMovieData:any = {};
-	image:File = null;
-	imagePreview:any = '';
 	deleteMovieId = '';
-	labImg:any;
+
 	mainToggle:boolean = true;
 	showLoader:boolean = false;
 
@@ -46,16 +43,18 @@ export class AdminAddMoviesComponent implements OnInit {
 	addMovies(){
 		if (this.commonService.required(this.moviesObj.title) && this.commonService.required(this.moviesObj.year) && this.commonService.required(this.moviesObj.director) && this.commonService.required(this.moviesObj.categoryId) && this.commonService.required(this.moviesObj.description)) {
 			if (this.checkMovieYear(this.moviesObj.year)) {
-				console.log(this.moviesObj);
+				this.sharedService.addMovies(this.moviesObj).subscribe(res=> {
+					this.showLoader = false;
+					if (res.status == "OK") {
+						this.getAllMovies();
+						this.notificationsService.success('Success','Movie successfully added.');
+					}
+				}, (error)=>{
+					this.notificationsService.error('Error','Internal server error.');
+				});
 			}else{
 				this.notificationsService.error('Error',"Please enter a valid year.");
 			}
-			// this.sharedService.addNewCategory(this.moviesObj).subscribe(res=> {
-				// 	console.log(res);
-				// 	this.notificationsService.success('Success','New category created successfully.');
-				// }, (error)=>{
-					// 	this.notificationsService.error('Error','Internal server error.');
-					// });
 			}else{
 				this.notificationsService.error('Error','Please fill all the required fields.');
 		}
@@ -68,20 +67,7 @@ export class AdminAddMoviesComponent implements OnInit {
 			return false;
 		}
 	}
-	saveImage(event){
-		this.image = event.target.files[0];
-		console.log(this.image);
-		const reader = new FileReader();
-		reader.onload = () => {
-			this.imagePreview = reader.result;
-		};
-		console.log(this.imagePreview);
-		reader.readAsDataURL(this.image);
-		this.http.post('assets/movies-poster', this.image).subscribe(
-			data => {
-				alert(data)
-			});
-	}
+	
 	getAllMovies(){
 		this.showLoader = true;
 		this.sharedService.getAllMovies().subscribe(res=>{
@@ -133,20 +119,22 @@ export class AdminAddMoviesComponent implements OnInit {
 		}
 	}
 	updateMovie(){
-		// this.showLoader = true;
-		console.log(this.updateMovieData);
-		if (this.commonService.required(this.updateMovieData.title) && this.commonService.required(this.updateMovieData.year) && this.commonService.required(this.updateMovieData.director) && this.commonService.required(this.updateMovieData.categoryId) && this.commonService.required(this.updateMovieData.description)) {
+		if (this.commonService.required(this.updateMovieData.title) && this.commonService.required(this.updateMovieData.year) && this.commonService.required(this.updateMovieData.director) && this.commonService.required(this.updateMovieData.categoryId) && this.commonService.required(this.updateMovieData.description) && this.commonService.required(this.updateMovieData.photoUrl)) {
 			if (this.checkMovieYear(this.updateMovieData.year)) {
-				this.showLoader = false;
+				this.showLoader = true;
+				this.sharedService.updateMovie(this.updateMovieData).subscribe(res=> {
+					this.showLoader = false;
+					if (res.status == "OK") {
+						this.getAllMovies();
+						document.getElementById("closeUpdateMovie").click();
+						this.notificationsService.success('Success','Movie updated successfully.');
+					}
+				}, (error)=>{
+					this.notificationsService.error('Error','Internal server error.');
+				});
 			}else{
 				this.notificationsService.error('Error',"Please enter a valid year.");
 			}
-			// this.sharedService.addNewCategory(this.updateMovieData).subscribe(res=> {
-				// 	console.log(res);
-				// 	this.notificationsService.success('Success','New category created successfully.');
-				// }, (error)=>{
-					// 	this.notificationsService.error('Error','Internal server error.');
-					// });
 			}else{
 				this.notificationsService.error('Error','Please fill all the required fields.');
 		}

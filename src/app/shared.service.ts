@@ -50,7 +50,7 @@ export class SharedService {
 		return this.appService.get("movies/deleteTimePeriod?timePeriodId="+timeId);
 	}
 	addMovies(obj){
-		return this.appService.post("",obj);
+		return this.appService.post("movies/addMovie",obj);
 	}
 	getAllMovies(){
 		return this.appService.get("movies/getMovies");
