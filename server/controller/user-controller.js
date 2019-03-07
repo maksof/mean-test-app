@@ -90,7 +90,7 @@ exports.login = function (request, response) {
 }
 
 /**
- * @api {post} user/changePassword changePassword API
+ * @api {post} user/changePassword ChangePassword API
  * @apiName changePassword API
  * @apiGroup User
  *
