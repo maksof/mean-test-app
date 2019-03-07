@@ -27,6 +27,10 @@ module.exports = function(sequelize,DataType){
         	type : DataType.STRING,
         	allownull : true
         },
+        description : {
+            type : DataType.STRING,
+            allownull : true
+        },
         photoUrl : {
         	type : DataType.STRING,
         	allownull : true

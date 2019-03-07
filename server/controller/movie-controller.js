@@ -314,6 +314,25 @@ exports.acceptSuggestedMovie = function (request, response) {
 }
 
 /**
+ * @api {get} movies/getSuggestedMovie Get Suggested Movie API
+ * @apiName Get Suggested Movie API
+ * @apiGroup Movies
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.getSuggestedMovie = function (request, response) {
+
+    tbl_movies.findAll({ where: { 'isApproved': 0, 'isDeleted': 0 } }).then(function(movies) {
+        if(movies.length > 0) common.sendResponseBack(response, 'OK', 'Suggested movies fetched successfully!', movies);
+        else common.sendResponseBack(response, 'OK', 'No records found!', null);
+    }, (error) => {
+        common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+        logger.error( 'Error occured on '+new Date()+' with reason' + error);
+    });
+}
+
+/**
  * @api {get} movies/rejectSuggestedMovie Reject Suggested Movie API
  * @apiName Reject Suggested Movie API
  * @apiGroup Movies
