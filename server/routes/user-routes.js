@@ -27,7 +27,7 @@ var router = function(){
 			return userController.login(req, res);
 		});
 
-		userRoute.route('/changePassword')
+	userRoute.route('/changePassword')
 		.post(function(req,res){
 			return userController.changePassword(req, res);
 		});

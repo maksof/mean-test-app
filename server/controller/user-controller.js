@@ -62,20 +62,10 @@ exports.signup = function (request, response) {
 exports.login = function (request, response) {
 
     var user = request.body;
-
     if(common.required(user.email) && common.required(user.password)) {
-        tbl_user.find({ where: { email: user.email, password: user.password } }).then(function (res){
+        tbl_user.find({ attributes:['id','first_name','last_name','gender','age','phone','email','role'], where: { email: user.email, password: user.password } }).then(function (res){
             if(res) {
-                var finalRes = {
-                    id : res.id,
-                    first_name : res.first_name,
-                    last_name : res.last_name,
-                    gender : res.gender,
-                    age : res.age,
-                    email : res.email,
-                    role : res.role
-                }
-                common.sendResponseBack(response, 'OK', 'User logged in successfully.',finalRes);
+                common.sendResponseBack(response, 'OK', 'User logged in successfully.',res);
             } else {
                 common.sendResponseBack(response,'FAIL','Incorrect email or password.',null);
             }
@@ -90,8 +80,8 @@ exports.login = function (request, response) {
 }
 
 /**
- * @api {post} user/changePassword ChangePassword API
- * @apiName changePassword API
+ * @api {post} user/changePassword Change Password API
+ * @apiName Change Password API
  * @apiGroup User
  *
  * @apiParam {string} email Email Address
