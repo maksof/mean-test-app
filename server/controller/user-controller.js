@@ -60,21 +60,32 @@ exports.signup = function (request, response) {
  * @apiSuccess {string} message Message corresponding to request.
 */
 exports.login = function (request, response) {
-    
-    var user = request.body;
-    if(common.required(user.email) && common.required(user.password)) {
-        tbl_user.findAll({ where: { email: user.email, password: user.password } }).then(function (res){
-            if(res.length > 0) {
-            common.sendResponseBack(response, 'OK', 'User logged in successfully.', null);
-        } else {
-            common.sendResponseBack(response,'FAIL','Incorrect email or password.',null);
-            logger.error( 'Error occured on '+new Date()+' with reason' + error);
-        }
-    }, (error) => {
-        common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
-        logger.error( 'Error occured on '+new Date()+' with reason' + error);
-    });
 
+    var user = request.body;
+
+    if(common.required(user.email) && common.required(user.password)) {
+        tbl_user.find({ where: { email: user.email, password: user.password } }).then(function (res){
+            if(res) {
+                var finalRes = {
+                    id : res.id,
+                    first_name : res.first_name,
+                    last_name : res.last_name,
+                    gender : res.gender,
+                    age : res.age,
+                    email : res.email,
+                    role : res.role
+                }
+                common.sendResponseBack(response, 'OK', 'User logged in successfully.',finalRes);
+            } else {
+                common.sendResponseBack(response,'FAIL','Incorrect email or password.',null);
+            }
+        }, (error) => {
+            common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+            logger.error( 'Error occured on '+new Date()+' with reason' + error);
+        });
+
+        } else {
+        common.sendResponseBack(response,'FAIL','Please fill all the required fiels!..',null);
     }
 }
 
@@ -91,20 +102,21 @@ exports.login = function (request, response) {
 */
 exports.changePassword = function (request,response) {
     var user = request.body;
-    if(common.required(user.email) && common.required(user.password)){
+    if(common.required(user.email) && common.required(user.password)) {
         tbl_user.findAll({where : {email : user.email}}).then(function(res) {
             if(res.length > 0) {
-            tbl_user.update({password : user.password},{where : {email : user.email}}).then(function(result) {
-                common.sendResponseBack(response, 'OK', 'Your password has been updated successfully.', result);
-            });
-        } else {
-            common.sendResponseBack(response,'FAIL','Incorrect email or password.',null);
+                tbl_user.update({password : user.password},{where : {email : user.email}}).then(function(result) {
+                    common.sendResponseBack(response, 'OK', 'Your password has been updated successfully.', result);
+                });
+            } else {
+                common.sendResponseBack(response,'FAIL','Incorrect email or password.',null);
+                logger.error( 'Error occured on '+new Date()+' with reason' + error);
+            }
+        }, (error) =>{
+            common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
             logger.error( 'Error occured on '+new Date()+' with reason' + error);
-        }
-    }, (error) =>{
-         common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
-         logger.error( 'Error occured on '+new Date()+' with reason' + error);
-    });
+        });
+    } else {
+        common.sendResponseBack(response,'FAIL','Please fill all the required fields!..',null);
     }
 }
-
