@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonService } from './../common.service';
 import { SharedService } from './../shared.service';
 import { NotificationsService } from 'angular2-notifications';
-import { HttpModule, Headers, RequestOptions } from '@angular/http';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
 	selector: 'app-admin-add-movies',
@@ -12,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AdminAddMoviesComponent implements OnInit {
 
-	constructor(public commonService:CommonService, private notificationsService:NotificationsService, private sharedService:SharedService, public http: HttpClient) { }
+	constructor(public commonService:CommonService, private notificationsService:NotificationsService, private sharedService:SharedService) { }
 	allCategories:any = [];
 	allMovies:any = [];
 	moviesObj:any = {};
@@ -47,6 +45,7 @@ export class AdminAddMoviesComponent implements OnInit {
 					this.showLoader = false;
 					if (res.status == "OK") {
 						this.getAllMovies();
+						this.moviesObj = {};
 						this.notificationsService.success('Success','Movie successfully added.');
 					}
 				}, (error)=>{

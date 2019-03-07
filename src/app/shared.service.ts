@@ -61,4 +61,13 @@ export class SharedService {
 	updateMovie(obj){
 		return this.appService.post("movies/updateMovie",obj);
 	}
+	getSuggestedMovies(){
+		return this.appService.get("movies/getSuggestedMovie");
+	}
+	acceptSuggestedMovies(id){
+		return this.appService.get("movies/acceptSuggestedMovie?movieId="+id);
+	}
+	rejectSuggestedMovies(id){
+		return this.appService.get("movies/rejectSuggestedMovie?movieId="+id);
+	}
 }
