@@ -11,7 +11,10 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 	styleUrls: ['./movie-list.component.css']
 })
 export class MovieListComponent implements OnInit {
-	movieListObj:any = {};
+	movieListObj:any = {
+		categoryId:'',
+		title:''
+	};
 
 	constructor(private snackBar: MatSnackBar, public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService) { }
 	star: boolean[] = [false,false,false,false,false,false,false,true,true,true];
@@ -22,7 +25,7 @@ export class MovieListComponent implements OnInit {
 
 	movies:any  = [];
 	allCategories:any = [];
-	
+
 	ngOnInit() {
 		this.getAllCategories();
 		this.getMovies();
@@ -73,5 +76,32 @@ export class MovieListComponent implements OnInit {
 			this.notificationService.error("Error", "Internal Server Error.");
 		})
 	}
-
+	searchMovies(){
+		if (this.commonService.required(this.movieListObj.categoryId) || this.commonService.required(this.movieListObj.title)) {
+			this.showLoader = true;
+			this.sharedService.searchMovies(this.movieListObj.categoryId, this.movieListObj.title).subscribe(res=>{
+				if (this.commonService.required(res.data)) {
+					this.movies = [];
+					var self = this;
+					var allMovies = res.data;
+					allMovies.forEach(function(m){
+						self.allCategories.forEach(function(cat){
+							if (m.categoryId == cat.id) {
+								m.category = cat;
+							}
+						});
+					});
+					this.movies = allMovies;
+				}else {
+					this.notificationService.info("Info", "No records found.");
+				}
+				this.showLoader = false;
+			},(error)=>{
+				this.showLoader = false;
+				this.notificationService.error("Error", "Internal Server Error.");
+			})
+		}else{
+			this.notificationService.error('Error','Please fill all the required (*) fields.');
+		}
+	}
 }

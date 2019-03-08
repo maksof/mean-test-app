@@ -70,4 +70,7 @@ export class SharedService {
 	rejectSuggestedMovies(id){
 		return this.appService.get("movies/rejectSuggestedMovie?movieId="+id);
 	}
+	searchMovies(category, title){
+        return this.appService.get("movies/getMovies?categoryId="+category+"&title="+title);
+    }
 }
