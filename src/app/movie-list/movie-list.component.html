@@ -10,7 +10,7 @@
 					<div class="col-md-3">
 						<mat-form-field class="w-100">
 							<mat-select placeholder="Select Category" [(ngModel)]="movieListObj.categoryId">
-								<mat-option *ngFor = "let m of movies" [value]="m.id">{{m.year}}</mat-option>
+								<mat-option *ngFor = "let c of allCategories" [value]="c.id">{{c.categoryName}}</mat-option>
 							</mat-select>
 						</mat-form-field>
 					</div>
@@ -24,24 +24,24 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-12">
+			<div class="col-12" *ngFor = "let m of movies">
 				<div class="movieMainCon">
 					<div class="posterCon">
-						<img src="assets/images/avengers.jpg" alt="">
+						<img src="{{m.photoUrl}}" alt="">
 					</div>
-					<div class="MoviedataCon">
-						<h2>Avengers Infinity War II (2019) <a title="like" class="float-right text-danger"><i class="fa fa-heart-o"></i></a></h2>
-						<p class="cat"><span>Fantasy | Science Fiction</span></p>
-						<p>Adrift in space with no food or water, Tony Stark sends a message to Pepper Potts as his oxygen supply starts to dwindle. Meanwhile, the remaining Avengers -- Thor, Black Widow, Captain America and Bruce Banner -- must figure out a way to bring back their vanquished allies for an epic showdown with Thanos -- the evil demigod who decimated the planet and the universe.</p>
-						<p><b>Director:</b>&nbsp;<span> Anthony Russo, Joe Russo</span></p>
-						<p><b>Distributor:</b>&nbsp;<span> abc, xyz</span></p>
+					<div class="MoviedataCon" >
+						<h2>{{m.title}}<a title="like" class="float-right text-danger"><i class="fa fa-heart-o"></i></a></h2>
+						<p class="cat"><span>{{m.category.categoryName}}</span></p>
+						<p>{{m.description}}</p>
+						<p><b>Director:</b>&nbsp;<span>{{m.director}}</span></p>
+						<p><b>Distributor:</b>&nbsp;<span>{{m.distribution}}</span></p>
 						<p class="text-warning">
 							<i *ngFor="let item of star; let i=index" (click)="setStartList(i)" class="fa pointer starRating" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
 						</p>
 					</div>
 				</div>
 			</div>
-			<div class="col-12">
+			<!-- <div class="col-12">
 				<div class="movieMainCon">
 					<div class="posterCon">
 						<img src="assets/images/venom.jpg" alt="">
@@ -74,8 +74,11 @@
 						</p>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<app-footer></app-footer>
 </section>
+<div *ngIf="showLoader" style="position: fixed; z-index: 1003; left: 0; top: 0; bottom: 0; right: 0; background: #bfbfbf75; opacity: 1;">
+    <img id="loadinggif" src="assets/images/load.gif" style="width: 100px; height: 100px; position: absolute; top: 50%; left: 50%; margin: -28px 0 0 -25px;">
+</div>

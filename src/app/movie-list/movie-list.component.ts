@@ -15,11 +15,16 @@ export class MovieListComponent implements OnInit {
 
 	constructor(private snackBar: MatSnackBar, public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService) { }
 	star: boolean[] = [false,false,false,false,false,false,false,true,true,true];
+
 	starRating: number;
 	mainToggle:boolean = true;
+	showLoader:boolean = true;
+
 	movies:any  = [];
+	allCategories:any = [];
 	
 	ngOnInit() {
+		this.getAllCategories();
 		this.getMovies();
 	}
 	toggleMainSec(){
@@ -39,10 +44,32 @@ export class MovieListComponent implements OnInit {
 			duration: 2000,
 		});
 	}
+	getAllCategories(){
+		this.showLoader = true;
+		this.sharedService.getAllCategories().subscribe(res=>{
+			this.showLoader = false;
+			this.allCategories = res.data;
+		},(error)=>{
+			this.showLoader = false;
+			this.notificationService.error("Error", "Internal Server Error.");
+		})
+	}
 	getMovies(){
-		this.sharedService.getMovies().subscribe(res=>{
-			this.movies = res.data;
+		this.showLoader = true;
+		this.sharedService.getAllMovies().subscribe(res=>{
+			var self = this;
+			var allMovies = res.data;
+			allMovies.forEach(function(m){
+				self.allCategories.forEach(function(cat){
+					if (m.categoryId == cat.id) {
+						m.category = cat;
+					}
+				});
+			});
+			this.movies = allMovies;
+			this.showLoader = false;
 		}, (error)=>{
+			this.showLoader = false;
 			this.notificationService.error("Error", "Internal Server Error.");
 		})
 	}

@@ -8,37 +8,42 @@ import { SharedService } from './shared.service';
 export class CommonService {
 	constructor(private httpService: AppService, public sharedService:SharedService) { }
 
-  	checkValidEmail(email){
-       	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-           	return true;
-       	} else {
-         	return false;
-       	}
+  checkValidEmail(email){
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-   	required(data){
-  		if (data == undefined || data == null || data == "") {
-  			return false;
-  		} else {
-  			return true;
-  		}
-  	}
+  required(data){
+    if (data == undefined || data == null || data == "") {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-  	checkValidMobileNumber(mobileNumber) {
-       	if(mobileNumber){
-	       	if(mobileNumber.toString().length == 10){
-	        	return true;
-	       	} else { 
-	       		return false;
-          }
-        }
-      }
-      
+    
     checkValidLoginUser(loginObj){
     if (loginObj.userName != loginObj.password) {
       return false;
     } else {
       return true;
     }
-  }   	
+  } 	
+  checkValidMobileNumber(mobileNumber) {
+    if(mobileNumber){
+      if(mobileNumber.toString().length == 10){
+        return true;
+      } else { 
+        return false;
+      }
+    }
+  }	
+  getCurrentYear(){
+    var d = new Date();
+    var currentYear = d.getFullYear();
+    return currentYear;
+  }
 }

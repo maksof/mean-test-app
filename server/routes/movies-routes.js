@@ -62,6 +62,11 @@ var router = function(){
 			return movieController.suggestMovie(req, res);
 		});
 
+	movieRoute.route('/getSuggestedMovie')
+		.get(function(req,res) {
+			return movieController.getSuggestedMovie(req, res);
+		});
+
 	movieRoute.route('/acceptSuggestedMovie')
 		.get(function(req,res) {
 			return movieController.acceptSuggestedMovie(req, res);
