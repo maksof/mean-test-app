@@ -9,16 +9,14 @@
 					<div class="col-md-5"></div>
 					<div class="col-md-3">
 						<mat-form-field class="w-100">
-							<mat-select placeholder="Select Category">
-								<mat-option value="">Romantic</mat-option>
-								<mat-option value="">Comedy</mat-option>
-								<mat-option value="">Action</mat-option>
+							<mat-select placeholder="Select Category" [(ngModel)]="movieListObj.categoryId">
+								<mat-option *ngFor = "let m of movies" [value]="m.id">{{m.year}}</mat-option>
 							</mat-select>
 						</mat-form-field>
 					</div>
 					<div class="col-md-3">
 						<mat-form-field class="w-100">
-							<input matInput type="text" name="title" placeholder="Search Title">
+							<input matInput type="text" name="title" placeholder="Search Title" [(ngModel)]="movieListObj.title">
 						</mat-form-field>
 					</div>
 					<div class="col-md-1">

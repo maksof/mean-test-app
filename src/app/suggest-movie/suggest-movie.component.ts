@@ -15,6 +15,7 @@ export class SuggestMovieComponent implements OnInit {
 	mainToggle:boolean = true;
 	allCategories:any = [];
 	ngOnInit() {
+		this.getAllCategories();
 	}
 	toggleMainSec(){
 		this.mainToggle = !this.mainToggle;
