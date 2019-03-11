@@ -9,11 +9,13 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 	styleUrls: ['./suggest-movie.component.css']
 })
 export class SuggestMovieComponent implements OnInit {
-	suggestMovieObj:any = {};
 
 	constructor(public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService) { }
+
+	suggestMovieObj:any = {};
 	mainToggle:boolean = true;
 	allCategories:any = [];
+
 	ngOnInit() {
 		this.getAllCategories();
 	}
@@ -22,15 +24,12 @@ export class SuggestMovieComponent implements OnInit {
 	}
 
 	getAllCategories(){
-		// if (this.commonService.required(this.suggestMovieObj.title) && this.commonService.required(this.suggestMovieObj.year) && this.commonService.required(this.suggestMovieObj.director) && this.commonService.required(this.suggestMovieObj.distribution) && this.commonService.required(this.suggestMovieObj.description) && this.commonService.required(this.suggestMovieObj.categoryId)) {
-			
-		// } else {
-		// 	this.notificationService.error('Error','Please fill all the required (*) fields.')
-		// }
-		this.sharedService.getAllCategories().subscribe(res=>{
-			this.allCategories = res.data;
-		},(error)=>{
-			this.notificationService.error("Error", "Internal Server Error.");
-		})
+		if (this.commonService.required(this.suggestMovieObj.title) && this.commonService.required(this.suggestMovieObj.year) && this.commonService.required(this.suggestMovieObj.director) && this.commonService.required(this.suggestMovieObj.distribution) && this.commonService.required(this.suggestMovieObj.description) && this.commonService.required(this.suggestMovieObj.categoryId)) {
+			this.sharedService.getAllCategories().subscribe(res=>{
+				this.allCategories = res.data;
+			},(error)=>{
+				this.notificationService.error("Error", "Internal Server Error.");
+			})
+		} else this.notificationService.error('Error','Please fill all the required (*) fields.');
 	}
 }

@@ -25,7 +25,7 @@ export class CommonService {
   }
 
     
-    checkValidLoginUser(loginObj){
+  checkValidLoginUser(loginObj){
     if (loginObj.userName != loginObj.password) {
       return false;
     } else {

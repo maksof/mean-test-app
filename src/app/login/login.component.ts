@@ -8,12 +8,15 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-	loginObj:any = {};
 
   constructor(public notificationService:NotificationsService, public commonService:CommonService) { }
 
+	loginObj:any = {};
+
   ngOnInit() {
+    
   }
+
   login(){
   	if (this.commonService.required(this.loginObj.userName) && this.commonService.required(this.loginObj.password)) {
 

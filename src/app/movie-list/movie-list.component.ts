@@ -11,18 +11,17 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 	styleUrls: ['./movie-list.component.css']
 })
 export class MovieListComponent implements OnInit {
+
+	constructor(private snackBar: MatSnackBar, public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService) { }
+
+	star: boolean[] = [false,false,false,false,false,false,false,true,true,true];
+	starRating: number;
+	mainToggle:boolean = true;
+	showLoader:boolean = true;
 	movieListObj:any = {
 		categoryId:'',
 		title:''
 	};
-
-	constructor(private snackBar: MatSnackBar, public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService) { }
-	star: boolean[] = [false,false,false,false,false,false,false,true,true,true];
-
-	starRating: number;
-	mainToggle:boolean = true;
-	showLoader:boolean = true;
-
 	movies:any  = [];
 	allCategories:any = [];
 
@@ -92,16 +91,12 @@ export class MovieListComponent implements OnInit {
 						});
 					});
 					this.movies = allMovies;
-				}else {
-					this.notificationService.info("Info", "No records found.");
-				}
+				}else this.notificationService.info("Info", "No records found.");
 				this.showLoader = false;
 			},(error)=>{
 				this.showLoader = false;
 				this.notificationService.error("Error", "Internal Server Error.");
 			})
-		}else{
-			this.notificationService.error('Error','Please fill all the required (*) fields.');
-		}
+		}else this.notificationService.error('Error','Please fill all the required (*) fields.');
 	}
 }
