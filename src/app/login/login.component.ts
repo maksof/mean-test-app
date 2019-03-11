@@ -4,7 +4,6 @@ import {CommonService} from '../common.service';
 import { Router } from '@angular/router'
 import {NotificationsService, SimpleNotificationsModule } from 'angular2-notifications';
 
-
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
@@ -12,11 +11,9 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 })
 export class LoginComponent implements OnInit {
 
-	loginObj:any = {};
-
+	constructor(public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService, public route:Router) {}
 	showLoader:boolean = false;
-	constructor(public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService, public route:Router) {
-	}
+	loginObj:any = {};
 
 	ngOnInit() {
 	}

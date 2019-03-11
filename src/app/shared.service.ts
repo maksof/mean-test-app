@@ -86,4 +86,7 @@ export class SharedService {
 	removeFavoriteMovie(obj){
 		return this.appService.post("movies/removeMovieFromFavorites",obj);
 	}
+	searchMovies(category, title){
+		return this.appService.get("movies/getMovies?categoryId="+category+"&title="+title);
+	}
 }
