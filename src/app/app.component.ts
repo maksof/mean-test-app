@@ -51,6 +51,8 @@ export class AppComponent {
 				this.route.navigateByUrl("/admin");
 			}else if(user.role == "ADMIN" && this.route.url == '/suggest-movie'){
 				this.route.navigateByUrl("/admin");
+			}else if(user.role == "ADMIN" && this.route.url == '/profile'){
+				this.route.navigateByUrl("/admin");
 			}
 		}else this.route.navigateByUrl("/login");
 	}

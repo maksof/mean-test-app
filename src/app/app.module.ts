@@ -35,6 +35,7 @@ import { MovieListComponent } from './movie-list/movie-list.component';
 import { SuggestMovieComponent } from './suggest-movie/suggest-movie.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { SettingComponent } from './setting/setting.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
   SuggestMovieComponent,
   FavoritesComponent,
   ForgotPasswordComponent,
+  SettingComponent,
   ],
   imports: [
   BrowserModule,    
@@ -113,6 +115,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     { path: 'suggest-movie', component: SuggestMovieComponent },
     { path: 'favorites', component: FavoritesComponent },
     { path: 'movies', component: MovieListComponent },
+    { path: 'profile', component: SettingComponent },
     // Admin
     { path: 'admin', component: AdminDashComponent },
     { path: 'add-categories', component: AdminAddCategoryComponent },
