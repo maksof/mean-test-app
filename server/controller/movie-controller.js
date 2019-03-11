@@ -528,7 +528,7 @@ exports.getMovies = function (request, response) {
 }
 
 /**
- * @api {get} movies/gradeMovies Grade Movies API
+ * @api {post} movies/gradeMovies Grade Movies API
  * @apiName Grade Movies API
  * @apiGroup Movies
  *
