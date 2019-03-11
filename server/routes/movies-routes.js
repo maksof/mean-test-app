@@ -92,6 +92,16 @@ var router = function(){
 			return movieController.getAllFavoritesMoviesOfUser(req, res);
 		});
 
+	movieRoute.route('/gradeMovies')
+		.post(function(req,res) {
+			return movieController.gradeMovies(req, res);
+		});	
+
+	movieRoute.route('/viewGradeMovies')
+		.get(function(req,res) {
+			return movieController.viewGradeMovie(req, res);
+		});
+
     return movieRoute;
 }
 

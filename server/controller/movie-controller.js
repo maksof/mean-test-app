@@ -11,6 +11,7 @@ var tbl_movies = models.tbl_movies;
 var tbl_categories = models.tbl_categories;
 var tbl_time_periods = models.tbl_time_periods;
 var tbl_user_favorites = models.tbl_user_favorites;
+var tbl_grades = models.tbl_grades;
 
 /**
  * @api {post} movies/addCategory Add Category API
@@ -524,4 +525,72 @@ exports.getMovies = function (request, response) {
         common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
         logger.error( 'Error occured on '+new Date()+' with reason' + error);
     });
+}
+
+/**
+ * @api {get} movies/gradeMovies Grade Movies API
+ * @apiName Grade Movies API
+ * @apiGroup Movies
+ *
+ * @apiParam {number} userId User Id
+ * @apiParam {number} movieId movie Id 
+ * @apiParam {number} grade Grade 
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+
+exports.gradeMovies = function(request,response) {
+    var data = request.body;
+    if(common.required(data.userId) && common.required(data.movieId) && common.required(data.grade)) {
+        tbl_grades.findAll({where : {userId: data.userId, movieId: data.movieId, grade : data.grade}}).then(function(res) {
+        console.log(res.length);
+        if(res.length>0) {
+            tbl_grades.update({grade : data.grade},{where :{userId : data.userId}}).then(function(result){
+            common.sendResponseBack(response, 'OK', 'grade updated successfully!', res);
+            });
+        }
+        else {
+            tbl_grades.build(data).save().then(function(result){
+            common.sendResponseBack(response, 'OK', 'grade added successfully!', result);
+            }, (error) => {
+                common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                logger.error( 'Error occured on '+new Date()+' with reason' + error);
+            });
+        }
+
+    });   
+    }
+}
+
+/**
+ * @api {get} movies/viewGradeMovie ViewGrade Movies API
+ * @apiName viewGradeMovie API
+ * @apiGroup Movies
+ *
+ * @apiParam {number} movieId movie Id
+ * @apiParam {grade} grade Grade
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.viewGradeMovie = function(request,response) {
+    var data = request.query;
+    if(common.required(data.movieId)){
+        tbl_grades.find({attributes:['grade'],where:{movieId : data.movieId}}).then(function (res) {
+            if(res){
+                common.sendResponseBack(response,'OK','grades fetch successfully.',res);
+            } else {
+                common.sendResponseBack(response,'FAIL','Incorrect movieId',null);
+            }
+            }, (error) => {
+            common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
+            logger.error( 'Error occured on '+new Date()+' with reason' + error);
+    });
+
+    } else {
+        common.sendResponseBack(response,'FAIL','Please fill the required fields!..',null);
+    }
+
+
 }

@@ -511,6 +511,63 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "movies/gradeMovies",
+    "title": "Grade Movies API",
+    "name": "Grade_Movies_API",
+    "group": "Movies",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "movieId",
+            "description": "<p>movie Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "grade",
+            "description": "<p>Grade</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Movies"
+  },
+  {
+    "type": "get",
     "url": "movies/rejectSuggestedMovie",
     "title": "Reject Suggested Movie API",
     "name": "Reject_Suggested_Movie_API",
@@ -730,6 +787,56 @@ define({ "api": [
     "groupTitle": "Movies"
   },
   {
+    "type": "get",
+    "url": "movies/viewGradeMovie",
+    "title": "ViewGrade Movies API",
+    "name": "viewGradeMovie_API",
+    "group": "Movies",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "movieId",
+            "description": "<p>movie Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "grade",
+            "optional": false,
+            "field": "grade",
+            "description": "<p>Grade</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/movie-controller.js",
+    "groupTitle": "Movies"
+  },
+  {
     "type": "post",
     "url": "movies/addTimePeriod",
     "title": "Add Time Period API",
@@ -847,6 +954,56 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "user/changePassword",
+    "title": "Change Password API",
+    "name": "Change_Password_API",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Email Address</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Password</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/user-controller.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
     "url": "user/login",
     "title": "Login API",
     "name": "Login_API",
@@ -952,56 +1109,6 @@ define({ "api": [
             "optional": false,
             "field": "phone",
             "description": "<p>Phone</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "string",
-            "optional": false,
-            "field": "status",
-            "description": "<p>Status of the request.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "string",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Message corresponding to request.</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "controller/user-controller.js",
-    "groupTitle": "User"
-  },
-  {
-    "type": "post",
-    "url": "user/changePassword",
-    "title": "changePassword API",
-    "name": "changePassword_API",
-    "group": "User",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "email",
-            "description": "<p>Email Address</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "password",
-            "description": "<p>Password</p>"
           }
         ]
       }
