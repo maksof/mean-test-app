@@ -9,7 +9,6 @@ import { CommonService } from './common.service'
 export class AppComponent {
 	title = 'app';
 	constructor(public commonService:CommonService, public route:Router) {}
-	user = JSON.parse(localStorage.getItem('user'));
 	public options = {
 		position: ["bottom", "left"],
 		theClass:'angular_notification',
@@ -24,36 +23,35 @@ export class AppComponent {
 		this.checkIfLogggedIn();
 	}
 	checkIfLogggedIn(){
-		if (this.commonService.required(this.user)) {
-			if(!this.commonService.required(this.user.role)){
-				this.route.navigateByUrl("login");
-				localStorage.removeItem("user");
-			}
-		}else{
-			this.route.navigateByUrl("login");
-			localStorage.removeItem("user");
+		var user = JSON.parse(localStorage.getItem('user'));
+		if (!this.commonService.required(user)) this.route.navigateByUrl("/login");
+		else{
+			if (user.role == "USER") this.route.navigateByUrl("dashboard");
+			else if(user.role == "ADMIN")this.route.navigateByUrl("/admin");
 		}
 	}
 	changeOfRoutes(){
-		console.log("CHECK");
-		if (this.user.role == "USER" && this.route.url == '/admin') {
-			this.route.navigateByUrl("/dashboard");
-		}else if(this.user.role == "USER" && this.route.url == '/add-categories'){
-			this.route.navigateByUrl("/dashboard");
-		}else if(this.user.role == "USER" && this.route.url == '/add-movies'){
-			this.route.navigateByUrl("/dashboard");
-		}else if(this.user.role == "USER" && this.route.url == '/suggested-movies'){
-			this.route.navigateByUrl("/dashboard");
-		}else if(this.user.role == "USER" && this.route.url == '/view-grades'){
-			this.route.navigateByUrl("/dashboard");
-		}else if(this.user.role == "ADMIN" && this.route.url == '/dashboard'){
-			this.route.navigateByUrl("/admin");
-		}else if(this.user.role == "ADMIN" && this.route.url == '/movies'){
-			this.route.navigateByUrl("/admin");
-		}else if(this.user.role == "ADMIN" && this.route.url == '/favorites'){
-			this.route.navigateByUrl("/admin");
-		}else if(this.user.role == "ADMIN" && this.route.url == '/suggest-movie'){
-			this.route.navigateByUrl("/admin");
-		}
+		var user = JSON.parse(localStorage.getItem('user'));
+		if (this.commonService.required(user)) {
+			if (user.role == "USER" && this.route.url == '/admin') {
+				this.route.navigateByUrl("/dashboard");
+			}else if(user.role == "USER" && this.route.url == '/add-categories'){
+				this.route.navigateByUrl("/dashboard");
+			}else if(user.role == "USER" && this.route.url == '/add-movies'){
+				this.route.navigateByUrl("/dashboard");
+			}else if(user.role == "USER" && this.route.url == '/suggested-movies'){
+				this.route.navigateByUrl("/dashboard");
+			}else if(user.role == "USER" && this.route.url == '/view-grades'){
+				this.route.navigateByUrl("/dashboard");
+			}else if(user.role == "ADMIN" && this.route.url == '/dashboard'){
+				this.route.navigateByUrl("/admin");
+			}else if(user.role == "ADMIN" && this.route.url == '/movies'){
+				this.route.navigateByUrl("/admin");
+			}else if(user.role == "ADMIN" && this.route.url == '/favorites'){
+				this.route.navigateByUrl("/admin");
+			}else if(user.role == "ADMIN" && this.route.url == '/suggest-movie'){
+				this.route.navigateByUrl("/admin");
+			}
+		}else this.route.navigateByUrl("/login");
 	}
 }
