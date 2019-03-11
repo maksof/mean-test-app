@@ -3,32 +3,18 @@ import {CommonService} from '../common.service';
 import {NotificationsService, SimpleNotificationsModule } from 'angular2-notifications';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public notificationService:NotificationsService, public commonService:CommonService) { }
+	constructor(public notificationService:NotificationsService, public commonService:CommonService) { }
 
 	loginObj:any = {};
 
-  ngOnInit() {
-    
-  }
-
-  login(){
-  	if (this.commonService.required(this.loginObj.userName) && this.commonService.required(this.loginObj.password)) {
-
-  		if (this.commonService.checkValidLoginUser(this.loginObj)) {
-  			
-  		} else {
-  			this.notificationService.error('Error','please enter valid username and password');
-  		}
-  		
-  	} else {
-  		this.notificationService.error('Error','Please fill all the required (*) fields.');
-  	}
-  }
+	ngOnInit() {
+		
+	}
 
 }
