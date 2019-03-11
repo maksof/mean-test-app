@@ -7,47 +7,45 @@
 			<div class="row mx-0">
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="name" name="Title" placeholder="Movie Title">
+						<input matInput type="name" name="Title" placeholder="Movie Title" [(ngModel)]="suggestMovieObj.title">
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="number" name="Year" maxlength="4" placeholder="Year">
+						<input matInput type="number" name="Year" maxlength="4" placeholder="Year" [(ngModel)]="suggestMovieObj.year">
 						<mat-hint align="start">Please Enter the Releasing Year of the Movie</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="text" name="director" placeholder="Director's Name">
+						<input matInput type="text" name="director" placeholder="Director's Name" [(ngModel)]="suggestMovieObj.director">
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<mat-select placeholder="Category">
-							<mat-option value="0">Romantic</mat-option>
-							<mat-option  value="1">Comedy</mat-option>
-							<mat-option  value="2">Action</mat-option>
+						<mat-select placeholder="Category" [(ngModel)]="suggestMovieObj.categoryId" >
+							<mat-option *ngFor = "let c of allCategories" [value]="c.id">{{c.categoryName}}</mat-option>
 						</mat-select>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="text" name="distribution" placeholder="Distibution">
+						<input matInput type="text" name="distribution" placeholder="Distibution" [(ngModel)]="suggestMovieObj.distribution">
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="profileImage" class="border-bottom py-1 w-100 pointer">
 						<a mat-flat-button color="primary">Choose File</a>
 					</label>
-					<input type="file" name="image" class="d-none" id="profileImage">
+					<input type="file" name="image" class="d-none" id="profileImage" >
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<textarea matInput type="text" name="Description" placeholder="Description"></textarea>
+						<textarea matInput type="text" name="Description" placeholder="Description" [(ngModel)]="suggestMovieObj.description"></textarea>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group text-right">
-					<button mat-raised-button color="primary" class="mt-2">Update</button>
+					<button mat-raised-button color="primary" class="mt-2">Suggest Movie</button>
 				</div>
 			</div>
 		</div>

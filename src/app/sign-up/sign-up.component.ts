@@ -17,18 +17,18 @@ export class SignUpComponent implements OnInit {
 	ngOnInit() {
 	}
 	registerUser(){
-		 if (this.commonService.required(this.signupObj.firstName) && this.commonService.required(this.signupObj.lastName) && this.commonService.required(this.signupObj.Email) && this.commonService.required(this.signupObj.username) && this.commonService.required(this.signupObj.password) && this.commonService.required(this.signupObj.confirmPassword)) {
+		 if (this.commonService.required(this.signupObj.first_name) && this.commonService.required(this.signupObj.last_name) && this.commonService.required(this.signupObj.email) && this.commonService.required(this.signupObj.age) && this.commonService.required(this.signupObj.password) && this.commonService.required(this.signupObj.confirmPassword) && this.commonService.required(this.signupObj.gender)) {
 		
-		 	if(this.commonService.checkValidEmail(this.signupObj.Email)){
+		 	if(this.commonService.checkValidEmail(this.signupObj.email)){
 				
-				if(this.commonService.checkValidMobileNumber(this.signupObj.mobileNumber)) {
+				if(this.commonService.checkValidMobileNumber(this.signupObj.phone)) {
 
 					if (this.signupObj.password != this.signupObj.confirmPassword) {
 						this.notificationService.error('Error','Password not matched');
 					}else{
 						this.sharedService.registerUser(this.signupObj).subscribe(res =>{
 						this.data = res.data;
-						this.notificationService.success("Success", "Successfully login");
+						this.notificationService.success("Success", "Successfully  Registered.");
 						},(error)=>{
 						this.notificationService.error("Error", "Internal Server Error.");
 						})
