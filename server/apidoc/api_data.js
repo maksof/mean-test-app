@@ -510,7 +510,7 @@ define({ "api": [
     "groupTitle": "Movies"
   },
   {
-    "type": "get",
+    "type": "post",
     "url": "movies/gradeMovies",
     "title": "Grade Movies API",
     "name": "Grade_Movies_API",
