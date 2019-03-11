@@ -1,4 +1,2 @@
 node_modules
-server/logs/console.log
-server/logs/console.log
-server/logs/console.log
+*.log
