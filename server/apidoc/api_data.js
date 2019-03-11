@@ -847,6 +847,56 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "user/changePassword",
+    "title": "Change Password API",
+    "name": "Change_Password_API",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Email Address</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Password</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Message corresponding to request.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "controller/user-controller.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
     "url": "user/login",
     "title": "Login API",
     "name": "Login_API",
@@ -982,13 +1032,41 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "user/changePassword",
-    "title": "changePassword API",
-    "name": "changePassword_API",
+    "url": "user/updateProfile",
+    "title": "Update Profile API",
+    "name": "Update_Profile_API",
     "group": "User",
     "parameter": {
       "fields": {
         "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "first_name",
+            "description": "<p>First Name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "last_name",
+            "description": "<p>Last Name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Gender</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "age",
+            "description": "<p>Age</p>"
+          },
           {
             "group": "Parameter",
             "type": "string",
@@ -1000,8 +1078,8 @@ define({ "api": [
             "group": "Parameter",
             "type": "string",
             "optional": false,
-            "field": "password",
-            "description": "<p>Password</p>"
+            "field": "phone",
+            "description": "<p>Phone</p>"
           }
         ]
       }
