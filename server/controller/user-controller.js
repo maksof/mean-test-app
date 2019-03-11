@@ -110,3 +110,49 @@ exports.changePassword = function (request,response) {
         common.sendResponseBack(response,'FAIL','Please fill all the required fields!..',null);
     }
 }
+
+/**
+ * @api {post} user/updateProfile Update Profile API
+ * @apiName Update Profile API
+ * @apiGroup User
+ *
+ * @apiParam {string} first_name First Name
+ * @apiParam {string} last_name Last Name
+ * @apiParam {string} gender Gender
+ * @apiParam {number} age Age
+ * @apiParam {string} email Email Address
+ * @apiParam {string} phone Phone
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.updateProfile = function (request,response) {
+    var user = request.body;
+    if(common.required(user.first_name) && common.required(user.last_name) && common.required(user.gender) && common.required(user.age) && common.required(user.email) && common.required(user.phone)) {
+        tbl_user.findAll({where : {email : user.email}}).then(function(res) {
+            if(res.length > 0) {
+                var toUpdate = {
+                    first_name : user.first_name,
+                    last_name : user.last_name,
+                    gender : user.gender,
+                    age : user.age,
+                    phone : user.phone,
+                };
+                tbl_user.update(toUpdate,{where : {email : user.email}}).then(function(result) {
+                    common.sendResponseBack(response, 'OK', 'Profile details updated successfully.', null);
+                }, (error) =>{
+                    common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });
+            } else {
+                common.sendResponseBack(response,'FAIL','Incorrect user details.',null);
+            }
+        }, (error) =>{
+            common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
+            logger.error( 'Error occured on '+new Date()+' with reason' + error);
+        });
+    } else {
+        common.sendResponseBack(response,'FAIL','Please fill all the required fields!..',null);
+    }
+}
+
