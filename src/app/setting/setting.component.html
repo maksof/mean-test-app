@@ -7,32 +7,28 @@
 			<div class="row mx-0">
 				<div class="col-md-6">
 					<mat-form-field class="w-100">
-						<input matInput type="name" name="name" placeholder="Name">
+						<input matInput type="name" [(ngModel)]="userData.first_name" name="name" placeholder="First Name" required>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6">
 					<mat-form-field class="w-100">
-						<input matInput type="name" name="fName" placeholder="Father's Name
-						">
+						<input matInput type="name" [(ngModel)]="userData.last_name" name="fName" placeholder="Last Name" required>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6">
 					<mat-form-field class="w-100">
-						<input matInput type="number" name="mobile" placeholder="Mobile Number
-						">
+						<input matInput type="email" [(ngModel)]="userData.email" name="email" placeholder="Email" readonly="true">
 					</mat-form-field>
 				</div>
 				<div class="col-md-6">
 					<mat-form-field class="w-100">
-						<input matInput type="address" name="address" placeholder="Address
-						">
+						<input matInput type="number" [(ngModel)]="userData.phone" name="mobile" placeholder="Mobile Number" required>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6">
-					<label for="profileImage" class="border-bottom py-1 w-100 pointer">
-						<a mat-flat-button color="primary">Choose File</a>
-					</label>
-					<input type="file" name="image" class="d-none" id="profileImage">
+					<mat-form-field class="w-100">
+						<input matInput type="text" [(ngModel)]="userData.age" name="age" placeholder="Age" required>
+					</mat-form-field>
 				</div>
 				<div class="col-md-6 text-right">
 					<button mat-raised-button color="primary" class="mt-2">Update</button>

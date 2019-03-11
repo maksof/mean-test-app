@@ -89,4 +89,13 @@ export class SharedService {
 	searchMovies(category, title){
 		return this.appService.get("movies/getMovies?categoryId="+category+"&title="+title);
 	}
+	changePassword(obj){
+		var md5 = new Md5();
+		obj.password = md5.appendStr(obj.password).end();
+		obj.oldPassword = md5.appendStr(obj.oldPassword).end();
+		return this.appService.post("user/changePassword",obj);
+	}
+	editProfile(obj){
+		return this.appService.post("user/updateProfile",obj);
+	}
 }

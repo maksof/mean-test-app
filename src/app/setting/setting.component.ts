@@ -13,6 +13,7 @@ export class SettingComponent implements OnInit {
 	constructor(public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService) { }
 
 	user = JSON.parse(localStorage.getItem('user'));
+	userData:any = this.user;
 	showLoader:boolean = true;
 	mainToggle:boolean = true;
 
