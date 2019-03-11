@@ -544,13 +544,11 @@ exports.gradeMovies = function(request,response) {
     var data = request.body;
     if(common.required(data.userId) && common.required(data.movieId) && common.required(data.grade)) {
         tbl_grades.findAll({where : {userId: data.userId, movieId: data.movieId, grade : data.grade}}).then(function(res) {
-        console.log(res.length);
         if(res.length>0) {
             tbl_grades.update({grade : data.grade},{where :{userId : data.userId}}).then(function(result){
             common.sendResponseBack(response, 'OK', 'grade updated successfully!', res);
             });
-        }
-        else {
+        } else {
             tbl_grades.build(data).save().then(function(result){
             common.sendResponseBack(response, 'OK', 'grade added successfully!', result);
             }, (error) => {
@@ -558,9 +556,9 @@ exports.gradeMovies = function(request,response) {
                 logger.error( 'Error occured on '+new Date()+' with reason' + error);
             });
         }
-
     });   
-    }
+    } else common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+
 }
 
 /**
@@ -583,14 +581,11 @@ exports.viewGradeMovie = function(request,response) {
             } else {
                 common.sendResponseBack(response,'FAIL','Incorrect movieId',null);
             }
-            }, (error) => {
+        }, (error) => {
             common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
             logger.error( 'Error occured on '+new Date()+' with reason' + error);
-    });
-
+        });
     } else {
         common.sendResponseBack(response,'FAIL','Please fill the required fields!..',null);
     }
-
-
 }
