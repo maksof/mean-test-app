@@ -19,9 +19,9 @@ export class SignUpComponent implements OnInit {
 	ngOnInit() {
 	}
 	registerUser(){
-		if (this.commonService.required(this.signupObj.email) && this.commonService.required(this.signupObj.first_name) && this.commonService.required(this.signupObj.last_name) && this.commonService.required(this.signupObj.mobileNumber) && this.commonService.required(this.signupObj.age) && this.commonService.required(this.signupObj.password) && this.commonService.required(this.signupObj.confirmPassword) && this.commonService.required(this.signupObj.gender)) {
+		if (this.commonService.required(this.signupObj.email) && this.commonService.required(this.signupObj.first_name) && this.commonService.required(this.signupObj.last_name) && this.commonService.required(this.signupObj.phone) && this.commonService.required(this.signupObj.age) && this.commonService.required(this.signupObj.password) && this.commonService.required(this.signupObj.confirmPassword) && this.commonService.required(this.signupObj.gender)) {
 			if(this.commonService.checkValidEmail(this.signupObj.email)){
-				if(this.commonService.checkValidMobileNumber(this.signupObj.mobileNumber)) {
+				if(this.commonService.checkValidMobileNumber(this.signupObj.phone)) {
 					if (this.checkValidAge(this.signupObj.age)) {
 						if (this.signupObj.password != this.signupObj.confirmPassword) {
 							this.notificationService.error('Error','Password not matched');
