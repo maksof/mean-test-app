@@ -8,7 +8,7 @@ var model = function(){
     models.tbl_categories = sequelize.import('./tbl_categories.js');
     models.tbl_time_periods = sequelize.import('./tbl_time_periods.js');
     models.tbl_user_favorites = sequelize.import('./tbl_user_favorites.js');
-
+    models.tbl_grades = sequelize.import('./tbl_grades.js');
 	return models;
 }
 module.exports = model;
