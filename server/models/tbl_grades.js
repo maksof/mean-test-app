@@ -9,21 +9,21 @@ module.exports = function(sequelize,DataType){
 		userId : {
 			type : DataType.DOUBLE,
 			allownull : true
-        },
-        movieId : {
+		},
+		movieId : {
 			type : DataType.DOUBLE,
 			allownull : true
-        },
-        grade : {
+		},
+		grade : {
 			type : DataType.DOUBLE,
 			allownull : true
-        },
-        date : {
+		},
+		date : {
 			type : DataType.DATE,
 			allownull : true
-        }
-    },{ 
-        tableName : "tbl_grades",
-        timestamps: false, 
-    });
+		}
+	},{ 
+		tableName : "tbl_grades",
+		timestamps: false, 
+	});
 }

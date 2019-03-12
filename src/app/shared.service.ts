@@ -14,16 +14,7 @@ export class SharedService {
 	constructor(private appService: AppService, private http: Http) { }
 
 	registerUser(signupObj){
-		var obj = {
-			first_name : signupObj.firstName,
-			last_name : signupObj.lastName,
-			password : signupObj.password,
-			gender : signupObj.gender,
-			age : signupObj.age,
-			email : signupObj.Email,
-			phone : signupObj.mobileNumber
-		}
-		return this.appService.post("user/signup",obj);
+		return this.appService.post("user/signup",signupObj);
 	}
 	login(login){
 		var md5 = new Md5();
