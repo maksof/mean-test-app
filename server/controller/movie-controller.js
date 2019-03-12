@@ -11,6 +11,7 @@ var tbl_movies = models.tbl_movies;
 var tbl_categories = models.tbl_categories;
 var tbl_time_periods = models.tbl_time_periods;
 var tbl_user_favorites = models.tbl_user_favorites;
+var tbl_user = models.tbl_user;
 var tbl_grades = models.tbl_grades;
 
 /**
@@ -528,7 +529,7 @@ exports.getMovies = function (request, response) {
 }
 
 /**
- * @api {post} movies/grade Movies Grade Movies API
+ * @api {post} movies/gradeMovies Grade Movies API
  * @apiName Grade Movies API
  * @apiGroup Movies
  *
@@ -542,54 +543,67 @@ exports.getMovies = function (request, response) {
 
 exports.gradeMovies = function(request,response) {
     var data = request.body;
+    data.date = new Date();
     if(common.required(data.userId) && common.required(data.movieId) && common.required(data.grade)) {
-        tbl_grades.findAll({where : {userId: data.userId, movieId: data.movieId, grade : data.grade}}).then(function(res) {
-        if(res.length>0) {
-            tbl_grades.update({grade : data.grade},{where :{userId : data.userId}}).then(function(result){
-            common.sendResponseBack(response, 'OK', 'grade updated successfully!', res);
-            });
-        } else {
-            tbl_grades.build(data).save().then(function(result){
-            common.sendResponseBack(response, 'OK', 'grade added successfully!', result);
-            }, (error) => {
-                common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
-                logger.error( 'Error occured on '+new Date()+' with reason' + error);
-            });
-        }
-    });   
+        tbl_grades.findAll({where : {userId: data.userId, movieId: data.movieId}}).then(function(res) {
+            if(res.length>0) {
+                tbl_grades.update({grade : data.grade},{where :{userId : data.userId}}).then(function(result){
+                    common.sendResponseBack(response, 'OK', 'grade updated successfully!', res);
+                });
+            } else {
+                tbl_grades.build(data).save().then(function(result){
+                    common.sendResponseBack(response, 'OK', 'grade added successfully!', result);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });
+            }
+        });   
     } else common.sendResponseBack(response, 'FAIL', 'Please pass all the required details.', null);
-
 }
 
 /**
- * @api {get} movies/viewGradeMovie ViewGrade Movies API
- * @apiName viewGradeMovie API
+ * @api {get} movies/viewGradeMovies View Grade Movies API
+ * @apiName View Grade Movies API
  * @apiGroup Movies
  *
- * @apiParam {number} movieId movie Id
- * @apiParam {number} grade Grade
+ * @apiParam {number} limit Limit of records
+ * @apiParam {number} offset Offset
  *
  * @apiSuccess {string} status Status of the request.
  * @apiSuccess {string} message Message corresponding to request.
 */
-exports.viewGradeMovie = function(request,response) {
-    var id = request.query.id;
-    tbl_grades.hasMany(tbl_movies,{sourcekey:'id'});
-    var query={
-        attributes : ['userId','movieId','title','grade','date'] , where : {id : id}, include : [{ models : tbl_movies}]
-    }
-    var data = request.query;
-    console.log(data);
-        tbl_grades.findAll(query).then(function (res) {
-            if(res){
-                common.sendResponseBack(response,'OK','grades fetch successfully.',res);
-            } else {
-                common.sendResponseBack(response,'FAIL','Incorrect movieId',null);
-            }
-        }, (error) => {
-            common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
-            logger.error( 'Error occured on '+new Date()+' with reason' + error);
-        });
+exports.viewGradeMovies = function(request,response) {
+    
+    var limit = request.query.limit? parseInt(request.query.limit) : 10;
+    var offset = request.query.offset? parseInt(request.query.offset) : 0;
 
-     
+    tbl_grades.belongsTo(tbl_movies, { foreignKey: 'movieId' });
+    tbl_grades.belongsTo(tbl_user, { foreignKey: 'userId' });
+
+    tbl_grades.findAll({ 
+        attributes: ['grade', 'date'],
+        include: [
+            {
+                model: tbl_movies,
+                attributes: ['id', 'title']
+            },
+            {
+                model: tbl_user,
+                attributes: ['first_name', 'last_name']
+            }
+        ],
+        limit: limit,
+        offset: offset,
+        order: '"date" DESC'
+    }).then(function (res) {
+        if(res.length >0){
+            common.sendResponseBack(response,'OK','records fetched successfully.', res);
+        } else {
+            common.sendResponseBack(response,'OK','No records found!',null);
+        }
+    }, (error) => {
+        common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+        logger.error( 'Error occured on '+new Date()+' with reason' + error);
+    });     
 }

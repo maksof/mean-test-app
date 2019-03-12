@@ -77,6 +77,7 @@ var router = function(){
 			return movieController.rejectSuggestedMovie(req, res);
 		});
 
+	/*FAVORITE MOVIE APIS*/
 	movieRoute.route('/addMovieToFavorites')
 		.post(function(req,res) {
 			return movieController.addMovieToFavorites(req, res);
@@ -92,6 +93,7 @@ var router = function(){
 			return movieController.getAllFavoritesMoviesOfUser(req, res);
 		});
 
+	/*GRADE MOVIE APIS*/
 	movieRoute.route('/gradeMovies')
 		.post(function(req,res) {
 			return movieController.gradeMovies(req, res);
@@ -99,7 +101,7 @@ var router = function(){
 
 	movieRoute.route('/viewGradeMovies')
 		.get(function(req,res) {
-			return movieController.viewGradeMovie(req, res);
+			return movieController.viewGradeMovies(req, res);
 		});
 
     return movieRoute;
