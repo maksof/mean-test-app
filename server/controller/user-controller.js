@@ -86,21 +86,21 @@ exports.login = function (request, response) {
  *
  * @apiParam {string} email Email Address
  * @apiParam {string} password Password
+ * @apiParam {string} oldPassword Old Password
  *
  * @apiSuccess {string} status Status of the request.
  * @apiSuccess {string} message Message corresponding to request.
 */
 exports.changePassword = function (request,response) {
     var user = request.body;
-    if(common.required(user.email) && common.required(user.password)) {
-        tbl_user.findAll({where : {email : user.email}}).then(function(res) {
+    if(common.required(user.email) && common.required(user.password) && common.required(user.oldPassword)) {
+        tbl_user.findAll({where : {email : user.email, password: user.oldPassword}}).then(function(res) {
             if(res.length > 0) {
                 tbl_user.update({password : user.password},{where : {email : user.email}}).then(function(result) {
                     common.sendResponseBack(response, 'OK', 'Your password has been updated successfully.', result);
                 });
             } else {
-                common.sendResponseBack(response,'FAIL','Incorrect email or password.',null);
-                logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                common.sendResponseBack(response,'FAIL','Incorrect old password.',null);
             }
         }, (error) =>{
             common.sendResponseBack(response,'FAIL','Incorrect email or password',null);
