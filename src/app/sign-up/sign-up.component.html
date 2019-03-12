@@ -40,18 +40,18 @@
 			<div class="row mx-0 w-100">
 				<mat-radio-group [(ngModel)]="signupObj.gender">
 					<div class="col-6 text-left">
-						<mat-radio-button value="female" color="primary" class="thRadio">Female</mat-radio-button>
+						<mat-radio-button value="MALE" color="primary" class="thRadio">Male</mat-radio-button>
 					</div>
 					<div class="col-6 text-left">
-						<mat-radio-button value="male" color="primary" class="thRadio">Male</mat-radio-button>
+						<mat-radio-button value="FEMALE" color="primary" class="thRadio">Female</mat-radio-button>
 					</div>
 				</mat-radio-group>
 			</div>
 			<div class="form-group col-12">
-				<button mat-raised-button class="mt-2 thBtn w-100" color="primary" (click)="registerUser()">register</button>
+				<button mat-raised-button class="mt-2 thBtn w-100" color="primary" (click)="registerUser()">Register</button>
 			</div>
 			<div class="form-group col-12 text-left">
-				<p>Already have an account? <a class="thLink" [routerLink]="['/login']" title="Sign Up">login</a></p>
+				<p>Already have an account? <a class="thLink" [routerLink]="['/login']" title="Login">login here</a></p>
 			</div>
 		</div>
 	</div>
