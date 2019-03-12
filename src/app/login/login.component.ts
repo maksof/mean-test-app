@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 	ngOnInit() {
 	}
 	loginUser(){
-		if (this.commonService.required(this.loginObj.email) && this.commonService.required(this.loginObj.password)) {
+		if (this.commonService.required(this.loginObj.email) && this.commonService.required(this.loginObj.Password)) {
 			if (this.commonService.checkValidEmail(this.loginObj.email)) {
 				this.sharedService.login(this.loginObj).subscribe(res=>{
 					this.showLoader = false;

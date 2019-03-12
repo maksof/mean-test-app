@@ -40,7 +40,7 @@
 						<p><b>Director:</b>&nbsp;<span>{{m.director}}</span></p>
 						<p><b>Distributor:</b>&nbsp;<span>{{m.distribution}}</span></p>
 						<p class="text-warning">
-							<i *ngFor="let item of star; let i=index" (click)="setStartList(i)" class="fa pointer starRating" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+							<i *ngFor="let item of star; let i=index" (click)="setStartList(i,m.id)" class="fa pointer starRating" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
 						</p>
 					</div>
 				</div>

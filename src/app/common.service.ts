@@ -38,4 +38,12 @@ export class CommonService {
 		var currentYear = d.getFullYear();
 		return currentYear;
 	}
+	formateDate(date){			
+		date = new Date(date);
+		var day = date.getDate() < 10 ? '0'+date.getDate(): date.getDate();
+		var month = date.getMonth()+1;
+		month = month < 10 ? '0'+month: month;
+		var year = date.getFullYear();
+		return year + '-' + month + '-' +day;
+	}
 }

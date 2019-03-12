@@ -15,8 +15,6 @@ export class FavoritesComponent implements OnInit {
 
 	user = JSON.parse(localStorage.getItem('user'));
 	showLoader:boolean = true;
-	star: boolean[] = [false,false,false,false,false,false,false,true,true,true];
-	starRating: number;
 	mainToggle:boolean = true;
 	favoriteMovies:any = [];
 	allCategories:any = [];
@@ -26,20 +24,6 @@ export class FavoritesComponent implements OnInit {
 	}
 	toggleMainSec(){
 		this.mainToggle = !this.mainToggle;
-	}
-	setStartList(data:any){
-		this.starRating = data+1;
-		for(var i=0;i<=9;i++){
-			if(i<=data){
-				this.star[i]=false;
-			}
-			else{
-				this.star[i]=true;
-			}
-		}
-		this.snackBar.open('Thanks For Rating Us.', '', {
-			duration: 2000,
-		});
 	}
 	getAllFavoriteMovies(){
 		this.showLoader = true;

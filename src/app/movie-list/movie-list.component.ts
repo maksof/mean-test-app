@@ -33,8 +33,24 @@ export class MovieListComponent implements OnInit {
 	toggleMainSec(){
 		this.mainToggle = !this.mainToggle;
 	}
-	setStartList(data:any){
+	setStartList(data:any,movieId:any){
 		this.starRating = data+1;
+		var rate = data+1;
+		var obj:any = {};
+		obj.userId = this.user.id;
+		obj.movieId = movieId;
+		obj.grade = rate;
+		this.sharedService.rateMovie(obj).subscribe(res=>{
+			if (res.status == "OK") {
+				this.snackBar.open('Thanks For Rating.', '', {
+					duration: 2000,
+				});
+			}
+		},(error)=>{
+			this.snackBar.open('Internal Server Error', '', {
+				duration: 2000,
+			});
+		})
 		for(var i=0;i<=9;i++){
 			if(i<=data){
 				this.star[i]=false;
@@ -43,9 +59,6 @@ export class MovieListComponent implements OnInit {
 				this.star[i]=true;
 			}
 		}
-		this.snackBar.open('Thanks For Rating Us.', '', {
-			duration: 2000,
-		});
 	}
 	getAllFavoriteMovies(){
 		this.showLoader = true;
