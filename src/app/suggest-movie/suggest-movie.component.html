@@ -1,4 +1,7 @@
-<app-header (headerClassChange)="toggleMainSec()"></app-header>
+
+<div *ngIf="showLoader" style="position: fixed; z-index: 1003; left: 0; top: 0; bottom: 0; right: 0; background: #bfbfbf75; opacity: 1;">
+	<img id="loadinggif" src="assets/images/load.gif" style="width: 100px; height: 100px; position: absolute; top: 50%; left: 50%; margin: -28px 0 0 -25px;">
+</div><app-header (headerClassChange)="toggleMainSec()"></app-header>
 <section class="transition3ms UP_mainCon" [ngClass]="{'open': mainToggle}">
 	<div class="UP_con">
 		<h2 class="text-left"><i class="fa fa-cogs headIcon"></i>Suggest Movie</h2>
@@ -7,48 +10,50 @@
 			<div class="row mx-0">
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="name" name="Title" placeholder="Movie Title" [(ngModel)]="suggestMovieObj.title">
+						<input matInput type="name" name="Title" placeholder="Movie Title" [(ngModel)]="suggestMovieObj.title" required>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="number" name="Year" maxlength="4" placeholder="Year" [(ngModel)]="suggestMovieObj.year">
+						<input matInput type="number" name="Year" maxlength="4" placeholder="Year" [(ngModel)]="suggestMovieObj.year" required>
 						<mat-hint align="start">Please Enter the Releasing Year of the Movie</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="text" name="director" placeholder="Director's Name" [(ngModel)]="suggestMovieObj.director">
+						<input matInput type="text" name="director" placeholder="Director's Name" [(ngModel)]="suggestMovieObj.director" required>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<mat-select placeholder="Category" [(ngModel)]="suggestMovieObj.categoryId" >
+						<mat-select placeholder="Category" [(ngModel)]="suggestMovieObj.categoryId" required>
 							<mat-option *ngFor = "let c of allCategories" [value]="c.id">{{c.categoryName}}</mat-option>
 						</mat-select>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput type="text" name="distribution" placeholder="Distibution" [(ngModel)]="suggestMovieObj.distribution">
+						<input matInput type="text" name="distribution" placeholder="Distibution" [(ngModel)]="suggestMovieObj.distribution" required>
 					</mat-form-field>
-				</div>
-				<div class="col-md-6 form-group">
-					<label for="profileImage" class="border-bottom py-1 w-100 pointer">
-						<a mat-flat-button color="primary">Choose File</a>
-					</label>
-					<input type="file" name="image" class="d-none" id="profileImage" >
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<textarea matInput type="text" name="Description" placeholder="Description" [(ngModel)]="suggestMovieObj.description"></textarea>
+						<input matInput type="text" name="photoUrl" placeholder="Photo Url" [(ngModel)]="suggestMovieObj.photoUrl" required>
+					</mat-form-field>
+				</div>
+				<div class="col-md-6 form-group">
+					<mat-form-field class="w-100">
+						<textarea matInput type="text" name="Description" placeholder="Description" rows="4" [(ngModel)]="suggestMovieObj.description" required></textarea>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group text-right">
-					<button mat-raised-button color="primary" class="mt-2">Suggest Movie</button>
+					<button mat-raised-button (click)="suggestMovies()" color="primary" class="mt-2">Suggest Movie</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<app-footer></app-footer>
 </section>
+<div *ngIf="showLoader" style="position: fixed; z-index: 1003; left: 0; top: 0; bottom: 0; right: 0; background: #bfbfbf75; opacity: 1;">
+	<img id="loadinggif" src="assets/images/load.gif" style="width: 100px; height: 100px; position: absolute; top: 50%; left: 50%; margin: -28px 0 0 -25px;">
+</div>

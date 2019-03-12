@@ -1,0 +1,69 @@
+<app-header (headerClassChange)="toggleMainSec()"></app-header>
+<section class="transition3ms UP_mainCon" [ngClass]="{'open': mainToggle}">
+	<div class="UP_con">
+		<h2 class="text-left"><i class="fa fa-cogs headIcon"></i>Add Movies</h2>
+		<hr class="headSep">
+		<div class="card shadow py-3 my-4">
+			<div class="row mx-0">
+				<div class="col-md-6">
+					<mat-form-field class="w-100">
+						<input matInput type="name" [(ngModel)]="userData.first_name" name="name" placeholder="First Name" required>
+					</mat-form-field>
+				</div>
+				<div class="col-md-6">
+					<mat-form-field class="w-100">
+						<input matInput type="name" [(ngModel)]="userData.last_name" name="fName" placeholder="Last Name" required>
+					</mat-form-field>
+				</div>
+				<div class="col-md-6">
+					<mat-form-field class="w-100">
+						<input matInput type="email" [(ngModel)]="userData.email" name="email" placeholder="Email" readonly="true">
+					</mat-form-field>
+				</div>
+				<div class="col-md-6">
+					<mat-form-field class="w-100">
+						<input matInput type="text" maxlength="10" OnlyNumber="true" [(ngModel)]="userData.phone" name="mobile" placeholder="Mobile Number" required>
+						<mat-hint>Please enter your number without 0.</mat-hint>
+						<mat-hint align="end">{{userData.phone.length}}/10</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="col-md-6">
+					<mat-form-field class="w-100">
+						<input matInput maxlength="3" OnlyNumber="true" type="text" [(ngModel)]="userData.age" name="age" placeholder="Age" required>
+					</mat-form-field>
+				</div>
+				<div class="col-md-6 text-right">
+					<button mat-raised-button (click)="updateProfile()" color="primary" class="mt-2">Update</button>
+				</div>
+			</div>
+		</div>
+		<h2 class="text-left"><i class="fa fa-key headIcon"></i>Change Password</h2>
+		<hr class="headSep">
+		<div class="card shadow py-3 my-4">
+			<div class="row mx-0">
+				<div class="col-md-6">
+					<mat-form-field class="w-100">
+						<input matInput type="password" name="oldPassword" placeholder="Old Password" [(ngModel)]="updatePassword.old" required>
+					</mat-form-field>
+				</div>
+				<div class="col-md-6">
+					<mat-form-field class="w-100">
+						<input matInput type="password" name="oldPassword" placeholder="New Password" [(ngModel)]="updatePassword.Password" required>
+					</mat-form-field>
+				</div>
+				<div class="col-md-6">
+					<mat-form-field class="w-100">
+						<input matInput type="password" name="oldPassword" placeholder="Confirm Password" [(ngModel)]="updatePassword.confirmPassword" required>
+					</mat-form-field>
+				</div>
+				<div class="col-md-6 text-right">
+					<button mat-raised-button color="primary" class="mt-2" (click)="changePassword()">Update Password</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<app-footer></app-footer>
+</section>
+<div *ngIf="showLoader" style="position: fixed; z-index: 1003; left: 0; top: 0; bottom: 0; right: 0; background: #bfbfbf75; opacity: 1;">
+	<img id="loadinggif" src="assets/images/load.gif" style="width: 100px; height: 100px; position: absolute; top: 50%; left: 50%; margin: -28px 0 0 -25px;">
+</div>

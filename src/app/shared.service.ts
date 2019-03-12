@@ -18,8 +18,10 @@ export class SharedService {
 	}
 	login(login){
 		var md5 = new Md5();
-		login.password = md5.appendStr(login.password).end();
-		return this.appService.post("user/login",login);
+		var obj:any = {};
+		obj.password = md5.appendStr(login.Password).end();
+		obj.email = login.email;
+		return this.appService.post("user/login",obj);
 	}
 	getAllCategories(){
 		return this.appService.get("movies/getAllCategories");
@@ -79,5 +81,23 @@ export class SharedService {
 	}
 	searchMovies(category, title){
 		return this.appService.get("movies/getMovies?categoryId="+category+"&title="+title);
+	}
+	changePassword(obj){
+		var md5 = new Md5();
+		var md6 = new Md5();
+		var cObj:any = {};
+		cObj.oldPassword = md5.appendStr(obj.old).end();
+		cObj.password = md6.appendStr(obj.Password).end();
+		cObj.email = obj.email;
+		return this.appService.post("user/changePassword",cObj);
+	}
+	editProfile(obj){
+		return this.appService.post("user/updateProfile",obj);
+	}
+	viewGrade(limit,offset){
+		return this.appService.get("movies/viewGradeMovies?limit="+limit+"&offset="+offset);
+	}
+	rateMovie(obj){
+		return this.appService.post("movies/gradeMovies",obj);
 	}
 }

@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="row">
-					<div class="col-md-5"></div>
+					<div class="col-md-4"></div>
 					<div class="col-md-3">
 						<mat-form-field class="w-100">
 							<mat-select placeholder="Select Category" [(ngModel)]="movieListObj.categoryId">
@@ -19,24 +19,28 @@
 							<input matInput type="text" name="title" placeholder="Search Title" [(ngModel)]="movieListObj.title">
 						</mat-form-field>
 					</div>
-					<div class="col-md-1">
-						<button mat-mini-fab color="primary" (click)="searchMovies()"><i class="fa fa-search"></i></button>
+					<div class="col-md-2">
+						<button mat-mini-fab color="primary" matTooltip="Search" (click)="searchMovies()" class="mt-3"><i class="fa fa-search"></i></button>
+						<button *ngIf="filtered" mat-mini-fab color="warn"  matTooltip="Clear Filter" (click)="clearFilter()" class="mt-3 ml-3"><i class="fa fa-times"></i></button>
 					</div>
 				</div>
 			</div>
 			<div class="col-12" *ngFor = "let m of movies">
 				<div class="movieMainCon">
 					<div class="posterCon">
-						<img src="{{m.photoUrl}}" alt="">
+						<img src="{{m.photoUrl}}" alt="Movie Poster">
 					</div>
 					<div class="MoviedataCon" >
-						<h2>{{m.title}}<a title="like" class="float-right text-danger"><i class="fa fa-heart-o"></i></a></h2>
+						<h2>{{m.title}} ({{m.year}})
+							<a *ngIf="!m.favorite" title="Add to Favorite" (click)="addToFavorite(m.id)" class="float-right text-danger"><i class="fa fa-heart-o"></i></a>
+							<a *ngIf="m.favorite" title="Remove from Favorite" (click)="removeFromFavorite(m.id)" class="float-right text-danger"><i class="fa fa-heart"></i></a>
+						</h2>
 						<p class="cat"><span>{{m.category.categoryName}}</span></p>
 						<p>{{m.description}}</p>
 						<p><b>Director:</b>&nbsp;<span>{{m.director}}</span></p>
 						<p><b>Distributor:</b>&nbsp;<span>{{m.distribution}}</span></p>
 						<p class="text-warning">
-							<i *ngFor="let item of star; let i=index" (click)="setStartList(i)" class="fa pointer starRating" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+							<i *ngFor="let item of star; let i=index" (click)="setStartList(i,m.id)" class="fa pointer starRating" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
 						</p>
 					</div>
 				</div>

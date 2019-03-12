@@ -7,40 +7,40 @@
 			<div class="row mx-0">
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput [(ngModel)]="moviesObj.title" type="name" name="Title" placeholder="Movie Title">
+						<input matInput [(ngModel)]="moviesObj.title" type="name" name="Title" placeholder="Movie Title" required>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput [(ngModel)]="moviesObj.year" type="text" name="Year" maxlength="4" OnlyNumber="true" placeholder="Year">
+						<input matInput [(ngModel)]="moviesObj.year" type="text" name="Year" maxlength="4" OnlyNumber="true" placeholder="Year" required>
 						<mat-hint align="start">Please Enter the Releasing Year of the Movie</mat-hint>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput [(ngModel)]="moviesObj.director" type="text" name="director" placeholder="Director's Name">
+						<input matInput [(ngModel)]="moviesObj.director" type="text" name="director" placeholder="Director's Name" required>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<mat-select [(ngModel)]="moviesObj.categoryId" placeholder="Category">
+						<mat-select [(ngModel)]="moviesObj.categoryId" placeholder="Category" required>
 							<mat-option *ngFor="let cRow of allCategories" value="{{cRow.id}}">{{cRow.categoryName}}</mat-option>
 						</mat-select>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput [(ngModel)]="moviesObj.distribution" type="text" name="distribution" placeholder="Distibution">
+						<input matInput [(ngModel)]="moviesObj.distribution" type="text" name="distribution" placeholder="Distibution" required>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<input matInput [(ngModel)]="moviesObj.photoUrl" type="text" name="url" placeholder="Photo Url">
+						<input matInput [(ngModel)]="moviesObj.photoUrl" type="text" name="url" placeholder="Photo Url" required>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group">
 					<mat-form-field class="w-100">
-						<textarea matInput [(ngModel)]="moviesObj.description" type="text" name="Description" placeholder="Description"></textarea>
+						<textarea matInput [(ngModel)]="moviesObj.description" type="text" name="Description" placeholder="Description" required></textarea>
 					</mat-form-field>
 				</div>
 				<div class="col-md-6 form-group text-right">
@@ -139,40 +139,40 @@
 						<div class="row">
 							<div class="col-md-6">
 								<mat-form-field>
-									<input matInput  [(ngModel)]="updateMovieData.title" type="text" name="" placeholder="Title">
+									<input matInput  [(ngModel)]="updateMovieData.title" type="text" name="" placeholder="Title" required>
 								</mat-form-field>
 							</div>
 							<div class="col-md-6">
 								<mat-form-field>
-									<input matInput [(ngModel)]="updateMovieData.year" type="text" name="" placeholder="Year" maxlength="4" OnlyNumber="true">
+									<input matInput [(ngModel)]="updateMovieData.year" type="text" name="" placeholder="Year" maxlength="4" OnlyNumber="true" required>
 									<mat-hint align="start">Please Enter the Releasing Year of the Movie</mat-hint>
 								</mat-form-field>
 							</div>
 							<div class="col-md-6">
 								<mat-form-field>
-									<input matInput [(ngModel)]="updateMovieData.director" type="text" name="" placeholder="Director's Name">
+									<input matInput [(ngModel)]="updateMovieData.director" type="text" name="" placeholder="Director's Name" required>
 								</mat-form-field>
 							</div>
 							<div class="col-md-6">
 								<mat-form-field>
-									<mat-select [(ngModel)]="updateMovieData.categoryId" placeholder="Category">
+									<mat-select [(ngModel)]="updateMovieData.categoryId" placeholder="Category" required>
 										<mat-option *ngFor="let cRow of allCategories" [value]="cRow.id">{{cRow.categoryName}}</mat-option>
 									</mat-select>
 								</mat-form-field>
 							</div>
 							<div class="col-md-6">
 								<mat-form-field>
-									<input matInput [(ngModel)]="updateMovieData.distribution" type="text" name="" placeholder="Distribution">
+									<input matInput [(ngModel)]="updateMovieData.distribution" type="text" name="" placeholder="Distribution" required>
 								</mat-form-field>
 							</div>
 							<div class="col-md-6">
 								<mat-form-field>
-									<input matInput type="text" [(ngModel)]="updateMovieData.photoUrl" placeholder="Photo Url">
+									<input matInput type="text" [(ngModel)]="updateMovieData.photoUrl" placeholder="Photo Url" required>
 								</mat-form-field>
 							</div>
 							<div class="col-md-6">
 								<mat-form-field>
-									<textarea matInput [(ngModel)]="updateMovieData.description" rows="4"  name="desc" placeholder="Description"></textarea> 
+									<textarea matInput [(ngModel)]="updateMovieData.description" rows="4"  name="desc" placeholder="Description" required></textarea> 
 								</mat-form-field>
 							</div>
 						</div>

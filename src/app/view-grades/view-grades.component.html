@@ -4,41 +4,23 @@
 		<h2 class="text-left"><i class="fa fa-calendar headIcon"></i>View Grades</h2>
 		<hr class="headSep">
 		<div class="row">
-			<div class="col-md-6"></div>
-			<div class="col-md-6 text-right">
-				<mat-form-field>
-					<input matInput [matDatepicker]="yearFilter" placeholder="Select Date">
-					<mat-datepicker-toggle matSuffix [for]="yearFilter"></mat-datepicker-toggle>
-					<mat-datepicker #yearFilter></mat-datepicker>
-				</mat-form-field>
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-12">
 				<div class="table-responsive">
 					<table class="table text-center">
 						<thead>
 							<tr>
-								<th>Due Date</th>
-								<th>In Time</th>
-								<th>Out Time</th>
+								<th>Movie Name</th>
+								<th>Username</th>
+								<th>Grade</th>
+								<th>Date</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>12/09/2018</td>
-								<td>10:14:15 PM</td>
-								<td>12:00:15 PM</td>
-							</tr>
-							<tr>
-								<td>12/09/2018</td>
-								<td>10:14:15 PM</td>
-								<td>12:00:15 PM</td>
-							</tr>
-							<tr>
-								<td>12/09/2018</td>
-								<td>10:14:15 PM</td>
-								<td>12:00:15 PM</td>
+							<tr *ngFor="let g of allGrades">
+								<td>{{g.tbl_movie.title}}</td>
+								<td>{{g.tbl_user.first_name}} {{g.tbl_user.last_name}}</td>
+								<td>{{g.grade}}</td>
+								<td>{{commonService.formateDate(g.date)}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -48,3 +30,6 @@
 	</div>
 	<app-footer></app-footer>
 </section>
+<div *ngIf="showLoader" style="position: fixed; z-index: 1003; left: 0; top: 0; bottom: 0; right: 0; background: #bfbfbf75; opacity: 1;">
+	<img id="loadinggif" src="assets/images/load.gif" style="width: 100px; height: 100px; position: absolute; top: 50%; left: 50%; margin: -28px 0 0 -25px;">
+</div>

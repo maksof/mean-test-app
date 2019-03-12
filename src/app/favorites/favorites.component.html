@@ -4,78 +4,23 @@
 		<h2 class="text-left"><i class="fa fa-calendar headIcon"></i>Favorites</h2>
 		<hr class="headSep">
 		<div class="row">
-			<div class="col-12">
-				<div class="row">
-					<div class="col-md-5"></div>
-					<div class="col-md-3">
-						<mat-form-field class="w-100">
-							<mat-select placeholder="Select Category">
-								<mat-option value="">Romantic</mat-option>
-								<mat-option value="">Comedy</mat-option>
-								<mat-option value="">Action</mat-option>
-							</mat-select>
-						</mat-form-field>
-					</div>
-					<div class="col-md-3">
-						<mat-form-field class="w-100">
-							<input matInput type="text" name="title" placeholder="Search Title">
-						</mat-form-field>
-					</div>
-					<div class="col-md-1">
-						<button mat-mini-fab color="primary"><i class="fa fa-search"></i></button>
-					</div>
-				</div>
+			<div class="col-12" *ngIf="favoriteMovies.length == 0">
+				<h5>No Records Found.</h5>
 			</div>
-			<div class="col-12">
+			<div class="col-12" *ngFor = "let m of favoriteMovies">
 				<div class="movieMainCon">
 					<div class="posterCon">
-						<img src="assets/images/avengers.jpg" alt="">
+						<img src="{{m.photoUrl}}" alt="Movie Poster">
 					</div>
-					<div class="MoviedataCon">
-						<h2>Avengers Infinity War II (2019) <a title="like" class="float-right text-danger">
-							<i class="fa fa-heart"></i>
-						</a></h2>
-						<p class="cat"><span>Fantasy | Science Fiction</span></p>
-						<p>Adrift in space with no food or water, Tony Stark sends a message to Pepper Potts as his oxygen supply starts to dwindle. Meanwhile, the remaining Avengers -- Thor, Black Widow, Captain America and Bruce Banner -- must figure out a way to bring back their vanquished allies for an epic showdown with Thanos -- the evil demigod who decimated the planet and the universe.</p>
-						<p><b>Director:</b>&nbsp;<span> Anthony Russo, Joe Russo</span></p>
-						<p><b>Distributor:</b>&nbsp;<span> abc, xyz</span></p>
-						<p class="text-warning">
-							<i *ngFor="let item of star; let i=index" (click)="setStartList(i)" class="fa pointer starRating" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-12">
-				<div class="movieMainCon">
-					<div class="posterCon">
-						<img src="assets/images/venom.jpg" alt="">
-					</div>
-					<div class="MoviedataCon">
-						<h2>Venom (2018) <a title="like" class="float-right text-danger"><i class="fa fa-heart"></i></a></h2>
-						<p class="cat"><span>Thriller | Science Fiction</span></p>
-						<p>Journalist Eddie Brock is trying to take down Carlton Drake, the notorious and brilliant founder of the Life Foundation. While investigating one of Drake's experiments, Eddie's body merges with the alien Venom -- leaving him with superhuman strength and power. Twisted, dark and fueled by rage, Venom tries to control the new and dangerous abilities that Eddie finds so intoxicating.</p>
-						<p><b>Director:</b>&nbsp;<span> Ruben Fleischer</span></p>
-						<p><b>Distributor:</b>&nbsp;<span> abc, xyz</span></p>
-						<p class="text-warning">
-							<i *ngFor="let item of star; let i=index" (click)="setStartList(i)" class="fa pointer starRating" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-12">
-				<div class="movieMainCon">
-					<div class="posterCon">
-						<img src="assets/images/hobbs-and-shaw.jpg" alt="">
-					</div>
-					<div class="MoviedataCon">
-						<h2>Hobbs & Shaw (2019) <a title="like" class="float-right text-danger"><i class="fa fa-heart"></i></a></h2>
-						<p class="cat"><span>Thriller | Science Fiction</span></p>
-						<p>Hulking lawman Luke Hobbs teams up with lawless operative Deckard Shaw to battle a genetically enhanced terrorist who has superhuman strength.</p>
-						<p><b>Director:</b>&nbsp;<span> Chris Morgan</span></p>
-						<p><b>Distributor:</b>&nbsp;<span> abc, xyz</span></p>
-						<p class="text-warning">
-							<i *ngFor="let item of star; let i=index" (click)="setStartList(i)" class="fa pointer starRating" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
-						</p>
+					<div class="MoviedataCon" >
+						<h2>{{m.title}} ({{m.year}})
+							<a *ngIf="!m.favorite" title="Add to Favorite" (click)="addToFavorite(m.id)" class="float-right text-danger"><i class="fa fa-heart-o"></i></a>
+							<a *ngIf="m.favorite" title="Remove from Favorite" (click)="removeFromFavorite(m.id)" class="float-right text-danger"><i class="fa fa-heart"></i></a>
+						</h2>
+						<p class="cat"><span>{{m.category.categoryName}}</span></p>
+						<p>{{m.description}}</p>
+						<p><b>Director:</b>&nbsp;<span>{{m.director}}</span></p>
+						<p><b>Distributor:</b>&nbsp;<span>{{m.distribution}}</span></p>
 					</div>
 				</div>
 			</div>
