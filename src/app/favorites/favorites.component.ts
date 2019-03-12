@@ -31,13 +31,15 @@ export class FavoritesComponent implements OnInit {
 			this.showLoader = false;
 			var favMovies = res.data;
 			var self = this;
-			favMovies.forEach(function(m){
-				m.favorite = true;
-				self.allCategories.forEach(function(cat){
-					if (cat.id == m.categoryId) m.category = cat;
+			if (this.commonService.requiredArray(favMovies)) {
+				favMovies.forEach(function(m){
+					m.favorite = true;
+					self.allCategories.forEach(function(cat){
+						if (cat.id == m.categoryId) m.category = cat;
+					});
 				});
-			});
-			this.favoriteMovies = res.data;
+				this.favoriteMovies = res.data;
+			}
 		},(error)=>{
 			this.showLoader = false;
 			this.notificationService.error("Error", "Internal Server Error.");

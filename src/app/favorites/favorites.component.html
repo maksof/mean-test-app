@@ -4,6 +4,9 @@
 		<h2 class="text-left"><i class="fa fa-calendar headIcon"></i>Favorites</h2>
 		<hr class="headSep">
 		<div class="row">
+			<div class="col-12" *ngIf="favoriteMovies.length == 0">
+				<h5>No Records Found.</h5>
+			</div>
 			<div class="col-12" *ngFor = "let m of favoriteMovies">
 				<div class="movieMainCon">
 					<div class="posterCon">

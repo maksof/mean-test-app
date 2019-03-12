@@ -46,4 +46,11 @@ export class CommonService {
 		var year = date.getFullYear();
 		return year + '-' + month + '-' +day;
 	}
+	requiredArray(value) {
+		var cond = false;
+		if(value != null && value != undefined && value != '') {
+			if(value.length > 0) cond = true;
+		}
+		return cond;        
+	}
 }

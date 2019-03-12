@@ -92,11 +92,13 @@ export class MovieListComponent implements OnInit {
 					if (cat.id == m.categoryId) m.category = cat;
 				});
 			});
-			self.favoriteMovies.forEach(function(fMovie){
-				allMovies.forEach(function(m){
-					if (fMovie.id == m.id) m.favorite = true;
+			if (this.commonService.requiredArray(self.favoriteMovies)) {
+				self.favoriteMovies.forEach(function(fMovie){
+					allMovies.forEach(function(m){
+						if (fMovie.id == m.id) m.favorite = true;
+					});
 				});
-			});
+			}
 			this.movies = allMovies;
 			this.showLoader = false;
 		}, (error)=>{
@@ -120,11 +122,13 @@ export class MovieListComponent implements OnInit {
 							}
 						});
 					});
-					self.favoriteMovies.forEach(function(fMovie){
-						allMovies.forEach(function(m){
-							if (fMovie.id == m.id) m.favorite = true;
+					if (this.commonService.requiredArray(self.favoriteMovies)) {
+						self.favoriteMovies.forEach(function(fMovie){
+							allMovies.forEach(function(m){
+								if (fMovie.id == m.id) m.favorite = true;
+							});
 						});
-					});
+					}
 					this.movies = allMovies;
 				}else this.notificationService.info("Info", "No records found.");
 				this.showLoader = false;
