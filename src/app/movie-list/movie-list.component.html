@@ -20,8 +20,8 @@
 						</mat-form-field>
 					</div>
 					<div class="col-md-2">
-						<button mat-mini-fab color="primary" (click)="searchMovies()" class="mt-3"><i class="fa fa-search"></i></button>
-						<button *ngIf="filtered" mat-mini-fab color="warn" (click)="clearFilter()" class="mt-3"><i class="fa fa-search"></i></button>
+						<button mat-mini-fab color="primary" matTooltip="Search" (click)="searchMovies()" class="mt-3"><i class="fa fa-search"></i></button>
+						<button *ngIf="filtered" mat-mini-fab color="warn"  matTooltip="Clear Filter" (click)="clearFilter()" class="mt-3 ml-3"><i class="fa fa-times"></i></button>
 					</div>
 				</div>
 			</div>

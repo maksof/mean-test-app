@@ -22,7 +22,6 @@ export class AdminAddMoviesComponent implements OnInit {
 
 	ngOnInit() {
 		this.getAllCategory();
-		this.getAllMovies();
 	}
 	
 	toggleMainSec(){
@@ -32,6 +31,7 @@ export class AdminAddMoviesComponent implements OnInit {
 		this.showLoader = true;
 		this.sharedService.getAllCategories().subscribe(res =>{
 			this.showLoader = false;
+			this.getAllMovies();
 			this.allCategories = res.data;
 		},(error)=>{
 			this.showLoader = false;
@@ -39,7 +39,7 @@ export class AdminAddMoviesComponent implements OnInit {
 		})
 	}
 	addMovies(){
-		if (this.commonService.required(this.moviesObj.title) && this.commonService.required(this.moviesObj.year) && this.commonService.required(this.moviesObj.director) && this.commonService.required(this.moviesObj.categoryId) && this.commonService.required(this.moviesObj.description)) {
+		if (this.commonService.required(this.moviesObj.title) && this.commonService.required(this.moviesObj.year) && this.commonService.required(this.moviesObj.director) && this.commonService.required(this.moviesObj.categoryId) && this.commonService.required(this.moviesObj.description) && this.commonService.required(this.moviesObj.distribution) && this.commonService.required(this.moviesObj.photoUrl)) {
 			if (this.checkMovieYear(this.moviesObj.year)) {
 				this.sharedService.addMovies(this.moviesObj).subscribe(res=> {
 					this.showLoader = false;
@@ -97,7 +97,6 @@ export class AdminAddMoviesComponent implements OnInit {
 				self.updateMovieData = row;
 			}
 		});
-		console.log(this.updateMovieData);
 		document.getElementById("accessMovieUpdateModal").click();
 	}
 	deleteMovie(){
@@ -118,7 +117,7 @@ export class AdminAddMoviesComponent implements OnInit {
 		}
 	}
 	updateMovie(){
-		if (this.commonService.required(this.updateMovieData.title) && this.commonService.required(this.updateMovieData.year) && this.commonService.required(this.updateMovieData.director) && this.commonService.required(this.updateMovieData.categoryId) && this.commonService.required(this.updateMovieData.description) && this.commonService.required(this.updateMovieData.photoUrl)) {
+		if (this.commonService.required(this.updateMovieData.title) && this.commonService.required(this.updateMovieData.year) && this.commonService.required(this.updateMovieData.director) && this.commonService.required(this.updateMovieData.categoryId) && this.commonService.required(this.updateMovieData.description) && this.commonService.required(this.updateMovieData.photoUrl) && this.commonService.required(this.updateMovieData.distribution)) {
 			if (this.checkMovieYear(this.updateMovieData.year)) {
 				this.showLoader = true;
 				this.sharedService.updateMovie(this.updateMovieData).subscribe(res=> {

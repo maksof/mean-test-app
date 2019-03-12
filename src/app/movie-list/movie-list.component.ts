@@ -123,6 +123,8 @@ export class MovieListComponent implements OnInit {
 	}
 	clearFilter(){
 		this.filtered = false;
+		this.movieListObj.categoryId = '';
+		this.movieListObj.title = '';
 		this.getMovies();
 	}
 	removeFromFavorite(id){
