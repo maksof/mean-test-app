@@ -867,6 +867,13 @@
             "optional": false,
             "field": "password",
             "description": "<p>Password</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "oldPassword",
+            "description": "<p>Old Password</p>"
           }
         ]
       }
