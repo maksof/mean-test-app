@@ -16,7 +16,7 @@ export class SettingComponent implements OnInit {
 	userData:any = this.user;
 	showLoader:boolean = false;
 	mainToggle:boolean = true;
-
+	updatePassword:any = {};
 	ngOnInit() {
 	}
 
@@ -48,5 +48,22 @@ export class SettingComponent implements OnInit {
 		if (age > 100 || age <= 0) return false;
 		else return true;
 	}
-
+	changePassword(){
+		if (this.commonService.required(this.updatePassword.Password) && this.commonService.required(this.updatePassword.old) && this.commonService.required(this.updatePassword.confirmPassword)) {
+			if (this.updatePassword.Password == this.updatePassword.confirmPassword) {
+				this.updatePassword.email = this.userData.email;
+				this.showLoader = true;
+				this.sharedService.changePassword(this.updatePassword).subscribe(res=>{
+					this.showLoader = false;
+					if (res.status == "OK") {
+						this.updatePassword = {};
+						this.notificationService.success("Success","Password Successfully updated.");
+					}
+				},(error)=>{
+					this.showLoader = false;
+					this.notificationService.error("Error", "Internal Server Error, please try again later.");
+				})
+			}else this.notificationService.error("Error","Password Doesn't Match.");
+		}else this.notificationService.error("Error","Please fill all the required (*) fields.");
+	}
 }

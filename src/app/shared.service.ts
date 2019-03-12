@@ -91,9 +91,12 @@ export class SharedService {
 	}
 	changePassword(obj){
 		var md5 = new Md5();
-		obj.password = md5.appendStr(obj.password).end();
-		obj.oldPassword = md5.appendStr(obj.oldPassword).end();
-		return this.appService.post("user/changePassword",obj);
+		var md6 = new Md5();
+		var cObj:any = {};
+		cObj.oldPassword = md5.appendStr(obj.old).end();
+		cObj.password = md6.appendStr(obj.Password).end();
+		cObj.email = obj.email;
+		return this.appService.post("user/changePassword",cObj);
 	}
 	editProfile(obj){
 		return this.appService.post("user/updateProfile",obj);

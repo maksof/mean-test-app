@@ -63,7 +63,6 @@ export class UserSuggestionsComponent implements OnInit {
 		document.getElementById("accessRejMovieModal").click();
 	}
 	acceptMovie(){
-		console.log("WTH");
 		if (this.commonService.required(this.movieAcceptId)) {
 			this.showLoader = true;
 			this.sharedService.acceptSuggestedMovies(this.movieAcceptId).subscribe(res=>{
@@ -80,7 +79,6 @@ export class UserSuggestionsComponent implements OnInit {
 		}
 	}
 	rejectMovie(){
-		console.log("WTG");
 		if (this.commonService.required(this.movieRejectId)) {
 			this.showLoader = true;
 			this.sharedService.rejectSuggestedMovies(this.movieRejectId).subscribe(res=>{

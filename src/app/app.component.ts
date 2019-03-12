@@ -54,6 +54,6 @@ export class AppComponent {
 			}else if(user.role == "ADMIN" && this.route.url == '/profile'){
 				this.route.navigateByUrl("/admin");
 			}
-		}else this.route.navigateByUrl("/login");
+		}
 	}
 }
