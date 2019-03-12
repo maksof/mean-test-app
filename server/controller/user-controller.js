@@ -155,4 +155,3 @@ exports.updateProfile = function (request,response) {
         common.sendResponseBack(response,'FAIL','Please fill all the required fields!..',null);
     }
 }
-
