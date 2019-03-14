@@ -515,17 +515,30 @@ exports.getMovies = function (request, response) {
 
     var whereClause = {'isDeleted': 0, 'isApproved': 1};
     var categoryId = request.query.categoryId ? request.query.categoryId : '';
-    var title = request.query.title ? request.query.title : '';
-    if(categoryId) whereClause.categoryId = categoryId;
-    if(title) whereClause.title = { $like: title };
-
-    tbl_movies.findAll({where: whereClause}).then(function(movies) {
-        if(movies.length > 0) common.sendResponseBack(response, 'OK', 'Movies fetched successfully!', movies);
-        else common.sendResponseBack(response, 'OK', 'No records found!', null);
-    }, (error) => {
-        common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
-        logger.error( 'Error occured on '+new Date()+' with reason' + error);
-    });
+    var userId = request.query.userId; 
+    if(common.required(userId)) {
+	    var categoryId = request.query.categoryId ? request.query.categoryId : '';
+	    var title = request.query.title ? request.query.title : '';
+	    if(categoryId) whereClause.categoryId = categoryId;
+	    if(title) whereClause.title = { $like: title };
+	    tbl_grades.belongsTo(tbl_movies, {foreignKey:'movieId'});
+	    var query = { where : {'userId' : userId},
+	        include : [{
+	            model : tbl_movies,
+	            attributes : ['title','year','director','distribution','description','photoUrl'],
+	            where : {'isDeleted': 0, 'isApproved': 1}
+	        }]
+	    }
+	    tbl_grades.findAll(query)
+	    .then(function(movies) {
+	        
+	        common.sendResponseBack(response,'OK','data fetched successfully',movies)
+	    }, (error) => {
+	        console.log("error",error)
+	        common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+	        logger.error( 'Error occured on '+new Date()+' with reason' + error);
+	    });
+    }  else common.sendResponseBack(response, 'FAIL', 'Please pass the user id.', null);
 }
 
 /**
@@ -547,7 +560,7 @@ exports.gradeMovies = function(request,response) {
     if(common.required(data.userId) && common.required(data.movieId) && common.required(data.grade)) {
         tbl_grades.findAll({where : {userId: data.userId, movieId: data.movieId}}).then(function(res) {
             if(res.length>0) {
-                tbl_grades.update({grade : data.grade},{where :{userId : data.userId}}).then(function(result){
+                tbl_grades.update({grade : data.grade},{where :{movieId : data.movieId}}).then(function(result){
                     common.sendResponseBack(response, 'OK', 'grade updated successfully!', res);
                 });
             } else {
@@ -581,7 +594,7 @@ exports.viewGradeMovies = function(request,response) {
     tbl_grades.belongsTo(tbl_movies, { foreignKey: 'movieId' });
     tbl_grades.belongsTo(tbl_user, { foreignKey: 'userId' });
 
-    tbl_grades.findAll({ 
+    tbl_grades.findAndCountAll({ 
         attributes: ['grade', 'date'],
         include: [
             {
@@ -595,10 +608,10 @@ exports.viewGradeMovies = function(request,response) {
         ],
         limit: limit,
         offset: offset,
-        order: '"date" DESC'
+        order: '"date" DESC',
     }).then(function (res) {
-        if(res.length >0){
-            common.sendResponseBack(response,'OK','records fetched successfully.', res);
+        if(res.rows.length >0){
+            common.sendResponseBack(response,'OK','records fetched successfully.', {data: res.rows,total : res.count});
         } else {
             common.sendResponseBack(response,'OK','No records found!',null);
         }
