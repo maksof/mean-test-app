@@ -23,6 +23,11 @@
 								<td>{{commonService.formateDate(g.date)}}</td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<td *ngIf="allGrades.length == 0" colspan="4" class="text-left">No Records Found.</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
