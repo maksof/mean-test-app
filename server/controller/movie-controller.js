@@ -617,3 +617,30 @@ exports.viewGradeMovies = function(request,response) {
         logger.error( 'Error occured on '+new Date()+' with reason' + error);
     });     
 }
+
+/**
+ * @api {get} movies/movieWithTimePeriodBasis Movie With Time Period Basis
+ * @apiName Movie With Time Period Basis
+ * @apiGroup Movies
+ *
+ * @apiParam {string} years Years
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+exports.movieWithTimePeriodBasis = function(req,res){
+    if(!req.query.years) return res.status(200).json({success : false ,"msg" : "years is missing"})
+    var year = req.query.years.split('-');
+    var rangeMovies = [];
+    tbl_movies.findAll().then(function(results){
+        results.forEach(function(row){
+            var yearArr = row.year.split('-');
+            if(parseInt(year[0]) >= parseInt(yearArr[0]) && parseInt(year[1]) <= parseInt(yearArr[1])){
+                rangeMovies.push(row)
+            }
+        });
+
+        if(rangeMovies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
+        res.status(200).json({"movies" : rangeMovies ,"msg" : "fetched successfully"})
+    })
+}
