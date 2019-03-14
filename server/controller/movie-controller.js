@@ -504,8 +504,7 @@ exports.getAllFavoritesMoviesOfUser = function (request, response) {
  * @api {get} movies/getMovies Get Movies API
  * @apiName Get Movies API
  * @apiGroup Movies
- *
- * @apiParam {number} categoryId Category Id
+ * @apiParam {number} userId user Id
  * @apiParam {string} title Title
  *
  * @apiSuccess {string} status Status of the request.
@@ -522,9 +521,10 @@ exports.getMovies = function (request, response) {
 	    var query = { where : {'userId' : userId},
 	        include : [{
 	            model : tbl_movies,
-	            attributes : ['title','year','director','distribution','description','photoUrl'],
+	            attributes : ['categoryId','title','year','director','distribution','description','photoUrl'],
 	            where : {'isDeleted': 0, 'isApproved': 1}
-	        }]
+	        }
+	        ]
 	    }
 	    tbl_grades.findAll(query)
 	    .then(function(movies) {
