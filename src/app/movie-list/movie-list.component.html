@@ -28,19 +28,19 @@
 			<div class="col-12" *ngFor = "let m of movies">
 				<div class="movieMainCon">
 					<div class="posterCon">
-						<img src="{{m.photoUrl}}" alt="Movie Poster">
+						<img src="{{m.tbl_movie.photoUrl}}" alt="Movie Poster">
 					</div>
 					<div class="MoviedataCon" >
-						<h2>{{m.title}} ({{m.year}})
-							<a *ngIf="!m.favorite" title="Add to Favorite" (click)="addToFavorite(m.id)" class="float-right text-danger"><i class="fa fa-heart-o"></i></a>
-							<a *ngIf="m.favorite" title="Remove from Favorite" (click)="removeFromFavorite(m.id)" class="float-right text-danger"><i class="fa fa-heart"></i></a>
+						<h2>{{m.tbl_movie.title}} ({{m.tbl_movie.year}})
+							<a *ngIf="!m.favorite" title="Add to Favorite" (click)="addToFavorite(m.tbl_movie.id)" class="float-right text-danger"><i class="fa fa-heart-o"></i></a>
+							<a *ngIf="m.favorite" title="Remove from Favorite" (click)="removeFromFavorite(m.tbl_movie.id)" class="float-right text-danger"><i class="fa fa-heart"></i></a>
 						</h2>
-						<p class="cat"><span>{{m.category.categoryName}}</span></p>
-						<p>{{m.description}}</p>
-						<p><b>Director:</b>&nbsp;<span>{{m.director}}</span></p>
-						<p><b>Distributor:</b>&nbsp;<span>{{m.distribution}}</span></p>
+						<p class="cat"><span>{{m.tbl_movie.category.categoryName}}</span></p>
+						<p>{{m.tbl_movie.description}}</p>
+						<p><b>Director:</b>&nbsp;<span>{{m.tbl_movie.director}}</span></p>
+						<p><b>Distributor:</b>&nbsp;<span>{{m.tbl_movie.distribution}}</span></p>
 						<p class="text-warning">
-							<i *ngFor="let item of star; let i=index" (click)="setStartList(i,m.id)" class="fa pointer starRating" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+							<i *ngFor="let item of star; let i=index" (click)="setStartList(i,m.id)" class="fa pointer starRating" [ngClass]="{'fa-star-o':!item,'fa-star':item}"></i>
 						</p>
 					</div>
 				</div>

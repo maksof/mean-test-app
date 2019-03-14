@@ -84,18 +84,18 @@ export class MovieListComponent implements OnInit {
 	}
 	getMovies(){
 		this.showLoader = true;
-		this.sharedService.getAllMovies().subscribe(res=>{
+		this.sharedService.getAllMovies(this.user.id).subscribe(res=>{
 			var self = this;
 			var allMovies = res.data;
 			allMovies.forEach(function(m){
 				self.allCategories.forEach(function(cat){
-					if (cat.id == m.categoryId) m.category = cat;
+					if (cat.id == m.tbl_movie.categoryId) m.category = cat;
 				});
 			});
 			if (this.commonService.requiredArray(self.favoriteMovies)) {
 				self.favoriteMovies.forEach(function(fMovie){
 					allMovies.forEach(function(m){
-						if (fMovie.id == m.id) m.favorite = true;
+						if (fMovie.id == m.tbl_movie.id) m.favorite = true;
 					});
 				});
 			}
@@ -109,7 +109,7 @@ export class MovieListComponent implements OnInit {
 	searchMovies(){
 		if (this.commonService.required(this.movieListObj.categoryId) || this.commonService.required(this.movieListObj.title)) {
 			this.showLoader = true;
-			this.sharedService.searchMovies(this.movieListObj.categoryId, this.movieListObj.title).subscribe(res=>{
+			this.sharedService.searchMovies(this.movieListObj.categoryId, this.movieListObj.title, this.user.id).subscribe(res=>{
 				this.filtered = true;
 				if (this.commonService.required(res.data)) {
 					this.movies = [];
@@ -117,7 +117,7 @@ export class MovieListComponent implements OnInit {
 					var allMovies = res.data;
 					allMovies.forEach(function(m){
 						self.allCategories.forEach(function(cat){
-							if (m.categoryId == cat.id) {
+							if (m.tbl_movie.categoryId == cat.id) {
 								m.category = cat;
 							}
 						});
@@ -125,7 +125,7 @@ export class MovieListComponent implements OnInit {
 					if (this.commonService.requiredArray(self.favoriteMovies)) {
 						self.favoriteMovies.forEach(function(fMovie){
 							allMovies.forEach(function(m){
-								if (fMovie.id == m.id) m.favorite = true;
+								if (fMovie.id == m.tbl_movie.id) m.favorite = true;
 							});
 						});
 					}

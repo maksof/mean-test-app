@@ -11,6 +11,7 @@ import { NotificationsService } from 'angular2-notifications';
 export class AdminAddMoviesComponent implements OnInit {
 
 	constructor(public commonService:CommonService, private notificationsService:NotificationsService, private sharedService:SharedService) { }
+	user = JSON.parse(localStorage.getItem('user'));
 	allCategories:any = [];
 	allMovies:any = [];
 	moviesObj:any = {};
@@ -69,7 +70,7 @@ export class AdminAddMoviesComponent implements OnInit {
 	
 	getAllMovies(){
 		this.showLoader = true;
-		this.sharedService.getAllMovies().subscribe(res=>{
+		this.sharedService.getAllMovies(this.user.id).subscribe(res=>{
 			var self = this;
 			var movies = res.data;
 			movies.forEach(function(row){
