@@ -512,9 +512,6 @@ exports.getAllFavoritesMoviesOfUser = function (request, response) {
  * @apiSuccess {string} message Message corresponding to request.
 */
 exports.getMovies = function (request, response) {
-
-    var whereClause = {'isDeleted': 0, 'isApproved': 1};
-    var categoryId = request.query.categoryId ? request.query.categoryId : '';
     var userId = request.query.userId; 
     if(common.required(userId)) {
 	    var categoryId = request.query.categoryId ? request.query.categoryId : '';
