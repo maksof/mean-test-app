@@ -618,6 +618,16 @@ exports.viewGradeMovies = function(request,response) {
     });     
 }
 
+/**
+ * @api {get} movies/movieWithTimePeriodBasis Movie With Time Period Basis
+ * @apiName Movie With Time Period Basis
+ * @apiGroup Movies
+ *
+ * @apiParam {string} years Offset
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
 exports.movieWithTimePeriodBasis = function(req,res){
     if(!req.query.years) return res.status(200).json({success : false ,"msg" : "years is missing"})
     var year = req.query.years.split('-');
