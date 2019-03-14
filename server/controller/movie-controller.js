@@ -623,7 +623,7 @@ exports.viewGradeMovies = function(request,response) {
  * @apiName Movie With Time Period Basis
  * @apiGroup Movies
  *
- * @apiParam {string} years Offset
+ * @apiParam {string} years Years
  *
  * @apiSuccess {string} status Status of the request.
  * @apiSuccess {string} message Message corresponding to request.
