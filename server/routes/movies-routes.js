@@ -104,6 +104,11 @@ var router = function(){
 			return movieController.viewGradeMovies(req, res);
 		});
 
+	movieRoute.route('/movieWithTimePeriodBasis')
+		.get(function(req,res) {
+			return movieController.movieWithTimePeriodBasis(req, res);
+		});
+
     return movieRoute;
 }
 
