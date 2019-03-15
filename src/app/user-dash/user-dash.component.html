@@ -6,41 +6,16 @@
 		<div class="row">
 			<div class="col-4">
 				<mat-form-field>
-					<mat-select placeholder="Select Time Period">
-						<mat-option *ngFor="let row of timePeriod" value="{{row.id}}">{{row.timePeriod}}</mat-option>
+					<mat-select placeholder="Select Time Period" [(ngModel)]="timeId" (ngChange)="getTimePeriodDashBoarData()">
+						<mat-option *ngFor="let row of timePeriod" [value]="row.id">{{row.timePeriod}}</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>
 			<div class="col-12">
 				<div class="card shadow form-group p-3">
 					<div class="d-block">
-						<canvas baseChart
-						[datasets]="lineChartData"
-						[labels]="lineChartLabels"
-						[options]="lineChartOptions"
-						[colors]="lineChartColors"
-						[legend]="lineChartLegend"
-						[chartType]="lineChartType"></canvas>
+						<canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"  [colors]="barColors" [legend]="barChartLegend" [chartType]="barChartType" ></canvas>
 					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="card shadow form-group">
-					<div class="d-block">
-						<canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card shadow form-group">
-					<canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"></canvas>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card shadow form-group">
-					<canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
 				</div>
 			</div>
 		</div>
