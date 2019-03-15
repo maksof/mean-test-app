@@ -515,6 +515,7 @@ exports.getMovies = function (request, response) {
     if(common.required(userId)) {
 	    var categoryId = request.query.categoryId ? request.query.categoryId : '';
 	    var title = request.query.title ? request.query.title : '';
+        var whereClause = {};
 	    if(categoryId) whereClause.categoryId = categoryId;
 	    if(title) whereClause.title = { $like: title };
 	    tbl_movies.belongsTo(tbl_grades, {foreignKey:'id',targetKey : 'movieId'});
