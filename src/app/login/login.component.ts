@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 						this.loginObj = {};
 						this.notificationService.success("Success", "Successfully login");
 					}else{
-						this.notificationService.info("Info", res.message);
+						this.notificationService.error("Info", res.message);
 					}
 				},(error)=>{
 					this.showLoader = false;

@@ -39,11 +39,18 @@ export class MovieListComponent implements OnInit {
 		obj.grade = rate;
 		this.sharedService.rateMovie(obj).subscribe(res=>{
 			if (res.status == "OK") {
-				// this.movies.forEach(function(row){
-				// 	if (row.) {
-						
-				// 	}
-				// });
+				this.movies.forEach(function(row){
+					if (row.id == movieId) {
+						row.grade = [];
+						for (var i = 0; i < rate; i++) {
+							row.grade.push(true);
+						}
+						var count = 10 - rate;
+						for (var j = 0; j < count; j++) {
+							row.grade.push(false);
+						}
+					}
+				});
 				this.snackBar.open('Thanks For Rating.', '', {
 					duration: 2000,
 				});
