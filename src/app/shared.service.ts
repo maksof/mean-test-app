@@ -49,8 +49,8 @@ export class SharedService {
 	addMovies(obj){
 		return this.appService.post("movies/addMovie",obj);
 	}
-	getAllMovies(){
-		return this.appService.get("movies/getMovies");
+	getAllMovies(userId){
+		return this.appService.get("movies/getMovies?userId="+userId);
 	}
 	deleteMovie(id){
 		return this.appService.get("movies/deleteMovie?movieId="+id);
@@ -79,8 +79,8 @@ export class SharedService {
 	removeFavoriteMovie(obj){
 		return this.appService.post("movies/removeMovieFromFavorites",obj);
 	}
-	searchMovies(category, title){
-		return this.appService.get("movies/getMovies?categoryId="+category+"&title="+title);
+	searchMovies(category, title,userId){
+		return this.appService.get("movies/getMovies?categoryId="+category+"&title="+title+"userId"+userId);
 	}
 	changePassword(obj){
 		var md5 = new Md5();
@@ -99,5 +99,8 @@ export class SharedService {
 	}
 	rateMovie(obj){
 		return this.appService.post("movies/gradeMovies",obj);
+	}
+	getMoviesOnTimePeriod(id){
+		return this.appService.get("movieWithTimePeriodBasis?periodId="+id);
 	}
 }

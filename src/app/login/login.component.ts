@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import {SharedService} from '../shared.service';
 import {CommonService} from '../common.service';
 import { Router } from '@angular/router'
@@ -11,11 +11,12 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 })
 export class LoginComponent implements OnInit {
 
-	constructor(public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService, public route:Router) {}
+	constructor(private elementRef:ElementRef, public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService, public route:Router) {}
 	showLoader:boolean = false;
 	loginObj:any = {};
 
 	ngOnInit() {
+		this.onKeyPress();
 	}
 	loginUser(){
 		if (this.commonService.required(this.loginObj.email) && this.commonService.required(this.loginObj.Password)) {
@@ -44,4 +45,15 @@ export class LoginComponent implements OnInit {
 		}else{this.notificationService.error('Error','Please fill all the required (*) fields.');}
 	}
 
+	onKeyPress(){
+		var allInput = this.elementRef.nativeElement.querySelectorAll('input');
+		for(var i=0;i<allInput.length;i++){
+			allInput[i].addEventListener("keyup", function(event) {
+				event.preventDefault();
+				if (event.keyCode === 13) {
+					document.getElementById("lBtn").click();
+				}
+			});
+		}
+	}
 }

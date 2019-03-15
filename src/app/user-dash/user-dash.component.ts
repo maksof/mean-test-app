@@ -54,13 +54,32 @@ export class UserDashComponent implements OnInit {
 	public doughnutChartType:string = 'doughnut';
 
 	mainToggle:boolean = true;
-	
+	showLoader:boolean = false;
+	timePeriod:any = [];
 	ngOnInit() {
-		this.notificationService.info("Notification","Test");
+		this.getAllTimePeriod();
 	}
 
 	toggleMainSec(){
 		this.mainToggle = !this.mainToggle;
 	}
 
+	getAllTimePeriod(){
+		this.showLoader = true;
+		this.sharedService.getAllTimePeriod().subscribe(res=>{
+			this.showLoader = false;
+			this.timePeriod = res.data;
+		},(error)=>{
+			this.showLoader = false;
+			this.notificationService.error("Error!","Internal Server Error.");
+		})
+	}
+	getMoviesOnTimePeriod(id){
+		this.showLoader = true;
+		this.sharedService.getMoviesOnTimePeriod(id).subscribe(res=>{
+			this.showLoader = false;
+		},(error)=>{
+			this.showLoader = false;
+		})
+	}
 }
