@@ -16,7 +16,7 @@ export class ViewGradesComponent implements OnInit {
 	showLoader:boolean = false;
 	allGrades:any = [];
 	offset = 0;
-	limit = 1;
+	limit = 10;
 	private totalItems: any[];
 	pager: any = {};
 	pagedItems: any[];
@@ -43,7 +43,7 @@ export class ViewGradesComponent implements OnInit {
 	}
 	setPage(page: number) {
 		this.start = false;
-        this.pager = this.commonService.getPager(this.totalItems, page);
+        this.pager = this.commonService.getPager(this.totalItems, page, this.limit);
 		if(page > this.pager.endPage) page = this.pager.endPage;
 		if(page < 1) page = 1;
         this.offset = (page - 1) * this.limit;

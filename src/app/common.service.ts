@@ -53,7 +53,7 @@ export class CommonService {
 		}
 		return cond;        
 	}
-	getPager(totalItems: number, currentPage: number = 1, pageSize: number = 1) {
+	getPager(totalItems: number, currentPage: number = 1, pageSize: number) {
         // calculate total pages
         let totalPages = Math.ceil(totalItems / pageSize);
 
