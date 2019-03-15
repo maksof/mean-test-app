@@ -630,7 +630,7 @@ exports.viewGradeMovies = function(request,response) {
 */
 
 exports.movieWithTimePeriodBasis = function(req,res){
-    if(!req.query.periodId) return res.status(200).json({success : false ,"msg" : "years is missing"})
+    if(!req.query.periodId) return res.status(200).json({success : false ,"msg" : "periodId is missing"})
     var periodId = req.query.periodId;
     var rangeMovies = [];
     tbl_time_periods.findAll({where:{id:periodId}}).then(function(results){
@@ -655,7 +655,6 @@ exports.movieWithTimePeriodBasis = function(req,res){
                         }
                     });
                     mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : '';
-                    // console.log(mvi.dataValues.avg)
                 });
                 if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
                 res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
@@ -664,3 +663,31 @@ exports.movieWithTimePeriodBasis = function(req,res){
     })
 }
 
+exports.movieWithCategoryBasis = function(req,res){
+    if(!req.query.categoryId) return res.status(200).json({success : false ,"msg" : "categoryId is missing"})
+    var categoryId = req.query.categoryId;
+    var rangeMovies = [];
+    tbl_movies.findAll({where : {
+        categoryId : categoryId
+    }}).then(function(movies){
+        var movId = [];
+        movies.forEach(function(row){
+            if(movId.indexOf(row.id) == -1) movId.push(row.id);
+        })
+        tbl_grades.findAll({where : {movieId : {$in : movId}}}).then(function(grade){
+            movies.forEach(function(mvi){
+                var grdSum = 0;
+                count = 0;
+                grade.forEach(function(grd){
+                    if(mvi.id == grd.movieId){
+                        grdSum +=grd.grade;
+                        count++;
+                    }
+                });
+                mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : '';
+            });
+            if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
+            res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
+        });
+    })
+}

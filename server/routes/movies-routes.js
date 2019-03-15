@@ -109,6 +109,11 @@ var router = function(){
 			return movieController.movieWithTimePeriodBasis(req, res);
 		});
 
+	movieRoute.route('/movieWithCategoryBasis')
+		.get(function(req,res) {
+			return movieController.movieWithCategoryBasis(req, res);
+		});
+
     return movieRoute;
 }
 
