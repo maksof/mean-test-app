@@ -17,6 +17,11 @@ export class ViewGradesComponent implements OnInit {
 	allGrades:any = [];
 	offset = 0;
 	limit = 10;
+	private totalItems: any[];
+	pager: any = {};
+	pagedItems: any[];
+	start = true;
+
 	ngOnInit() {
 		this.getAllMovieGrades();
 	}
@@ -30,14 +35,25 @@ export class ViewGradesComponent implements OnInit {
 			this.showLoader = false;
 			if (res.status == "OK") {
 				if (this.commonService.requiredArray(res.data)) {
-					this.allGrades = res.data;
+					this.allGrades = res.data.data;
+					this.totalItems = res.data.total;
+					if (this.start == true)this.setPage(1);
 				}
 			}else{
 				this.notificationsService.info("Info", res.message);
-			}			
+			}
 		},(error)=>{
 			this.showLoader = false;
 			this.notificationsService.error('Error','Internal Server Error, please try again later.');
 		})
 	}
+	setPage(page: number) {
+		this.start = false;
+        this.pager = this.commonService.getPager(this.totalItems, page, this.limit);
+		if(page > this.pager.endPage) page = this.pager.endPage;
+		if(page < 1) page = 1;
+        this.offset = (page - 1) * this.limit;
+        this.getAllMovieGrades();
+    }
+ 
 }
