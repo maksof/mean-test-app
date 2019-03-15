@@ -17,9 +17,9 @@ export class ViewGradesComponent implements OnInit {
 	allGrades:any = [];
 	offset = 0;
 	limit = 10;
-	private totalItems: any[];
+	private totalItems: any = [];
 	pager: any = {};
-	pagedItems: any[];
+	pagedItems: any = [];
 	start = true;
 
 	ngOnInit() {
@@ -33,9 +33,15 @@ export class ViewGradesComponent implements OnInit {
 		this.showLoader = true;
 		this.sharedService.viewGrade(this.limit, this.offset).subscribe(res=>{
 			this.showLoader = false;
-			this.allGrades = res.data.data;
-			this.totalItems = res.data.total;
-			if (this.start == true)this.setPage(1);
+			if (res.status == "OK") {
+				if (this.commonService.requiredArray(res.data)) {
+					this.allGrades = res.data.data;
+					this.totalItems = res.data.total;
+					if (this.start == true)this.setPage(1);
+				}
+			}else{
+				this.notificationsService.info("Info", res.message);
+			}
 		},(error)=>{
 			this.showLoader = false;
 			this.notificationsService.error('Error','Internal Server Error, please try again later.');

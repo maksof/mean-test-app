@@ -29,14 +29,19 @@ export class UserSuggestionsComponent implements OnInit {
 		this.showLoader = true;
 		this.sharedService.getSuggestedMovies().subscribe(res=>{
 			var self = this;
-			var movies = res.data;
-			movies.forEach(function(row){
-				self.allCategories.forEach(function(cat){
-					if (row.categoryId == cat.id) {
-						row.category = cat;
-					}
+			var movies = [];
+			if (this.commonService.requiredArray(res.data)) {
+				movies = res.data;
+				movies.forEach(function(row){
+					self.allCategories.forEach(function(cat){
+						if (row.categoryId == cat.id) {
+							row.category = cat;
+						}
+					});
 				});
-			});
+			}else{
+				this.notificationsService.info("Info", res.message);
+			}
 			this.allSuggestedMovies = movies;
 			this.showLoader = false;
 		},(error)=>{

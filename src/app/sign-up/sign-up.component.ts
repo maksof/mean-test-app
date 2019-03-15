@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import {SharedService} from '../shared.service';
 import {CommonService} from '../common.service';
 import { Router } from '@angular/router'
@@ -10,13 +10,14 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 })
 export class SignUpComponent implements OnInit {
 
-	constructor(public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService, public router:Router) { }
+	constructor(private elementRef:ElementRef, public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService, public router:Router) { }
 
 	signupObj:any = {};
 	public data : any;
 	showLoader:boolean = false;
 
 	ngOnInit() {
+		this.onKeyPress();
 	}
 	registerUser(){
 		if (this.commonService.required(this.signupObj.email) && this.commonService.required(this.signupObj.first_name) && this.commonService.required(this.signupObj.last_name) && this.commonService.required(this.signupObj.phone) && this.commonService.required(this.signupObj.age) && this.commonService.required(this.signupObj.password) && this.commonService.required(this.signupObj.confirmPassword) && this.commonService.required(this.signupObj.gender)) {
@@ -49,5 +50,17 @@ export class SignUpComponent implements OnInit {
 	checkValidAge(age){
 		if (age > 100 || age <= 0) return false;
 		else return true;
+	}
+	onKeyPress(){
+		var allInput = this.elementRef.nativeElement.querySelectorAll('input');
+		for(var i=0;i<allInput.length;i++){
+			allInput[i].addEventListener("keyup", function(event) {
+				event.preventDefault();
+					if (event.keyCode === 13) {
+					document.getElementById("sBtn").click();
+					console.log("onKeyPress");
+				}
+			});
+		}
 	}
 }

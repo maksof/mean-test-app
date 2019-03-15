@@ -6,8 +6,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="row">
-					<div class="col-md-4"></div>
-					<div class="col-md-3">
+					<div class="col-md-3 offset-md-4">
 						<mat-form-field class="w-100">
 							<mat-select placeholder="Select Category" [(ngModel)]="movieListObj.categoryId">
 								<mat-option *ngFor = "let c of allCategories" [value]="c.id">{{c.categoryName}}</mat-option>
@@ -40,7 +39,7 @@
 						<p><b>Director:</b>&nbsp;<span>{{m.director}}</span></p>
 						<p><b>Distributor:</b>&nbsp;<span>{{m.distribution}}</span></p>
 						<p class="text-warning">
-							<i *ngFor="let item of star; let i=index" (click)="setStartList(i,m.id)" class="fa pointer starRating" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+							<i *ngFor="let item of m.grade; let i=index" (click)="setStartList(i,m.id)" class="fa pointer starRating" [ngClass]="{'fa-star-o':!item,'fa-star':item}"></i>
 						</p>
 					</div>
 				</div>

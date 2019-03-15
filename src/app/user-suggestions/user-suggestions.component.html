@@ -40,6 +40,11 @@
 										</td>
 									</tr>
 								</tbody>
+								<tfoot>
+									<tr>
+										<td *ngIf="allSuggestedMovies.length == 0" colspan="8" class="text-left">No Records Found.</td>
+									</tr>
+								</tfoot>
 							</table>
 						</div>
 					</div>
