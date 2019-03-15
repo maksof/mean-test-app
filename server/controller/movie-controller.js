@@ -635,14 +635,31 @@ exports.movieWithTimePeriodBasis = function(req,res){
     var rangeMovies = [];
     tbl_time_periods.findAll({where:{id:periodId}}).then(function(results){
         var timePeriod = results[0].dataValues.timePeriod.split('-');
-        console.log(timePeriod)
         tbl_movies.findAll({where : {
             year : {
                 $between : timePeriod
             }
         }}).then(function(movies){
-            if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
-            res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
+            var movId = [];
+            movies.forEach(function(row){
+                if(movId.indexOf(row.id) == -1) movId.push(row.id);
+            })
+            tbl_grades.findAll({where : {movieId : {$in : movId}}}).then(function(grade){
+                movies.forEach(function(mvi){
+                    var grdSum = 0;
+                    count = 0;
+                    grade.forEach(function(grd){
+                        if(mvi.id == grd.movieId){
+                            grdSum +=grd.grade;
+                            count++;
+                        }
+                    });
+                    mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : '';
+                    // console.log(mvi.dataValues.avg)
+                });
+                if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
+                res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
+            });
         })
     })
 }
