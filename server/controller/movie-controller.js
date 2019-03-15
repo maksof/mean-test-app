@@ -519,7 +519,7 @@ exports.getMovies = function (request, response) {
 	    if(title) whereClause.title = { $like: title };
 	    tbl_movies.belongsTo(tbl_grades, {foreignKey:'id',targetKey : 'movieId'});
 	    var query = { 
-            attributes : ['categoryId','title','year','director','distribution','description','photoUrl'],
+            attributes : ['id','categoryId','title','year','director','distribution','description','photoUrl'],
             where : {'isDeleted': 0, 'isApproved': 1},
             include : [{
                 required : false,
