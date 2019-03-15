@@ -74,5 +74,12 @@ export class UserDashComponent implements OnInit {
 			this.notificationService.error("Error!","Internal Server Error.");
 		})
 	}
-
+	getMoviesOnTimePeriod(id){
+		this.showLoader = true;
+		this.sharedService.getMoviesOnTimePeriod(id).subscribe(res=>{
+			this.showLoader = false;
+		},(error)=>{
+			this.showLoader = false;
+		})
+	}
 }

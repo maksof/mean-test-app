@@ -100,4 +100,7 @@ export class SharedService {
 	rateMovie(obj){
 		return this.appService.post("movies/gradeMovies",obj);
 	}
+	getMoviesOnTimePeriod(id){
+		return this.appService.get("movieWithTimePeriodBasis?periodId="+id);
+	}
 }

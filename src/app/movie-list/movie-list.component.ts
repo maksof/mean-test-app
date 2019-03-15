@@ -88,14 +88,15 @@ export class MovieListComponent implements OnInit {
 			var self = this;
 			var allMovies = res.data;
 			allMovies.forEach(function(m){
+				console.log(m);
 				self.allCategories.forEach(function(cat){
-					if (cat.id == m.tbl_movie.categoryId) m.category = cat;
+					if (cat.id == m.categoryId) m.category = cat;
 				});
 			});
 			if (this.commonService.requiredArray(self.favoriteMovies)) {
 				self.favoriteMovies.forEach(function(fMovie){
 					allMovies.forEach(function(m){
-						if (fMovie.id == m.tbl_movie.id) m.favorite = true;
+						if (fMovie.id == m.id) m.favorite = true;
 					});
 				});
 			}
@@ -117,7 +118,7 @@ export class MovieListComponent implements OnInit {
 					var allMovies = res.data;
 					allMovies.forEach(function(m){
 						self.allCategories.forEach(function(cat){
-							if (m.tbl_movie.categoryId == cat.id) {
+							if (m.categoryId == cat.id) {
 								m.category = cat;
 							}
 						});
@@ -125,7 +126,7 @@ export class MovieListComponent implements OnInit {
 					if (this.commonService.requiredArray(self.favoriteMovies)) {
 						self.favoriteMovies.forEach(function(fMovie){
 							allMovies.forEach(function(m){
-								if (fMovie.id == m.tbl_movie.id) m.favorite = true;
+								if (fMovie.id == m.id) m.favorite = true;
 							});
 						});
 					}
