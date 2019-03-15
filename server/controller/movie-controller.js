@@ -517,25 +517,25 @@ exports.getMovies = function (request, response) {
 	    var title = request.query.title ? request.query.title : '';
 	    if(categoryId) whereClause.categoryId = categoryId;
 	    if(title) whereClause.title = { $like: title };
-	    tbl_grades.belongsTo(tbl_movies, {foreignKey:'movieId'});
-	    var query = { where : {'userId' : userId},
-	        include : [{
-	            model : tbl_movies,
-	            attributes : ['categoryId','title','year','director','distribution','description','photoUrl'],
-	            where : {'isDeleted': 0, 'isApproved': 1}
-	        }
-	        ]
+	    tbl_movies.belongsTo(tbl_grades, {foreignKey:'id',targetKey : 'movieId'});
+	    var query = { 
+            attributes : ['categoryId','title','year','director','distribution','description','photoUrl'],
+            where : {'isDeleted': 0, 'isApproved': 1},
+            include : [{
+                required : false,
+                model : tbl_grades,
+                where : {'userId' : userId}
+	        }]
 	    }
-	    tbl_grades.findAll(query)
+	    tbl_movies.findAll(query)
 	    .then(function(movies) {
-	        
 	        common.sendResponseBack(response,'OK','data fetched successfully',movies)
 	    }, (error) => {
 	        console.log("error",error)
 	        common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
 	        logger.error( 'Error occured on '+new Date()+' with reason' + error);
 	    });
-    }  else common.sendResponseBack(response, 'FAIL', 'Please pass the user id.', null);
+    }  else common.sendResponseBack(response, 'FAIL', 'Please pass the userId.', null);
 }
 
 /**
@@ -628,19 +628,22 @@ exports.viewGradeMovies = function(request,response) {
  * @apiSuccess {string} status Status of the request.
  * @apiSuccess {string} message Message corresponding to request.
 */
-exports.movieWithTimePeriodBasis = function(req,res){
-    if(!req.query.years) return res.status(200).json({success : false ,"msg" : "years is missing"})
-    var year = req.query.years.split('-');
-    var rangeMovies = [];
-    tbl_movies.findAll().then(function(results){
-        results.forEach(function(row){
-            var yearArr = row.year.split('-');
-            if(parseInt(year[0]) >= parseInt(yearArr[0]) && parseInt(year[1]) <= parseInt(yearArr[1])){
-                rangeMovies.push(row)
-            }
-        });
 
-        if(rangeMovies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
-        res.status(200).json({"movies" : rangeMovies ,"msg" : "fetched successfully"})
+exports.movieWithTimePeriodBasis = function(req,res){
+    if(!req.query.periodId) return res.status(200).json({success : false ,"msg" : "years is missing"})
+    var periodId = req.query.periodId;
+    var rangeMovies = [];
+    tbl_time_periods.findAll({where:{id:periodId}}).then(function(results){
+        var timePeriod = results[0].dataValues.timePeriod.split('-');
+        console.log(timePeriod)
+        tbl_movies.findAll({where : {
+            year : {
+                $between : timePeriod
+            }
+        }}).then(function(movies){
+            if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
+            res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
+        })
     })
 }
+
