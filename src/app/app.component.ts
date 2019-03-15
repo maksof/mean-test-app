@@ -32,22 +32,15 @@ export class AppComponent {
 		var userRoutes = ['/dashboard', '/suggest-movie', '/favorites', '/movies', '/profile'];
 		var isAdmin = adminRoutes.indexOf(this.route.url);
 		var isUser = userRoutes.indexOf(this.route.url);
-		console.log(isUser,isAdmin);
 		if (this.commonService.required(user)) {
 			if(isAdmin != -1 && user.role == "ADMIN") {
-				console.log(isAdmin,"ADMIN");
 				this.route.navigateByUrl(this.route.url);
 			} else if(isUser != -1 && user.role == "USER") {
-				console.log(isUser,"USER");
 				this.route.navigateByUrl(this.route.url);
 			} else if(isAdmin != -1 && user.role == "USER") {
-				console.log(isAdmin,"admin");
 				this.route.navigateByUrl('/dashboard');
 			} else if(isUser != -1 && user.role == "ADMIN") {
-				console.log(isUser,"user");
 				this.route.navigateByUrl('/admin');
-			}else{
-				console.log("F");
 			}
 		}
 	}

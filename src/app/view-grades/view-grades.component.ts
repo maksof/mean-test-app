@@ -17,9 +17,9 @@ export class ViewGradesComponent implements OnInit {
 	allGrades:any = [];
 	offset = 0;
 	limit = 10;
-	private totalItems: any[];
+	private totalItems: any = [];
 	pager: any = {};
-	pagedItems: any[];
+	pagedItems: any = [];
 	start = true;
 
 	ngOnInit() {

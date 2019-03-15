@@ -14,8 +14,6 @@ export class MovieListComponent implements OnInit {
 
 	constructor(private snackBar: MatSnackBar, public sharedService:SharedService, public notificationService:NotificationsService, public commonService:CommonService) { }
 	user = JSON.parse(localStorage.getItem('user'));
-	star: boolean[] = [false,false,false,false,false,false,false,true,true,true];
-	starRating: number;
 	mainToggle:boolean = true;
 	filtered:boolean = false;
 	showLoader:boolean = true;
@@ -34,7 +32,6 @@ export class MovieListComponent implements OnInit {
 		this.mainToggle = !this.mainToggle;
 	}
 	setStartList(data:any,movieId:any){
-		this.starRating = data+1;
 		var rate = data+1;
 		var obj:any = {};
 		obj.userId = this.user.id;
@@ -42,6 +39,11 @@ export class MovieListComponent implements OnInit {
 		obj.grade = rate;
 		this.sharedService.rateMovie(obj).subscribe(res=>{
 			if (res.status == "OK") {
+				// this.movies.forEach(function(row){
+				// 	if (row.) {
+						
+				// 	}
+				// });
 				this.snackBar.open('Thanks For Rating.', '', {
 					duration: 2000,
 				});
@@ -50,15 +52,7 @@ export class MovieListComponent implements OnInit {
 			this.snackBar.open('Internal Server Error', '', {
 				duration: 2000,
 			});
-		})
-		for(var i=0;i<=9;i++){
-			if(i<=data){
-				this.star[i]=false;
-			}
-			else{
-				this.star[i]=true;
-			}
-		}
+		});
 	}
 	getAllFavoriteMovies(){
 		this.showLoader = true;
@@ -88,7 +82,20 @@ export class MovieListComponent implements OnInit {
 			var self = this;
 			var allMovies = res.data;
 			allMovies.forEach(function(m){
-				console.log(m);
+				m.grade = [];
+				if (self.commonService.required(m.tbl_grade)) {
+					for (var i = 0; i < m.tbl_grade.grade; i++) {
+						m.grade.push(true);
+					}
+					var count = 10 - m.tbl_grade.grade;
+					for (var j = 0; j < count; j++) {
+						m.grade.push(false);
+					}
+				}else{
+					for (var i = 0; i < 10; i++) {
+						m.grade.push(false);
+					}
+				}
 				self.allCategories.forEach(function(cat){
 					if (cat.id == m.categoryId) m.category = cat;
 				});
@@ -117,6 +124,20 @@ export class MovieListComponent implements OnInit {
 					var self = this;
 					var allMovies = res.data;
 					allMovies.forEach(function(m){
+						m.grade = [];
+						if (self.commonService.required(m.tbl_grade)) {
+							for (var i = 0; i < m.tbl_grade.grade; i++) {
+								m.grade.push(true);
+							}
+							var count = 10 - m.tbl_grade.grade;
+							for (var j = 0; j < count; j++) {
+								m.grade.push(false);
+							}
+						}else{
+							for (var i = 0; i < 10; i++) {
+								m.grade.push(false);
+							}
+						}
 						self.allCategories.forEach(function(cat){
 							if (m.categoryId == cat.id) {
 								m.category = cat;
