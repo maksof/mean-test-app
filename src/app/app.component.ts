@@ -25,6 +25,12 @@ export class AppComponent {
 	checkIfLogggedIn(){
 		var user = JSON.parse(localStorage.getItem('user'));
 		if (!this.commonService.required(user)) this.route.navigateByUrl("/login");
+		else{
+			console.log(user);
+			console.log(this.route);
+			if(this.route.url == '/' && user.role == 'ADMIN') this.route.navigateByUrl("/admin");
+			if (this.route.url == '/' && user.role == 'USER') this.route.navigateByUrl("/dashboard");; 
+		}
 	}
 	changeOfRoutes(){
 		var user = JSON.parse(localStorage.getItem('user'));
