@@ -29,17 +29,18 @@ export class FavoritesComponent implements OnInit {
 		this.showLoader = true;
 		this.sharedService.getAllFavoriteMovies(this.user.id).subscribe(res=>{
 			this.showLoader = false;
-			var favMovies = res.data;
+			var favMovies = []
 			var self = this;
-			if (this.commonService.requiredArray(favMovies)) {
+			if (this.commonService.requiredArray(res.data)) {
+				favMovies = res.data;
 				favMovies.forEach(function(m){
 					m.favorite = true;
 					self.allCategories.forEach(function(cat){
 						if (cat.id == m.categoryId) m.category = cat;
 					});
 				});
-				this.favoriteMovies = res.data;
 			}
+			this.favoriteMovies = favMovies;
 		},(error)=>{
 			this.showLoader = false;
 			this.notificationService.error("Error", "Internal Server Error.");

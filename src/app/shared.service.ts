@@ -80,7 +80,7 @@ export class SharedService {
 		return this.appService.post("movies/removeMovieFromFavorites",obj);
 	}
 	searchMovies(category, title,userId){
-		return this.appService.get("movies/getMovies?categoryId="+category+"&title="+title+"userId"+userId);
+		return this.appService.get("movies/getMovies?categoryId="+category+"&title="+title+"&userId="+userId);
 	}
 	changePassword(obj){
 		var md5 = new Md5();
