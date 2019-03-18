@@ -30,7 +30,10 @@ export class UserDashComponent implements OnInit {
 	public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
 	public barChartType:string = 'bar';
 	public barChartLegend:boolean = true;
-	public barChartData: any[] = [{data: [20,10,50,60,60,20,11], label: 'Quiz', backgroundColor: ['#163293',]}];
+	public barChartData = [
+		{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+		{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+	];
 
 	mainToggle:boolean = true;
 	showLoader:boolean = false;
@@ -50,7 +53,7 @@ export class UserDashComponent implements OnInit {
 			this.showLoader = false;
 			this.timePeriod = res.data;
 			this.timeId = this.timePeriod[0].id;
-			console.log(this.timeId,this.timePeriod);
+			this.getTimePeriodDashBoarData();
 		},(error)=>{
 			this.showLoader = false;
 			this.notificationService.error("Error!","Internal Server Error.");
