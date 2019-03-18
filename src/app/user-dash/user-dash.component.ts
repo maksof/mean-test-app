@@ -23,18 +23,16 @@ export class UserDashComponent implements OnInit {
 			yAxes: [{
 				gridLines: {
 					color: "rgba(210, 210, 210, 0.75)",
-				}   
+				},ticks: {
+					beginAtZero: true
+				}
 			}]
 		},
 	};
-	public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+	public barChartLabels:Array<any> = [];
 	public barChartType:string = 'bar';
 	public barChartLegend:boolean = true;
-	public barChartData = [
-		{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-		{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
-	];
-
+	public barChartData:Array<any> = [{data:[0],label:""}];
 	mainToggle:boolean = true;
 	showLoader:boolean = false;
 	timePeriod:any = [];
@@ -63,10 +61,48 @@ export class UserDashComponent implements OnInit {
 	getTimePeriodDashBoarData(){
 		this.showLoader = true;
 		this.sharedService.getMoviesOnTimePeriod(this.timeId).subscribe(res=>{
-			console.log(res);
+			if (this.commonService.requiredArray(res.movies)) {
+				this.setBarChartData(res.movies);
+			}
 			this.showLoader = false;
 		},(error)=>{
 			this.showLoader = false;
 		});
 	}
+	setBarChartData(arr){
+		var self = this;
+		var period = '';
+		var chartData:Array<any> = [];
+		this.timePeriod.forEach(function (row){
+			if (row.id == self.timeId) period = row.timePeriod;
+		});
+		var pArr = period.split("-");
+		var pIntArr = [];
+		pArr.forEach(function(pRow){pIntArr.push(parseInt(pRow))});
+		this.barChartLabels.push(pIntArr[0]);
+		do {
+			var mArr = this.barChartLabels[this.barChartLabels.length-1]+1;
+			this.barChartLabels.push(mArr);
+		}
+		while (this.barChartLabels[this.barChartLabels.length-1] != pIntArr[1]);
+		console.log(this.barChartLabels);
+		arr.forEach(function (row) {
+			var avgData = {data:[],label:''};
+			self.barChartLabels.forEach(function (lRow) {
+				if (row.year == lRow) {
+					console.log(lRow,row);
+					avgData.data.push(row.avg);
+					avgData.label = row.title;
+				}else{
+					console.log(null);
+					avgData.data.push(null);
+				}
+			});
+			chartData.push(avgData);
+		});
+		console.log(chartData);
+		this.barChartData = chartData;
+		console.log(this.barChartData);
+	}
+
 }

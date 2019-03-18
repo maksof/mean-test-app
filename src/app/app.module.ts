@@ -8,6 +8,8 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 // Directives
 import { OnlyNumber } from './directives/number.only.directive';
 import { OnlyNumberNoDecimal } from './directives/no.decimal.directive';
@@ -65,6 +67,7 @@ import { SettingComponent } from './setting/setting.component';
   HttpClientModule,
   HttpModule,
   FormsModule,
+  NgxChartsModule,
   ReactiveFormsModule,
   BrowserAnimationsModule,
   MatAutocompleteModule,
