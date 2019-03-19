@@ -53,8 +53,6 @@ export class AdminDashComponent implements OnInit {
 	public barChartLegend:boolean = true;
 	public barChartData: any[] = [
 	{data: [20,10,50,60,60,20,11], backgroundColor: ['#163293',]}
-	/*{data: [], label: 'Articles', backgroundColor: ["#02abec"]},*/
-	/*{data: [], label: 'Smiulation', backgroundColor: ["#89a0b0"]},*/
 	];
 	// pie chart Varibales
 	public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
@@ -99,17 +97,13 @@ export class AdminDashComponent implements OnInit {
 		var count = 0;
 		this.sharedService.getAllDataCategories().subscribe(res=>{
 		allCategories = res.movies;
-		console.log(this.categoriesDataWithId);
-		console.log(allCategories);
 			for (var i = 0; i < this.categoriesDataWithId.length; i++) {
 				for (var j = 0; j < allCategories.length; j++) {
 					if(this.categoriesDataWithId[i].id == allCategories[j].categoryId){
 						count++;
-						console.log("avg",allCategories[j].avg);
 						if (allCategories[j].avg != "") temp += allCategories[j].avg;
 					}
 				};
-				console.log("count",count);
 				if(count != 0) temp = (temp/count);
 				avgCategoriesData.push(temp);
 				temp = 0;
