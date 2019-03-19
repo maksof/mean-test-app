@@ -59,14 +59,18 @@ export class UserDashComponent implements OnInit {
 	}
 	
 	getTimePeriodDashBoarData(){
+		console.log("WTF");
 		this.showLoader = true;
 		this.sharedService.getMoviesOnTimePeriod(this.timeId).subscribe(res=>{
 			if (this.commonService.requiredArray(res.movies)) {
 				this.setBarChartData(res.movies);
+			}else{
+				this.notificationService.info("Info!",res.message);
 			}
 			this.showLoader = false;
 		},(error)=>{
 			this.showLoader = false;
+			this.notificationService.error("Error!","Internal Server Error");
 		});
 	}
 	setBarChartData(arr){
@@ -98,22 +102,19 @@ export class UserDashComponent implements OnInit {
 			if(useYears.indexOf(row.year) == -1){
 				if (addAvg.length != 0) {
 					addAvg[addAvg.length-1] = addAvg[addAvg.length-1] / count;
-					console.log(count);
-					console.log(addAvg[addAvg.length-1]);
 				}
 				addAvg.push(row.avg);
 				count = 1;
+				console.log(row.avg);
 				useYears.push(row.year);
 			}else{
 				count += 1;
 				console.log(row.avg);
-				console.log(addAvg[addAvg.length-1]);
 				addAvg[addAvg.length-1] += parseInt(row.avg);
 			}
 		});
-		console.log(useYears);
+		addAvg[addAvg.length-1] = addAvg[addAvg.length-1] / count;
 		console.log(addAvg);
-		console.log(count);
 	}
 	sortArr(a, b) {
 		return a.year === null? 1 : b.year === null? -1 : a.year > b.year ? 1 : b.year > a.year ? -1 : 0;
