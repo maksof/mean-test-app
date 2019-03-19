@@ -82,6 +82,7 @@ export class UserDashComponent implements OnInit {
 		});
 		var pArr = period.split("-");
 		var pIntArr = [];
+		var allYearArr = [];
 		pArr.forEach(function(pRow){pIntArr.push(parseInt(pRow))});
 		this.barChartLabels.push(pIntArr[0]);
 		do {
@@ -96,25 +97,38 @@ export class UserDashComponent implements OnInit {
 			mDataArr.push(obj);
 		});
 		var useYears = [];
-		var addAvg = [];
-		var count = 0;
+		var addAvg;
+		var avgData:Array<any> = [];
+		var count   = 0;
 		mDataArr.forEach(function(row){
 			if(useYears.indexOf(row.year) == -1){
-				if (addAvg.length != 0) {
-					addAvg[addAvg.length-1] = addAvg[addAvg.length-1] / count;
+				if (addAvg != null) {
+					var d = addAvg / count;
+					var y = useYears[useYears.length-1];
+					avgData.push({data:d,year:y});
 				}
-				addAvg.push(row.avg);
+				addAvg = row.avg;
 				count = 1;
-				console.log(row.avg);
 				useYears.push(row.year);
 			}else{
 				count += 1;
-				console.log(row.avg);
-				addAvg[addAvg.length-1] += parseInt(row.avg);
+				addAvg += parseInt(row.avg);
 			}
 		});
-		addAvg[addAvg.length-1] = addAvg[addAvg.length-1] / count;
-		console.log(addAvg);
+		var d =  addAvg / count;
+		var y = useYears[useYears.length-1];
+		avgData.push({data:d,year:y});
+		var isCondition = false;
+		this.barChartLabels.forEach(function(yRow){
+			avgData.forEach(function (dRow) {
+				if (yRow == dRow.year) {
+					chartData.push(dRow.data);
+					isCondition = true;
+				}
+			});
+			if(!isCondition) chartData.push(null);
+		});
+		this.barChartData = [{data:chartData,label:""}];
 	}
 	sortArr(a, b) {
 		return a.year === null? 1 : b.year === null? -1 : a.year > b.year ? 1 : b.year > a.year ? -1 : 0;
