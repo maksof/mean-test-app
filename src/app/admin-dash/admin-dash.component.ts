@@ -57,7 +57,7 @@ export class AdminDashComponent implements OnInit {
 	public barChartType:string = 'bar';
 	public barChartLegend:boolean = true;
 	public barChartData: any[] = [
-	{data: [20,10,50,60,60,20,11], backgroundColor: ['#163293']}
+	{data: Array<any>(), label:'Rating', backgroundColor: ['#163293']}
 	];
 
 	//timeperiod Bar Chat Data
