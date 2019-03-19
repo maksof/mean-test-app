@@ -655,7 +655,7 @@ exports.movieWithTimePeriodBasis = function(req,res){
                             count++;
                         }
                     });
-                    mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : '';
+                    mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : 0;
                 });
                 if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
                 res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
