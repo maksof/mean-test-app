@@ -692,3 +692,39 @@ exports.movieWithCategoryBasis = function(req,res){
         });
     })
 }
+
+exports.getMoviesUserBasis = function(req,res){
+    var query = {
+        attributes : ['grade','userId']
+    };
+
+    tbl_grades.findAll(query).then(function(grade){
+
+        var ages = [];
+        var userId = [];
+        var state = [];
+
+        grade.forEach(function(row){
+            if(userId.indexOf(row.userId) == -1) userId.push(row.userId);
+        });
+
+        tbl_user.findAll({where : {id : { $in : userId}},attributes:['id','age']}).then(function(user){
+
+            user.forEach(function(userRow){
+                var gradeSum = 0;
+                var count = 0;
+                grade.forEach(function(gradeRow){
+                    if(gradeRow.userId == userRow.id){
+                        gradeSum += gradeRow.grade;
+                        count++;
+                    }
+                });
+                var obj = {age : userRow.age,avg : gradeSum / count};
+                state.push(obj);
+                ages.push(userRow.age);
+            });
+
+            res.send({'state':state,'ages':ages});
+        })
+    });
+}
