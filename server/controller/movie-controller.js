@@ -711,7 +711,7 @@ exports.getStatsOnAgeBasis = function(req,res){
 
         var ages = [];
         var userId = [];
-        var state = [];
+        var stats = [];
 
         grade.forEach(function(row){
             if(userId.indexOf(row.userId) == -1) userId.push(row.userId);
@@ -729,11 +729,11 @@ exports.getStatsOnAgeBasis = function(req,res){
                     }
                 });
                 var obj = {age : userRow.age,avg : gradeSum / count};
-                state.push(obj);
+                stats.push(obj);
                 ages.push(userRow.age);
             });
 
-            res.send({'state':state,'ages':ages});
+            res.send({'stats':stats,'ages':ages});
         })
     });
 }
