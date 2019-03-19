@@ -657,7 +657,7 @@ exports.movieWithTimePeriodBasis = function(req,res){
                     });
                     mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : 0;
                 });
-                if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
+                if(movies.length === 0 ) return res.status(200).json({success : true ,"msg" : "No record found!"})
                 res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
             });
         })
@@ -702,7 +702,7 @@ exports.movieWithCategoryBasis = function(req,res){
  * @apiSuccess {string} message Message corresponding to request.
 */
 
-exports.getStatesOnAgeBasis = function(req,res){
+exports.getStatsOnAgeBasis = function(req,res){
     var query = {
         attributes : ['grade','userId']
     };

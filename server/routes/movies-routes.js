@@ -114,9 +114,9 @@ var router = function(){
 			return movieController.movieWithCategoryBasis(req, res);
 		});
 
-	movieRoute.route('/getStatesOnAgeBasis')
+	movieRoute.route('/getStatsOnAgeBasis')
 		.get(function(req,res) {
-			return movieController.getStatesOnAgeBasis(req, res);
+			return movieController.getStatsOnAgeBasis(req, res);
 		});
 
     return movieRoute;
