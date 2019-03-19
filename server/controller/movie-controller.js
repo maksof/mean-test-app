@@ -694,8 +694,8 @@ exports.movieWithCategoryBasis = function(req,res){
 }
 
 /**
- * @api {get} movies/getStatesOnAgeBasis Get Movies User Basis
- * @apiName getStatesOnAgeBasis
+ * @api {get} movies/getStatsOnAgeBasis Get Movies User Basis
+ * @apiName getStatsOnAgeBasis
  * @apiGroup Movies
  *
  * @apiSuccess {string} status Status of the request.
