@@ -12,6 +12,8 @@ export class AdminDashComponent implements OnInit {
 
 	constructor(public sharedService:SharedService, public commonService:CommonService, public notificationService:NotificationsService) { }
 	// bar chart Varibales
+	categoriesData = [];
+	categoriesDataWithId;
 	public barChartOptions:any = {
 		scaleShowVerticalLines: false,
 		responsive: true,
@@ -50,9 +52,7 @@ export class AdminDashComponent implements OnInit {
 	public barChartType:string = 'bar';
 	public barChartLegend:boolean = true;
 	public barChartData: any[] = [
-	{data: [20,10,50,60,60,20,11], label: 'Quiz', backgroundColor: ['#163293',]}
-	/*{data: [], label: 'Articles', backgroundColor: ["#02abec"]},*/
-	/*{data: [], label: 'Smiulation', backgroundColor: ["#89a0b0"]},*/
+	{data: [20,10,50,60,60,20,11], backgroundColor: ['#163293',]}
 	];
 	// pie chart Varibales
 	public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
@@ -67,10 +67,54 @@ export class AdminDashComponent implements OnInit {
 	mainToggle:boolean = true;
 	
 	ngOnInit() {
-		this.notificationService.info("Notification","Test");
+		this.getCategoriesData();
+		this.getAllCategoriesData();
 	}
 
 	toggleMainSec(){
 		this.mainToggle = !this.mainToggle;
+	}
+
+	getCategoriesData(){
+		this.sharedService.getAllCategories().subscribe(res=>{
+			for (var i = 0; i < res.data.length; i++) {
+				this.categoriesData.push(res.data[i].categoryName);	
+			};
+			this.categoriesDataWithId = res.data;
+			this.barChartLabels =  this.categoriesData;
+
+		},(error)=>{
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
+	}
+
+	getAllCategoriesData(){
+		var allCategories;
+		var avgCategoriesData = [];
+		var temp = 0;
+		var count = 0;
+		this.sharedService.getAllDataCategories().subscribe(res=>{
+		allCategories = res.movies;
+			for (var i = 0; i < this.categoriesDataWithId.length; i++) {
+				for (var j = 0; j < allCategories.length; j++) {
+					if(this.categoriesDataWithId[i].id == allCategories[j].categoryId){
+						count++;
+						if (allCategories[j].avg != "") temp += allCategories[j].avg;
+					}
+				};
+				if(count != 0) temp = (temp/count);
+				avgCategoriesData.push(temp);
+				temp = 0;
+				count = 0;
+			};
+			this.barChartData = avgCategoriesData;
+
+		},(error)=>{
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
 	}
 }

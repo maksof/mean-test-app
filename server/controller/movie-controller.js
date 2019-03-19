@@ -694,6 +694,42 @@ exports.movieWithCategoryBasis = function(req,res){
 }
 
 /**
+ * @api {get} movies/getAllGradeAndCategoriesWiseMovies Get All Grade And Categories Wise Movies
+ * @apiName Get All Grade And Categories Wise Movies
+ * @apiGroup Movies
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+
+exports.getAllGradeAndCategoriesWiseMovies=function(req, res){
+    var rangeMovies = [];
+    var categArr = [];
+    tbl_movies.findAll(
+    ).then(function(movies){
+        var movId = [];
+        movies.forEach(function(row){
+            movId.push(row.id);
+        })
+        tbl_grades.findAll({where : {movieId : {$in : movId}}}).then(function(grade){
+            movies.forEach(function(mvi){
+                var grdSum = 0;
+                count = 0;
+                grade.forEach(function(grd){
+                    if(mvi.id == grd.movieId){
+                        grdSum +=grd.grade;
+                        count++;
+                    }
+                });
+                mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : '';
+            });
+            if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
+            res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
+        });
+    })
+}
+
+/**
  * @api {get} movies/getStatsOnAgeBasis Get Movies User Basis
  * @apiName getStatsOnAgeBasis
  * @apiGroup Movies
@@ -737,3 +773,4 @@ exports.getStatsOnAgeBasis = function(req,res){
         })
     });
 }
+
