@@ -693,6 +693,15 @@ exports.movieWithCategoryBasis = function(req,res){
     })
 }
 
+/**
+ * @api {get} movies/getMoviesUserBasis Get Movies User Basis
+ * @apiName getMoviesUserBasis
+ * @apiGroup Movies
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+
 exports.getMoviesUserBasis = function(req,res){
     var query = {
         attributes : ['grade','userId']
