@@ -657,7 +657,7 @@ exports.movieWithTimePeriodBasis = function(req,res){
                     });
                     mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : 0;
                 });
-                if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
+                if(movies.length === 0 ) return res.status(200).json({success : true ,"msg" : "No record found!"})
                 res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
             });
         })
@@ -693,6 +693,15 @@ exports.movieWithCategoryBasis = function(req,res){
     })
 }
 
+/**
+ * @api {get} movies/getAllGradeAndCategoriesWiseMovies Get All Grade And Categories Wise Movies
+ * @apiName Get All Grade And Categories Wise Movies
+ * @apiGroup Movies
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+
 exports.getAllGradeAndCategoriesWiseMovies=function(req, res){
     var rangeMovies = [];
     var categArr = [];
@@ -719,3 +728,49 @@ exports.getAllGradeAndCategoriesWiseMovies=function(req, res){
         });
     })
 }
+
+/**
+ * @api {get} movies/getStatsOnAgeBasis Get Movies User Basis
+ * @apiName getStatsOnAgeBasis
+ * @apiGroup Movies
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+
+exports.getStatsOnAgeBasis = function(req,res){
+    var query = {
+        attributes : ['grade','userId']
+    };
+
+    tbl_grades.findAll(query).then(function(grade){
+
+        var ages = [];
+        var userId = [];
+        var stats = [];
+
+        grade.forEach(function(row){
+            if(userId.indexOf(row.userId) == -1) userId.push(row.userId);
+        });
+
+        tbl_user.findAll({where : {id : { $in : userId}},attributes:['id','age']}).then(function(user){
+
+            user.forEach(function(userRow){
+                var gradeSum = 0;
+                var count = 0;
+                grade.forEach(function(gradeRow){
+                    if(gradeRow.userId == userRow.id){
+                        gradeSum += gradeRow.grade;
+                        count++;
+                    }
+                });
+                var obj = {age : userRow.age,avg : gradeSum / count};
+                stats.push(obj);
+                ages.push(userRow.age);
+            });
+
+            res.send({'stats':stats,'ages':ages});
+        })
+    });
+}
+
