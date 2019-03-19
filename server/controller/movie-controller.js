@@ -636,9 +636,16 @@ exports.movieWithTimePeriodBasis = function(req,res){
     var rangeMovies = [];
     tbl_time_periods.findAll({where:{id:periodId}}).then(function(results){
         var timePeriod = results[0].dataValues.timePeriod.split('-');
+        var conMsg = '';
+        if(parseInt(timePeriod[0]) < parseInt(timePeriod[1])){
+            console.log('ONE');conMsg = 'ONE';
+        }else if(parseInt(timePeriod[0]) > parseInt(timePeriod[1])){
+            console.log('ZERo'); conMsg = 'ZERO';
+        }
         tbl_movies.findAll({where : {
             year : {
-                $between : timePeriod
+                $lte : (conMsg == 'ONE') ? timePeriod[1] : timePeriod[0],
+                $gte : (conMsg == 'ZERO') ? timePeriod[1] : timePeriod[0]
             }
         }}).then(function(movies){
             var movId = [];
@@ -773,4 +780,5 @@ exports.getStatsOnAgeBasis = function(req,res){
         })
     });
 }
+
 
