@@ -37,7 +37,7 @@
 						<p class="cat"><span>{{m.category.categoryName}}</span></p>
 						<p>{{m.description}}</p>
 						<p><b>Director:</b>&nbsp;<span>{{m.director}}</span></p>
-						<p><b>Distributor:</b>&nbsp;<span>{{m.distribution}}</span></p>
+						<p><b>Distribution:</b>&nbsp;<span>{{m.distribution}}</span></p>
 						<p class="text-warning">
 							<i *ngFor="let item of m.grade; let i=index" (click)="setStartList(i,m.id)" class="fa pointer starRating" [ngClass]="{'fa-star-o':!item,'fa-star':item}"></i>
 						</p>

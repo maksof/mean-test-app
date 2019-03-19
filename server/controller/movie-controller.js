@@ -515,13 +515,13 @@ exports.getMovies = function (request, response) {
     if(common.required(userId)) {
 	    var categoryId = request.query.categoryId ? request.query.categoryId : '';
 	    var title = request.query.title ? request.query.title : '';
-        var whereClause = {};
+        var whereClause = {'isDeleted': 0, 'isApproved': 1};
 	    if(categoryId) whereClause.categoryId = categoryId;
-	    if(title) whereClause.title = { $like: title };
+	    if(title) whereClause.title = { $like: "%"+title+"%" };
 	    tbl_movies.belongsTo(tbl_grades, {foreignKey:'id',targetKey : 'movieId'});
 	    var query = { 
             attributes : ['id','categoryId','title','year','director','distribution','description','photoUrl'],
-            where : {'isDeleted': 0, 'isApproved': 1},
+            where : whereClause,
             include : [{
                 required : false,
                 model : tbl_grades,
@@ -655,7 +655,7 @@ exports.movieWithTimePeriodBasis = function(req,res){
                             count++;
                         }
                     });
-                    mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : '';
+                    mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : 0;
                 });
                 if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
                 res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})

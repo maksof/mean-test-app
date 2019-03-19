@@ -34,7 +34,7 @@ export class ViewGradesComponent implements OnInit {
 		this.sharedService.viewGrade(this.limit, this.offset).subscribe(res=>{
 			this.showLoader = false;
 			if (res.status == "OK") {
-				if (this.commonService.requiredArray(res.data)) {
+				if (this.commonService.requiredArray(res.data.data)) {
 					this.allGrades = res.data.data;
 					this.totalItems = res.data.total;
 					if (this.start == true)this.setPage(1);
