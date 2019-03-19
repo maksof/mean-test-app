@@ -703,7 +703,6 @@ exports.getAllGradeAndCategoriesWiseMovies=function(req, res){
             movId.push(row.id);
         })
         tbl_grades.findAll({where : {movieId : {$in : movId}}}).then(function(grade){
-            // res.send(grade);
             movies.forEach(function(mvi){
                 var grdSum = 0;
                 count = 0;
