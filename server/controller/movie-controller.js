@@ -774,3 +774,49 @@ exports.getStatsOnAgeBasis = function(req,res){
     });
 }
 
+/**
+ * @api {get} movies/getStatsOnGenderBasis Get Movies User Basis
+ * @apiName getStatsOnGenderBasis
+ * @apiGroup Movies
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+
+exports.getStatsOnGenderBasis = function(req,res){
+    
+    tbl_grades.belongsTo(tbl_user,{foreignKey : "userId",sourceKey : 'id'})
+
+    var query = {
+        attributes : ['grade','userId'],
+        include : [{
+            model : tbl_user,
+            attributes : ['gender'],
+            where : {isDeleted : false}
+        }]
+    }
+
+    tbl_grades.findAll(query).then(function(results){
+        var gradOfMale = 0;
+        var gradOfFemale = 0;
+        var countOfMail = 0;
+        var countOfemail = 0;
+        data = [];
+        results.forEach(function(row){
+            if(row.tbl_user.gender == 'MALE'){
+                gradOfMale += row.grade;
+                countOfMail++;
+            }else{
+                gradOfFemale += row.grade;
+                countOfemail++;
+            }
+
+        });
+        var obj = {
+            male : gradOfMale/countOfMail,
+            female : gradOfFemale/countOfemail
+        };
+        data.push(obj);
+        res.status(200).json({success : true , data : data});
+    });
+}
