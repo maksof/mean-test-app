@@ -4,6 +4,23 @@
 		<h2 class="text-left"><i class="fa fa-bar-chart headIcon"></i>Admin Dashboard</h2>
 		<hr class="headSep">
 		<div class="row">
+
+			<div class="col-4">
+				<mat-form-field>
+					<mat-select placeholder="Select Time Period" [(ngModel)]="timeperiodId" (ngModelChange)="getAllTimePeriodsDataById($event)">
+						<mat-option *ngFor="let row of timeperiod" value="{{row.id}}">{{row.timePeriod}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+
+			<div class="col-12">
+				<div class="card shadow form-group p-3">
+					<div class="d-block">
+					  <canvas baseChart [datasets]="barChartDataTimePeriod" [labels]="barChartLabelsTimePeriod" [options]="barChartOptions"  [colors]="barColors" [legend]="barChartLegendTime" [chartType]="barChartType" ></canvas>
+					</div>
+				</div>
+			</div>
+
 			<div class="col-12">
 				<div class="card shadow form-group p-3">
 					<div class="d-block">
@@ -11,25 +28,15 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="card shadow form-group">
+
+			<div class="col-12">
+				<div class="card shadow form-group p-3">
 					<div class="d-block">
-						<canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+					  <canvas baseChart [datasets]="barChartDataAge" [labels]="barChartLabelsAge" [options]="barChartOptions"  [colors]="barColors" [legend]="barChartLegendAge" [chartType]="barChartType" ></canvas>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="card shadow form-group">
-					<canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"></canvas>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card shadow form-group">
-					<canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-				</div>
-			</div>
+			
 		</div>
 	</div>
 	<app-footer></app-footer>

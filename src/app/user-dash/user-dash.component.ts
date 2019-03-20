@@ -9,10 +9,16 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 })
 export class UserDashComponent implements OnInit {
 	constructor(public sharedService:SharedService, public commonService:CommonService, public notificationService:NotificationsService) { }
+	//timeperiodDataTypes
+	defaultTimePeriodId;
+	timeperiod;
+	selectedTPmovies = [];
+
 	// bar chart Varibales
-	public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-		scaleShowVerticalLines: false;
-	public lineChartOptions:any = {
+	categoriesData = [];
+	categoriesDataWithId;
+	public barChartOptions:any = {
+		scaleShowVerticalLines: false,
 		responsive: true,
 		legend: false,
 		scales: {
@@ -26,9 +32,7 @@ export class UserDashComponent implements OnInit {
 					color: "rgba(210, 210, 210, 0.75)",
 				}   
 			}]
-		}, line : { 
-			tension : 0 
-		} 
+		},
 	};
 	public chartColors: Array<any> = [
 	{ // first color
@@ -38,48 +42,146 @@ export class UserDashComponent implements OnInit {
 		pointBorderColor: '#fff',
 		pointHoverBackgroundColor: '#fff',
 		pointHoverBorderColor: 'rgba(225,10,24,0.2)'
-	}	];
-	public lineChartType:string = 'line';
-	public lineChartLegend:boolean  = true;
-	 // lineChart
-	public lineChartData:Array<any> = [{data: [6500, 5900, 8000, 8100, 5600, 5500, 4000, 900, 9500 , 10005, 5400, 6500], label: 'Ranking'}];
-	// pie chart Varibales
-	public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
-	public pieChartData:number[] = [300, 500, 100];
-	public pieChartType:string = 'pie';
+	},
+	{ // second color
+		backgroundColor: 'rgba(225,10,24,0.2)',
+		borderColor: 'rgba(225,10,24,0.2)',
+		pointBackgroundColor: 'rgba(225,10,24,0.2)',
+		pointBorderColor: '#fff',
+		pointHoverBackgroundColor: '#fff',
+		pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+	}];
+	public barChartLabels:string[] = [];
+	public barChartType:string = 'bar';
+	public barChartLegend:boolean = true;
+	public barChartData: any[] = [
+	{data: Array<any>(), label:'Rating', backgroundColor: ['#163293']}
+	];
 
-	// doghnut chart Varibales
-	public doughnutChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-	public doughnutChartData:number[] = [350, 450, 100];
-	public doughnutChartType:string = 'doughnut';
+	//timeperiod Bar Chat Data
+	public barChartLabelsTimePeriod:string[] = [];
+	public barChartLegendTime: boolean = true;
+	public barChartDataTimePeriod: any[] = [
+	{data:Array<any>(), label:'Rating', backgroundColor: ['#163293']}
+	];
 
 	mainToggle:boolean = true;
-	showLoader:boolean = false;
-	timePeriod:any = [];
+	
 	ngOnInit() {
-		this.getAllTimePeriod();
+		this.getCategoriesData();
+		this.getAllCategoriesData();
+		this.getTimePeriodData();
 	}
 
 	toggleMainSec(){
 		this.mainToggle = !this.mainToggle;
 	}
 
-	getAllTimePeriod(){
-		this.showLoader = true;
-		this.sharedService.getAllTimePeriod().subscribe(res=>{
-			this.showLoader = false;
-			this.timePeriod = res.data;
+	getCategoriesData(){
+		this.sharedService.getAllCategories().subscribe(res=>{
+			for (var i = 0; i < res.data.length; i++) {
+				this.categoriesData.push(res.data[i].categoryName);	
+			};
+			this.categoriesDataWithId = res.data;
+			this.barChartLabels =  this.categoriesData;
+
 		},(error)=>{
-			this.showLoader = false;
-			this.notificationService.error("Error!","Internal Server Error.");
-		})
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
 	}
-	getMoviesOnTimePeriod(id){
-		this.showLoader = true;
-		this.sharedService.getMoviesOnTimePeriod(id).subscribe(res=>{
-			this.showLoader = false;
+
+	getAllCategoriesData(){
+		var allCategories;
+		var avgCategoriesData = [];
+		var temp = 0;
+		var count = 0;
+		this.sharedService.getAllDataCategories().subscribe(res=>{
+		allCategories = res.movies;
+			for (var i = 0; i < this.categoriesDataWithId.length; i++) {
+				for (var j = 0; j < allCategories.length; j++) {
+					if(this.categoriesDataWithId[i].id == allCategories[j].categoryId){
+						count++;
+						if (allCategories[j].avg != "") temp += allCategories[j].avg;
+					}
+				};
+				if(count != 0) temp = (temp/count);
+				avgCategoriesData.push(temp);
+				temp = 0;
+				count = 0;
+			};
+			this.barChartData = avgCategoriesData;
+
 		},(error)=>{
-			this.showLoader = false;
-		})
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
+	}
+
+	getTimePeriodData(){
+		this.sharedService.getAllTimePeriod().subscribe(res=>{
+			this.timeperiod = res.data;
+			if(this.timeperiod)this.getAllTimePeriodsDataById(this.timeperiod[0].id);
+		},(error)=>{
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
+	}
+
+	getAllTimePeriodsDataById(id){
+		var DataBarChart = [];
+		var temp = 0;
+		var count = 0;
+		this.barChartLabelsTimePeriod = this.setYearForTimePeriods(id);
+		this.sharedService.getMoviesOnTimePeriod(id).subscribe(res=>{
+		this.selectedTPmovies = res.movies;
+		if(this.selectedTPmovies){
+			for (var i = 0; i < this.barChartLabelsTimePeriod.length; i++) {
+				for (var j = 0; j < this.selectedTPmovies.length; j++) {
+					if(this.barChartLabelsTimePeriod[i] == this.selectedTPmovies[j].year){
+						count++;
+						if (this.selectedTPmovies[j].avg != "") temp += this.selectedTPmovies[j].avg;
+					}
+				};
+				if(count != 0) temp = (temp/count);
+				DataBarChart.push(temp);
+				temp = 0;
+				count = 0;
+			}; 
+		} else{ 
+			this.notificationService.error('No record found');
+
+		}
+			this.barChartDataTimePeriod[0].data = DataBarChart;
+			var clone = JSON.parse(JSON.stringify(this.barChartDataTimePeriod));
+			this.barChartDataTimePeriod = clone;
+		},(error)=>{
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
+	}
+
+	setYearForTimePeriods(id){
+		var selectedTimePeriod;
+		var dataRaneForChart = [];
+		for(var i = 0; i < this.timeperiod.length; i++){
+			if(this.timeperiod[i].id == id){
+				selectedTimePeriod = this.timeperiod[i].timePeriod;
+			}
+		}
+		var dateRange = selectedTimePeriod.split("-");
+		dateRange.sort();
+		if (dateRange){
+		var startDate = parseInt(dateRange[0]);
+		var lastData = parseInt(dateRange[1])
+		}
+		for(var i = startDate; i < lastData+1; i++){
+			dataRaneForChart.push(i);
+		}
+		return dataRaneForChart;
 	}
 }

@@ -61,7 +61,7 @@ exports.deleteCategory = function (request, response) {
     
     var categoryId = request.query.categoryId;
     if(common.required(categoryId)) {
-        tbl_categories.update({ isDeleted: 1 }, { where: { 'id': categoryId } }).then(function (res) {
+        tbl_categories.destroy({ where: { 'id': categoryId } }).then(function (res) {
             if(res[0] == 1) common.sendResponseBack(response, 'OK', 'Category is deleted successfully!', null);
         }, (error) => {
             common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
@@ -118,7 +118,7 @@ exports.deleteTimePeriod = function (request, response) {
 
     var timePeriodId = request.query.timePeriodId;
     if(common.required(timePeriodId)) {
-        tbl_time_periods.update({ isDeleted: 1 }, { where: { 'id': timePeriodId } }).then(function (res) {
+        tbl_time_periods.destroy({ where: { 'id': timePeriodId } }).then(function (res) {
             if(res[0] == 1) common.sendResponseBack(response, 'OK', 'Time Period is deleted successfully!', null);
         }, (error) => {
             common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
@@ -636,9 +636,16 @@ exports.movieWithTimePeriodBasis = function(req,res){
     var rangeMovies = [];
     tbl_time_periods.findAll({where:{id:periodId}}).then(function(results){
         var timePeriod = results[0].dataValues.timePeriod.split('-');
+        var conMsg = '';
+        if(parseInt(timePeriod[0]) < parseInt(timePeriod[1])){
+            console.log('ONE');conMsg = 'ONE';
+        }else if(parseInt(timePeriod[0]) > parseInt(timePeriod[1])){
+            console.log('ZERo'); conMsg = 'ZERO';
+        }
         tbl_movies.findAll({where : {
             year : {
-                $between : timePeriod
+                $lte : (conMsg == 'ONE') ? timePeriod[1] : timePeriod[0],
+                $gte : (conMsg == 'ZERO') ? timePeriod[1] : timePeriod[0]
             }
         }}).then(function(movies){
             var movId = [];
@@ -774,6 +781,7 @@ exports.getStatsOnAgeBasis = function(req,res){
     });
 }
 
+
 /**
  * @api {get} movies/getStatsOnGenderBasis Get Movies User Basis
  * @apiName getStatsOnGenderBasis
@@ -820,3 +828,4 @@ exports.getStatsOnGenderBasis = function(req,res){
         res.status(200).json({success : true , data : data});
     });
 }
+
