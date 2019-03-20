@@ -61,7 +61,7 @@ exports.deleteCategory = function (request, response) {
     
     var categoryId = request.query.categoryId;
     if(common.required(categoryId)) {
-        tbl_categories.update({ isDeleted: 1 }, { where: { 'id': categoryId } }).then(function (res) {
+        tbl_categories.destroy({ where: { 'id': categoryId } }).then(function (res) {
             if(res[0] == 1) common.sendResponseBack(response, 'OK', 'Category is deleted successfully!', null);
         }, (error) => {
             common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
@@ -118,7 +118,7 @@ exports.deleteTimePeriod = function (request, response) {
 
     var timePeriodId = request.query.timePeriodId;
     if(common.required(timePeriodId)) {
-        tbl_time_periods.update({ isDeleted: 1 }, { where: { 'id': timePeriodId } }).then(function (res) {
+        tbl_time_periods.destroy({ where: { 'id': timePeriodId } }).then(function (res) {
             if(res[0] == 1) common.sendResponseBack(response, 'OK', 'Time Period is deleted successfully!', null);
         }, (error) => {
             common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);

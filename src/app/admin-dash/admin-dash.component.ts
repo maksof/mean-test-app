@@ -211,7 +211,7 @@ export class AdminDashComponent implements OnInit {
             if(index == -1){
                 ages.push(row.age);
             }
-        }
+        });
         this.barChartLabelsAge = ages;
         if(data){
 			for (var i = 0; i < this.barChartLabelsAge.length; i++) {
