@@ -37,6 +37,14 @@
 				</div>
 			</div>
 			
+			<div class="col-12">
+				<div class="card shadow form-group p-3">
+					<div class="d-block">
+					  <canvas baseChart [datasets]="barChartDataGender" [labels]="barChartLabelsGender" [options]="barChartOptions"  [colors]="barColors" [legend]="barChartLegendGender" [chartType]="barChartType" ></canvas>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 	<app-footer></app-footer>

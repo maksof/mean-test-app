@@ -112,4 +112,7 @@ export class SharedService {
 	getAgeWiseData(){
 		return this.appService.get("movies/getStatsOnAgeBasis");
 	}
+	getAllGenderRec(){
+		return this.appService.get("movies/getStatsOnGenderBasis");
+	}
 }
