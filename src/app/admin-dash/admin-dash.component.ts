@@ -74,9 +74,17 @@ export class AdminDashComponent implements OnInit {
 	{data:Array<any>(), label:'Rating', backgroundColor: ['#163293']}
 	];
 
+	// Gender Bar Chart Data
+	public barChartLabelsGender:string[] = ["Male", "Female"];
+	public barChartLegendGender: boolean = true;
+	public barChartDataGender: any[] = [
+	{data:Array<any>(), label:'Rating', backgroundColor: ['#163293']}
+	];
+
 	mainToggle:boolean = true;
 	
 	ngOnInit() {
+		this.getAllGenderBasisRecord();
 		this.getAgeWiseDataForBarChart();
 		this.getCategoriesData();
 		this.getAllCategoriesData();
@@ -240,7 +248,30 @@ export class AdminDashComponent implements OnInit {
 		});
 	}
 
-	 sortArr(a, b) {
+	sortArr(a, b) {
       return a.age === null? 1 : b.age === null? -1 : a.age > b.age ? 1 : b.age > a.age ? -1 : 0;
+    }
+
+    getAllGenderBasisRecord(){
+    	var data = [];
+    	var DataBarChart = [];
+    	this.sharedService.getAllGenderRec().subscribe(res=>{
+		data = res.data;
+		if(data){
+			DataBarChart[0] = data[0].male;
+			DataBarChart[1] = data[0].female;
+			DataBarChart[2]	= 0;
+			this.barChartDataGender[0].data = DataBarChart;
+			var clone = JSON.parse(JSON.stringify(this.barChartDataGender));
+			this.barChartDataGender = clone;
+
+		} else{ 
+			this.notificationService.error('No record found');
+		}			
+		},(error)=>{
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
     }
 }
