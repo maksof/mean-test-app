@@ -32,6 +32,7 @@ export class AdminAddCategoryComponent implements OnInit {
 		this.sharedService.getAllCategories().subscribe(res =>{
 			this.showLoader = false;
 			this.allCategories = res.data;
+			this.allCategories.sort(this.sortArr);
 		},(error)=>{
 			this.showLoader = false;
 			this.notificationsService.error("Error!","Internal Server Error.");
@@ -128,4 +129,10 @@ export class AdminAddCategoryComponent implements OnInit {
 			});
 		}
 	}
+
+	sortArr(a, b) {
+    var textA = a.categoryName.toUpperCase();
+    var textB = b.categoryName.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    }
 }
