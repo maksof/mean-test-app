@@ -103,4 +103,10 @@ export class SharedService {
 	getMoviesOnTimePeriod(id){
 		return this.appService.get("movies/movieWithTimePeriodBasis?periodId="+id);
 	}
+	getAllCategoriesById(id){
+		return this.appService.get("movies/movieWithCategoryBasis?categoryId="+id);	
+	}
+	getAllDataCategories(){
+		return this.appService.get("movies/getAllCategoriesMoviesGradeWise");
+	}
 }

@@ -104,6 +104,11 @@ var router = function(){
 			return movieController.viewGradeMovies(req, res);
 		});
 
+	movieRoute.route('/getAllCategoriesMoviesGradeWise')
+		.get(function(req,res){
+			return movieController.getAllGradeAndCategoriesWiseMovies(req,res);
+		});
+
 	movieRoute.route('/movieWithTimePeriodBasis')
 		.get(function(req,res) {
 			return movieController.movieWithTimePeriodBasis(req, res);
@@ -112,6 +117,11 @@ var router = function(){
 	movieRoute.route('/movieWithCategoryBasis')
 		.get(function(req,res) {
 			return movieController.movieWithCategoryBasis(req, res);
+		});
+
+	movieRoute.route('/getStatsOnAgeBasis')
+		.get(function(req,res) {
+			return movieController.getStatsOnAgeBasis(req, res);
 		});
 
     return movieRoute;

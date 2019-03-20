@@ -636,9 +636,16 @@ exports.movieWithTimePeriodBasis = function(req,res){
     var rangeMovies = [];
     tbl_time_periods.findAll({where:{id:periodId}}).then(function(results){
         var timePeriod = results[0].dataValues.timePeriod.split('-');
+        var conMsg = '';
+        if(parseInt(timePeriod[0]) < parseInt(timePeriod[1])){
+            console.log('ONE');conMsg = 'ONE';
+        }else if(parseInt(timePeriod[0]) > parseInt(timePeriod[1])){
+            console.log('ZERo'); conMsg = 'ZERO';
+        }
         tbl_movies.findAll({where : {
             year : {
-                $between : timePeriod
+                $lte : (conMsg == 'ONE') ? timePeriod[1] : timePeriod[0],
+                $gte : (conMsg == 'ZERO') ? timePeriod[1] : timePeriod[0]
             }
         }}).then(function(movies){
             var movId = [];
@@ -657,7 +664,7 @@ exports.movieWithTimePeriodBasis = function(req,res){
                     });
                     mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : 0;
                 });
-                if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
+                if(movies.length === 0 ) return res.status(200).json({success : true ,"msg" : "No record found!"})
                 res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
             });
         })
@@ -692,3 +699,86 @@ exports.movieWithCategoryBasis = function(req,res){
         });
     })
 }
+
+/**
+ * @api {get} movies/getAllGradeAndCategoriesWiseMovies Get All Grade And Categories Wise Movies
+ * @apiName Get All Grade And Categories Wise Movies
+ * @apiGroup Movies
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+
+exports.getAllGradeAndCategoriesWiseMovies=function(req, res){
+    var rangeMovies = [];
+    var categArr = [];
+    tbl_movies.findAll(
+    ).then(function(movies){
+        var movId = [];
+        movies.forEach(function(row){
+            movId.push(row.id);
+        })
+        tbl_grades.findAll({where : {movieId : {$in : movId}}}).then(function(grade){
+            movies.forEach(function(mvi){
+                var grdSum = 0;
+                count = 0;
+                grade.forEach(function(grd){
+                    if(mvi.id == grd.movieId){
+                        grdSum +=grd.grade;
+                        count++;
+                    }
+                });
+                mvi.dataValues.avg = (grdSum != 0 && count != 0) ? grdSum/count : '';
+            });
+            if(movies.length === 0 ) return res.status(403).json({success : false ,"msg" : "No record found!"})
+            res.status(200).json({"movies" : movies ,"msg" : "fetched successfully"})
+        });
+    })
+}
+
+/**
+ * @api {get} movies/getStatsOnAgeBasis Get Movies User Basis
+ * @apiName getStatsOnAgeBasis
+ * @apiGroup Movies
+ *
+ * @apiSuccess {string} status Status of the request.
+ * @apiSuccess {string} message Message corresponding to request.
+*/
+
+exports.getStatsOnAgeBasis = function(req,res){
+    var query = {
+        attributes : ['grade','userId']
+    };
+
+    tbl_grades.findAll(query).then(function(grade){
+
+        var ages = [];
+        var userId = [];
+        var stats = [];
+
+        grade.forEach(function(row){
+            if(userId.indexOf(row.userId) == -1) userId.push(row.userId);
+        });
+
+        tbl_user.findAll({where : {id : { $in : userId}},attributes:['id','age']}).then(function(user){
+
+            user.forEach(function(userRow){
+                var gradeSum = 0;
+                var count = 0;
+                grade.forEach(function(gradeRow){
+                    if(gradeRow.userId == userRow.id){
+                        gradeSum += gradeRow.grade;
+                        count++;
+                    }
+                });
+                var obj = {age : userRow.age,avg : gradeSum / count};
+                stats.push(obj);
+                ages.push(userRow.age);
+            });
+
+            res.send({'stats':stats,'ages':ages});
+        })
+    });
+}
+
+
