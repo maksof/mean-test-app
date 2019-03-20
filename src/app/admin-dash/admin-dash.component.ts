@@ -67,16 +67,6 @@ export class AdminDashComponent implements OnInit {
 	{data:Array<any>(), label:'Rating', backgroundColor: ['#163293']}
 	];
 
-	// pie chart Varibales
-	public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
-	public pieChartData:number[] = [300, 500, 100];
-	public pieChartType:string = 'pie';
-
-	// doghnut chart Varibales
-	public doughnutChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-	public doughnutChartData:number[] = [350, 450, 100];
-	public doughnutChartType:string = 'doughnut';
-
 	mainToggle:boolean = true;
 	
 	ngOnInit() {

@@ -9,7 +9,14 @@ import {NotificationsService, SimpleNotificationsModule } from 'angular2-notific
 })
 export class UserDashComponent implements OnInit {
 	constructor(public sharedService:SharedService, public commonService:CommonService, public notificationService:NotificationsService) { }
+	//timeperiodDataTypes
+	defaultTimePeriodId;
+	timeperiod;
+	selectedTPmovies = [];
+
 	// bar chart Varibales
+	categoriesData = [];
+	categoriesDataWithId;
 	public barChartOptions:any = {
 		scaleShowVerticalLines: false,
 		responsive: true,
@@ -23,115 +30,158 @@ export class UserDashComponent implements OnInit {
 			yAxes: [{
 				gridLines: {
 					color: "rgba(210, 210, 210, 0.75)",
-				},ticks: {
-					beginAtZero: true
-				}
+				}   
 			}]
 		},
 	};
-	public barChartLabels:Array<any> = [];
+	public chartColors: Array<any> = [
+	{ // first color
+		backgroundColor: 'rgba(225,10,24,0.2)',
+		borderColor: 'rgba(225,10,24,0.2)',
+		pointBackgroundColor: 'rgba(225,10,24,0.2)',
+		pointBorderColor: '#fff',
+		pointHoverBackgroundColor: '#fff',
+		pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+	},
+	{ // second color
+		backgroundColor: 'rgba(225,10,24,0.2)',
+		borderColor: 'rgba(225,10,24,0.2)',
+		pointBackgroundColor: 'rgba(225,10,24,0.2)',
+		pointBorderColor: '#fff',
+		pointHoverBackgroundColor: '#fff',
+		pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+	}];
+	public barChartLabels:string[] = [];
 	public barChartType:string = 'bar';
 	public barChartLegend:boolean = true;
-	public barChartData:Array<any> = [{data:[0],label:""}];
+	public barChartData: any[] = [
+	{data: Array<any>(), label:'Rating', backgroundColor: ['#163293']}
+	];
+
+	//timeperiod Bar Chat Data
+	public barChartLabelsTimePeriod:string[] = [];
+	public barChartLegendTime: boolean = true;
+	public barChartDataTimePeriod: any[] = [
+	{data:Array<any>(), label:'Rating', backgroundColor: ['#163293']}
+	];
+
 	mainToggle:boolean = true;
-	showLoader:boolean = false;
-	timePeriod:any = [];
-	timeId = '';
+	
 	ngOnInit() {
-		this.getAllTimePeriod();
+		this.getCategoriesData();
+		this.getAllCategoriesData();
+		this.getTimePeriodData();
 	}
 
 	toggleMainSec(){
 		this.mainToggle = !this.mainToggle;
 	}
 
-	getAllTimePeriod(){
-		this.showLoader = true;
-		this.sharedService.getAllTimePeriod().subscribe(res=>{
-			this.showLoader = false;
-			this.timePeriod = res.data;
-			this.timeId = this.timePeriod[0].id;
-			this.getTimePeriodDashBoarData();
+	getCategoriesData(){
+		this.sharedService.getAllCategories().subscribe(res=>{
+			for (var i = 0; i < res.data.length; i++) {
+				this.categoriesData.push(res.data[i].categoryName);	
+			};
+			this.categoriesDataWithId = res.data;
+			this.barChartLabels =  this.categoriesData;
+
 		},(error)=>{
-			this.showLoader = false;
-			this.notificationService.error("Error!","Internal Server Error.");
-		})
-	}
-	
-	getTimePeriodDashBoarData(){
-		console.log("WTF");
-		this.showLoader = true;
-		this.sharedService.getMoviesOnTimePeriod(this.timeId).subscribe(res=>{
-			if (this.commonService.requiredArray(res.movies)) {
-				this.setBarChartData(res.movies);
-			}else{
-				this.notificationService.info("Info!",res.message);
-			}
-			this.showLoader = false;
-		},(error)=>{
-			this.showLoader = false;
-			this.notificationService.error("Error!","Internal Server Error");
-		});
-	}
-	setBarChartData(arr){
-		var self = this;
-		var period = '';
-		var chartData:Array<any> = [];
-		this.timePeriod.forEach(function (row){
-			if (row.id == self.timeId) period = row.timePeriod;
-		});
-		var pArr = period.split("-");
-		var pIntArr = [];
-		var allYearArr = [];
-		pArr.forEach(function(pRow){pIntArr.push(parseInt(pRow))});
-		this.barChartLabels.push(pIntArr[0]);
-		do {
-			var mArr = this.barChartLabels[this.barChartLabels.length-1]+1;
-			this.barChartLabels.push(mArr);
-		}
-		while (this.barChartLabels[this.barChartLabels.length-1] != pIntArr[1]);
-		arr.sort(this.sortArr);
-		var mDataArr = [];
-		arr.forEach(function(mRow){
-			var  obj = {avg:mRow.avg,year:mRow.year};
-			mDataArr.push(obj);
-		});
-		var useYears = [];
-		var addAvg;
-		var avgData:Array<any> = [];
-		var count   = 0;
-		mDataArr.forEach(function(row){
-			if(useYears.indexOf(row.year) == -1){
-				if (addAvg != null) {
-					var d = addAvg / count;
-					var y = useYears[useYears.length-1];
-					avgData.push({data:d,year:y});
-				}
-				addAvg = row.avg;
-				count = 1;
-				useYears.push(row.year);
-			}else{
-				count += 1;
-				addAvg += parseInt(row.avg);
-			}
-		});
-		var d =  addAvg / count;
-		var y = useYears[useYears.length-1];
-		avgData.push({data:d,year:y});
-		var isCondition = false;
-		this.barChartLabels.forEach(function(yRow){
-			avgData.forEach(function (dRow) {
-				if (yRow == dRow.year) {
-					chartData.push(dRow.data);
-					isCondition = true;
-				}
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
 			});
-			if(!isCondition) chartData.push(null);
 		});
-		this.barChartData = [{data:chartData,label:""}];
-	}
-	sortArr(a, b) {
-		return a.year === null? 1 : b.year === null? -1 : a.year > b.year ? 1 : b.year > a.year ? -1 : 0;
 	}
 
+	getAllCategoriesData(){
+		var allCategories;
+		var avgCategoriesData = [];
+		var temp = 0;
+		var count = 0;
+		this.sharedService.getAllDataCategories().subscribe(res=>{
+		allCategories = res.movies;
+			for (var i = 0; i < this.categoriesDataWithId.length; i++) {
+				for (var j = 0; j < allCategories.length; j++) {
+					if(this.categoriesDataWithId[i].id == allCategories[j].categoryId){
+						count++;
+						if (allCategories[j].avg != "") temp += allCategories[j].avg;
+					}
+				};
+				if(count != 0) temp = (temp/count);
+				avgCategoriesData.push(temp);
+				temp = 0;
+				count = 0;
+			};
+			this.barChartData = avgCategoriesData;
+
+		},(error)=>{
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
+	}
+
+	getTimePeriodData(){
+		this.sharedService.getAllTimePeriod().subscribe(res=>{
+			this.timeperiod = res.data;
+			if(this.timeperiod)this.getAllTimePeriodsDataById(this.timeperiod[0].id);
+		},(error)=>{
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
+	}
+
+	getAllTimePeriodsDataById(id){
+		var DataBarChart = [];
+		var temp = 0;
+		var count = 0;
+		this.barChartLabelsTimePeriod = this.setYearForTimePeriods(id);
+		this.sharedService.getMoviesOnTimePeriod(id).subscribe(res=>{
+		this.selectedTPmovies = res.movies;
+		if(this.selectedTPmovies){
+			for (var i = 0; i < this.barChartLabelsTimePeriod.length; i++) {
+				for (var j = 0; j < this.selectedTPmovies.length; j++) {
+					if(this.barChartLabelsTimePeriod[i] == this.selectedTPmovies[j].year){
+						count++;
+						if (this.selectedTPmovies[j].avg != "") temp += this.selectedTPmovies[j].avg;
+					}
+				};
+				if(count != 0) temp = (temp/count);
+				DataBarChart.push(temp);
+				temp = 0;
+				count = 0;
+			}; 
+		} else{ 
+			this.notificationService.error('No record found');
+
+		}
+			this.barChartDataTimePeriod[0].data = DataBarChart;
+			var clone = JSON.parse(JSON.stringify(this.barChartDataTimePeriod));
+			this.barChartDataTimePeriod = clone;
+		},(error)=>{
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
+	}
+
+	setYearForTimePeriods(id){
+		var selectedTimePeriod;
+		var dataRaneForChart = [];
+		for(var i = 0; i < this.timeperiod.length; i++){
+			if(this.timeperiod[i].id == id){
+				selectedTimePeriod = this.timeperiod[i].timePeriod;
+			}
+		}
+		var dateRange = selectedTimePeriod.split("-");
+		dateRange.sort();
+		if (dateRange){
+		var startDate = parseInt(dateRange[0]);
+		var lastData = parseInt(dateRange[1])
+		}
+		for(var i = startDate; i < lastData+1; i++){
+			dataRaneForChart.push(i);
+		}
+		return dataRaneForChart;
+	}
 }
