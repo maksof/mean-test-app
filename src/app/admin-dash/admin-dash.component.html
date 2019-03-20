@@ -30,25 +30,6 @@
 			</div>
 
 		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="card shadow form-group">
-					<div class="d-block">
-						<canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card shadow form-group">
-					<canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"></canvas>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card shadow form-group">
-					<canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-				</div>
-			</div>
-		</div>
 	</div>
 	<app-footer></app-footer>
 </section>
