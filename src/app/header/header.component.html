@@ -4,7 +4,10 @@
 	<div class="navbar-collapse collapse show">
 		<ul class="navbar-nav ml-auto text-dark">
 			<li class="nav-item position-relative">
-				<button class="nav-link ppImageBtn" (click)="openDropDown()" [ngClass]="{'active': dropState}"><img src="assets/images/avatar.jpg" alt="User Profile"></button>
+				<button class="nav-link ppImageBtn" (click)="openDropDown()" [ngClass]="{'active': dropState}">
+					<img *ngIf="user.gender == 'FEMALE'" src="assets/images/female_avatar.png" alt="User Profile">
+					<img *ngIf="user.gender == 'MALE'" src="assets/images/male_avatar.png" alt="User Profile">
+				</button>
 				<ul class="UP_ppDropDownCon list-unstyled transition3ms" [ngClass]="{'open': dropState}">
 					<span></span>
 					<li><a class="transition3ms">{{user.first_name}}</a></li>
@@ -29,6 +32,7 @@
 			<li><a [routerLink]="['/add-movies']" class="transition3ms" [ngClass]="{'active': router.url == '/add-movies'}">Add Movies</a></li>
 			<li><a [routerLink]="['/suggested-movies']" class="transition3ms" [ngClass]="{'active': router.url == '/suggested-movies'}">Suggested Movies</a></li>
 			<li><a [routerLink]="['/view-grades']" class="transition3ms" [ngClass]="{'active': router.url == '/view-grades'}">View Grades</a></li>
+			<li><a [routerLink]="['/admin-profile']" class="transition3ms" [ngClass]="{'active': router.url == '/admin-profile'}">Profile</a></li>
 		</ul>
 	</div>
 </div>

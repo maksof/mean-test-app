@@ -17,6 +17,7 @@ export class AdminAddMoviesComponent implements OnInit {
 	moviesObj:any = {};
 	updateMovieData:any = {};
 	deleteMovieId = '';
+	hardDelete = false;
 
 	mainToggle:boolean = true;
 	showLoader:boolean = false;

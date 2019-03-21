@@ -38,6 +38,7 @@ import { SuggestMovieComponent } from './suggest-movie/suggest-movie.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SettingComponent } from './setting/setting.component';
+import { AdminPassComponent } from './admin-pass/admin-pass.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { SettingComponent } from './setting/setting.component';
   FavoritesComponent,
   ForgotPasswordComponent,
   SettingComponent,
+  AdminPassComponent,
   ],
   imports: [
   BrowserModule,    
@@ -125,6 +127,7 @@ import { SettingComponent } from './setting/setting.component';
     { path: 'add-movies', component: AdminAddMoviesComponent },
     { path: 'suggested-movies', component: UserSuggestionsComponent },
     { path: 'view-grades', component: ViewGradesComponent },
+    { path: 'admin-profile', component: AdminPassComponent },
     ]),
   ],
   providers: [AppService, SharedService, CommonService],

@@ -15,6 +15,7 @@ export class ViewGradesComponent implements OnInit {
 	mainToggle:boolean = true;
 	showLoader:boolean = false;
 	allGrades:any = [];
+	backupAllRows:any = [];
 	offset = 0;
 	limit = 10;
 	private totalItems: any = [];
@@ -36,6 +37,7 @@ export class ViewGradesComponent implements OnInit {
 			if (res.status == "OK") {
 				if (this.commonService.requiredArray(res.data.data)) {
 					this.allGrades = res.data.data;
+					this.backupAllRows = res.data.data;
 					this.totalItems = res.data.total;
 					if (this.start == true)this.setPage(1);
 				}
@@ -49,11 +51,40 @@ export class ViewGradesComponent implements OnInit {
 	}
 	setPage(page: number) {
 		this.start = false;
-        this.pager = this.commonService.getPager(this.totalItems, page, this.limit);
+		this.pager = this.commonService.getPager(this.totalItems, page, this.limit);
 		if(page > this.pager.endPage) page = this.pager.endPage;
 		if(page < 1) page = 1;
-        this.offset = (page - 1) * this.limit;
-        this.getAllMovieGrades();
-    }
- 
+		this.offset = (page - 1) * this.limit;
+		this.getAllMovieGrades();
+	}
+	nSearch(search, type){
+		var data = this.dropdownFilter(search, type);
+		if(data != undefined) this.allGrades = data;
+		else this.allGrades = []; 
+		return ;
+	}
+	dropdownFilter(searchKeyword,type) {
+		if(type == 'orderId'){
+			var searchParam = ['oDetailId'];
+			return this.filterData(searchKeyword,searchParam);
+		}
+		else if(type == 'pickupDelievery'){
+			var searchParam = ['PickOrDelivery'];
+			return this.filterData(searchKeyword, searchParam);
+		}
+	}
+	filterData(searchKeyword,searchParam){
+		var type = parseInt(searchKeyword);
+		for(var i=0; i < searchParam.length; i++){
+			var data = this.backupAllRows.filter(function(el) {
+				if (isNaN(type) && isNaN(el[searchParam[i]])) {
+					return ((el[searchParam[i]] != undefined && (el[searchParam[i]].toLowerCase().indexOf(searchKeyword.toLowerCase()) > -1))); 
+				}else{
+					return ((el[searchParam[i]] != undefined && (el[searchParam[i]].toString().indexOf(searchKeyword) > -1))); 
+				}
+			});
+			if(data.length > 0){return data;}
+		}
+	}
+	
 }
