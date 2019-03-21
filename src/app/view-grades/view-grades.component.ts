@@ -72,11 +72,7 @@ export class ViewGradesComponent implements OnInit {
 			return this.filterData(searchKeyword,searchParam);
 		}
 		else if(type == 'name'){
-			var searchParam = ['first_name'];
-			return this.filterData(searchKeyword, searchParam);
-		}
-		else if(type == 'name'){
-			var searchParam = ['last_name'];
+			var searchParam = ['first_name', 'last_name'];
 			return this.filterData(searchKeyword, searchParam);
 		}
 	}
