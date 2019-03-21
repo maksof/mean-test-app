@@ -20,6 +20,8 @@ export class ViewGradesComponent implements OnInit {
 	limit = 10;
 	private totalItems: any = [];
 	pager: any = {};
+	titleSearch;
+	nameSearch;
 	pagedItems: any = [];
 	start = true;
 
@@ -36,8 +38,8 @@ export class ViewGradesComponent implements OnInit {
 			this.showLoader = false;
 			if (res.status == "OK") {
 				if (this.commonService.requiredArray(res.data.data)) {
-					this.allGrades = res.data.data;
-					this.backupAllRows = res.data.data;
+					this.allGrades = this.setDataForGrid(res.data.data);
+					this.backupAllRows = this.allGrades;
 					this.totalItems = res.data.total;
 					if (this.start == true)this.setPage(1);
 				}
@@ -63,13 +65,18 @@ export class ViewGradesComponent implements OnInit {
 		else this.allGrades = []; 
 		return ;
 	}
+
 	dropdownFilter(searchKeyword,type) {
-		if(type == 'orderId'){
-			var searchParam = ['oDetailId'];
+		if(type == 'title'){
+			var searchParam = ['title'];
 			return this.filterData(searchKeyword,searchParam);
 		}
-		else if(type == 'pickupDelievery'){
-			var searchParam = ['PickOrDelivery'];
+		else if(type == 'name'){
+			var searchParam = ['first_name'];
+			return this.filterData(searchKeyword, searchParam);
+		}
+		else if(type == 'name'){
+			var searchParam = ['last_name'];
 			return this.filterData(searchKeyword, searchParam);
 		}
 	}
@@ -86,5 +93,13 @@ export class ViewGradesComponent implements OnInit {
 			if(data.length > 0){return data;}
 		}
 	}
-	
+
+	setDataForGrid(data){
+		data.forEach(function(item){
+		if(item.tbl_movie.title) item.title = item.tbl_movie.title;
+		if(item.tbl_user.first_name) item.first_name = item.tbl_user.first_name;
+		if(item.tbl_user.last_name) item.last_name = item.tbl_user.last_name;
+		});
+		return data;
+	}
 }
