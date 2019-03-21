@@ -52,8 +52,12 @@ export class SharedService {
 	getAllMovies(userId){
 		return this.appService.get("movies/getMovies?userId="+userId);
 	}
-	deleteMovie(id){
-		return this.appService.get("movies/deleteMovie?movieId="+id);
+	deleteMovie(obj){
+		var id;
+		var hardDelete;
+		if(obj.id) id = obj.id;
+		if (obj.hardDelete) hardDelete = "&hardDelete="+obj.hardDelete;
+		return this.appService.get("movies/deleteMovie?movieId="+id+hardDelete);
 	}
 	updateMovie(obj){
 		return this.appService.post("movies/updateMovie",obj);

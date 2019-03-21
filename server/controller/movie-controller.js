@@ -224,7 +224,8 @@ exports.updateMovie = function (request, response) {
 exports.deleteMovie = function (request, response) {
 
     var movieId = request.query.movieId;
-    if(common.required(movieId)) {
+    var hardDelete = request.query.hardDelete;
+    if(common.required(movieId) && !common.required(hardDelete)) {
         //if exist, send response back
         tbl_movies.findAll({ where: { id: movieId } }).then(function (res) {
             if(res.length > 0) {
@@ -238,7 +239,20 @@ exports.deleteMovie = function (request, response) {
                 common.sendResponseBack(response, 'FAIL', 'Incorrect Movie Id, Please try again with correct movie id!', null);
             }
         });
-    } else {
+    } else if(common.required(movieId) && common.required(hardDelete)) {
+          tbl_movies.findAll({ where: { id: movieId } }).then(function (res) {
+            if(res.length > 0) {
+                tbl_movies.destroy({ where: { 'id': movieId } }).then(function (res) {
+                    common.sendResponseBack(response, 'OK', 'Movie is deleted successfully!', null);
+                }, (error) => {
+                    common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
+                    logger.error( 'Error occured on '+new Date()+' with reason' + error);
+                });                
+            } else {
+                common.sendResponseBack(response, 'FAIL', 'Incorrect Movie Id, Please try again with correct movie id!', null);
+            }
+        });
+    } else{
         common.sendResponseBack(response, 'FAIL', 'Please pass the movie id!', null);
     }
 }

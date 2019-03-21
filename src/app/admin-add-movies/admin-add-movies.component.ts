@@ -102,9 +102,13 @@ export class AdminAddMoviesComponent implements OnInit {
 		document.getElementById("accessMovieUpdateModal").click();
 	}
 	deleteMovie(){
+		var deleteDetails : any = {};
 		this.showLoader = true;
 		if (this.commonService.required(this.deleteMovieId)) {
-			this.sharedService.deleteMovie(this.deleteMovieId).subscribe(res=>{
+		if(this.hardDelete) deleteDetails.hardDelete = this.hardDelete;
+			deleteDetails.id = this.deleteMovieId;
+			console.log(deleteDetails);
+			this.sharedService.deleteMovie(deleteDetails).subscribe(res=>{
 				document.getElementById("closeDeleteMovie").click();
 				this.showLoader = false;
 				if (res.status == "OK") {
