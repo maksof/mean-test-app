@@ -107,7 +107,6 @@ export class AdminAddMoviesComponent implements OnInit {
 		if (this.commonService.required(this.deleteMovieId)) {
 		if(this.hardDelete) deleteDetails.hardDelete = this.hardDelete;
 			deleteDetails.id = this.deleteMovieId;
-			console.log(deleteDetails);
 			this.sharedService.deleteMovie(deleteDetails).subscribe(res=>{
 				document.getElementById("closeDeleteMovie").click();
 				this.showLoader = false;
