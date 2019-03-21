@@ -4,6 +4,19 @@
 		<h2 class="text-left"><i class="fa fa-calendar headIcon"></i>View Grades</h2>
 		<hr class="headSep">
 		<div class="row">
+			<div class="col-md-4">
+				<mat-form-field>
+					<input matInput type="text" name="title" placeholder="Search Title"
+					[(ngModel)] = "titleSearch" (ngModelChange)="nSearch(titleSearch, 'title')">
+				</mat-form-field>
+			</div>
+			<div class="col-md-4">
+				<mat-form-field>
+					<input matInput type="text" name="username" placeholder="Search Username" [(ngModel)] = "nameSearch" (ngModelChange)="nSearch(nameSearch, 'name')">
+				</mat-form-field>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-12">
 				<div class="table-responsive">
 					<table class="table text-center">

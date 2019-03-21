@@ -32,7 +32,7 @@ export class AppComponent {
 	}
 	changeOfRoutes(){
 		var user = JSON.parse(localStorage.getItem('user'));
-		var adminRoutes = ['/admin', '/add-categories', '/add-movies', '/suggested-movies', '/view-grades'];
+		var adminRoutes = ['/admin', '/add-categories', '/add-movies', '/suggested-movies', '/view-grades', '/admin-profile'];
 		var userRoutes = ['/dashboard', '/suggest-movie', '/favorites', '/movies', '/profile'];
 		var isAdmin = adminRoutes.indexOf(this.route.url);
 		var isUser = userRoutes.indexOf(this.route.url);
