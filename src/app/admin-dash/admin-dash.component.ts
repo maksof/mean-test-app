@@ -67,9 +67,25 @@ export class AdminDashComponent implements OnInit {
 	{data:Array<any>(), label:'Rating', backgroundColor: ['#163293']}
 	];
 
+	// Age Bar Chart Data
+	public barChartLabelsAge:string[] = [];
+	public barChartLegendAge: boolean = true;
+	public barChartDataAge: any[] = [
+	{data:Array<any>(), label:'Rating', backgroundColor: ['#163293']}
+	];
+
+	// Gender Bar Chart Data
+	public barChartLabelsGender:string[] = ["Male", "Female"];
+	public barChartLegendGender: boolean = true;
+	public barChartDataGender: any[] = [
+	{data:Array<any>(), label:'Rating', backgroundColor: ['#163293']}
+	];
+
 	mainToggle:boolean = true;
 	
 	ngOnInit() {
+		this.getAllGenderBasisRecord();
+		this.getAgeWiseDataForBarChart();
 		this.getCategoriesData();
 		this.getAllCategoriesData();
 		this.getTimePeriodData();
@@ -186,4 +202,76 @@ export class AdminDashComponent implements OnInit {
 		}
 		return dataRaneForChart;
 	}
+
+	getAgeWiseDataForBarChart(){
+		var ages = [];
+		var data= [];
+		var DataBarChart = [];
+		var temp = 0;
+		var count = 0;
+		this.sharedService.getAgeWiseData().subscribe(res=>{
+		data = res.stats;
+		data.sort(this.sortArr);
+		data.forEach(function(row){
+			var index = ages.map(function(item){
+                return item;
+            }).indexOf(row.age);
+            if(index == -1){
+                ages.push(row.age);
+            }
+        });
+        this.barChartLabelsAge = ages;
+        if(data){
+			for (var i = 0; i < this.barChartLabelsAge.length; i++) {
+				for (var j = 0; j < data.length; j++) {
+					if(this.barChartLabelsAge[i] == data[j].age){
+						count++;
+						if (data[j].avg != "") temp += data[j].avg;
+					}
+				};
+				if(count != 0) temp = (temp/count);
+				DataBarChart.push(temp);
+				temp = 0;
+				count = 0;
+			}; 
+		} else{ 
+			this.notificationService.error('No record found');
+		}
+			this.barChartDataAge[0].data = DataBarChart;
+			var clone = JSON.parse(JSON.stringify(this.barChartDataTimePeriod));
+			this.barChartDataTimePeriod = clone;
+
+		},(error)=>{
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
+	}
+
+	sortArr(a, b) {
+      return a.age === null? 1 : b.age === null? -1 : a.age > b.age ? 1 : b.age > a.age ? -1 : 0;
+    }
+
+    getAllGenderBasisRecord(){
+    	var data = [];
+    	var DataBarChart = [];
+    	this.sharedService.getAllGenderRec().subscribe(res=>{
+		data = res.data;
+		if(data){
+			DataBarChart[0] = data[0].male;
+			DataBarChart[1] = data[0].female;
+			DataBarChart[2]	= 0;
+			this.barChartDataGender[0].data = DataBarChart;
+			var clone = JSON.parse(JSON.stringify(this.barChartDataGender));
+			this.barChartDataGender = clone;
+
+		} else{ 
+			this.notificationService.error('No record found');
+		}			
+		},(error)=>{
+			this.notificationService.error('Internal Server Error', {
+				duration: 2000,
+			});
+		});
+    }
 }

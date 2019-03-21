@@ -109,4 +109,10 @@ export class SharedService {
 	getAllDataCategories(){
 		return this.appService.get("movies/getAllCategoriesMoviesGradeWise");
 	}
+	getAgeWiseData(){
+		return this.appService.get("movies/getStatsOnAgeBasis");
+	}
+	getAllGenderRec(){
+		return this.appService.get("movies/getStatsOnGenderBasis");
+	}
 }

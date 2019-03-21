@@ -12,6 +12,7 @@ export class AdminAddCategoryComponent implements OnInit {
 	constructor(public commonService:CommonService, private notificationsService:NotificationsService, private sharedService:SharedService) { }
 	categoryName:any = {};
 	timePeriod:any = {};
+	yearRange: any = {};
 	allCategories:any = [];
 	allTimePeriod:any = [];
 	categoryId:string = '';
@@ -32,6 +33,7 @@ export class AdminAddCategoryComponent implements OnInit {
 		this.sharedService.getAllCategories().subscribe(res =>{
 			this.showLoader = false;
 			this.allCategories = res.data;
+			this.allCategories.sort(this.sortArr);
 		},(error)=>{
 			this.showLoader = false;
 			this.notificationsService.error("Error!","Internal Server Error.");
@@ -67,7 +69,13 @@ export class AdminAddCategoryComponent implements OnInit {
 	}
 	
 	addTimePeriod(){
-		if (this.commonService.required(this.timePeriod.timePeriod)) {
+		if (this.commonService.required(this.yearRange.First) && this.commonService.required(this.yearRange.Second)) {
+			
+			if(this.yearRange.First.length != 4) return this.notificationsService.error("Error, length must be of 4 Digits of Number Type");
+			if(this.yearRange.Second.length != 4) return this.notificationsService.error("Error, length must be of 4 Digits of Number Type");
+		
+			this.timePeriod.timePeriod = this.yearRange.First+"-"+this.yearRange.Second;
+
 			this.showLoader = true;
 			this.sharedService.addTimePeriod(this.timePeriod).subscribe(res=> {
 				this.showLoader = false;
@@ -128,4 +136,10 @@ export class AdminAddCategoryComponent implements OnInit {
 			});
 		}
 	}
+
+	sortArr(a, b) {
+    var textA = a.categoryName.toUpperCase();
+    var textB = b.categoryName.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    }
 }
