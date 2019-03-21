@@ -23,15 +23,24 @@
 			<div class="col-md-6">
 				<div class="card shadow py-3 my-4">
 					<div class="row mx-0">
-						<div class="col-12">
+						<div class="col-6">
 							<div class="">
 								<mat-form-field class="w-100">
-									<input matInput [(ngModel)]="timePeriod.timePeriod" type="name" name="name" placeholder="Time Period">
+									<input matInput maxLength="4" OnlyNumber = "true" [(ngModel)]="yearRange.First" type="text" name="firstRange" placeholder="First Time Period">
+									<mat-hint align="end">{{yearRange.First?.length || 0}}/4</mat-hint>
 								</mat-form-field>
 							</div>
-							<div class="text-center">
-								<button mat-raised-button (click)="addTimePeriod()" color="primary" class="mt-2">Add Time Period</button>
+						</div>
+						<div class="col-6">
+							<div class="">
+								<mat-form-field class="w-100">
+									<input matInput maxlength="4" OnlyNumber = "true" [(ngModel)]="yearRange.Second" type="text" name="secondRange" placeholder="Second Time Period">
+									<mat-hint align="end">{{yearRange.Second?.length || 0}}/4</mat-hint>
+								</mat-form-field>
 							</div>
+						</div>
+						<div class="col-12 text-center">
+							<button mat-raised-button (click)="addTimePeriod()" color="primary" class="mt-2">Add Time Period</button>
 						</div>
 					</div>
 				</div>
