@@ -7,7 +7,7 @@
 
 			<div class="col-4">
 				<mat-form-field>
-					<mat-select placeholder="Select Time Period" [(ngModel)]="timeperiodId" (ngModelChange)="getAllTimePeriodsDataById($event)">
+					<mat-select placeholder="Select Time Period" [(ngModel)]="timeperiod" (ngModelChange)="getAllTimePeriodsDataById($event)">
 						<mat-option *ngFor="let row of timeperiod" value="{{row.id}}">{{row.timePeriod}}</mat-option>
 					</mat-select>
 				</mat-form-field>

@@ -13,6 +13,7 @@ export class UserDashComponent implements OnInit {
 	defaultTimePeriodId;
 	timeperiod;
 	selectedTPmovies = [];
+	showLoader:boolean = false;
 
 	// bar chart Varibales
 	categoriesData = [];
@@ -34,23 +35,24 @@ export class UserDashComponent implements OnInit {
 			}]
 		},
 	};
-	public chartColors: Array<any> = [
-	{ // first color
-		backgroundColor: 'rgba(225,10,24,0.2)',
-		borderColor: 'rgba(225,10,24,0.2)',
-		pointBackgroundColor: 'rgba(225,10,24,0.2)',
-		pointBorderColor: '#fff',
-		pointHoverBackgroundColor: '#fff',
-		pointHoverBorderColor: 'rgba(225,10,24,0.2)'
-	},
-	{ // second color
-		backgroundColor: 'rgba(225,10,24,0.2)',
-		borderColor: 'rgba(225,10,24,0.2)',
-		pointBackgroundColor: 'rgba(225,10,24,0.2)',
-		pointBorderColor: '#fff',
-		pointHoverBackgroundColor: '#fff',
-		pointHoverBorderColor: 'rgba(225,10,24,0.2)'
-	}];
+	public barColors: Array<any> = [
+		{ // first color
+			backgroundColor: 'rgba(225,10,24,0.2)',
+			borderColor: 'rgba(225,10,24,0.2)',
+			pointBackgroundColor: 'rgba(225,10,24,0.2)',
+			pointBorderColor: '#fff',
+			pointHoverBackgroundColor: '#fff',
+			pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+		},
+		{ // second color
+			backgroundColor: 'rgba(225,10,24,0.2)',
+			borderColor: 'rgba(225,10,24,0.2)',
+			pointBackgroundColor: 'rgba(225,10,24,0.2)',
+			pointBorderColor: '#fff',
+			pointHoverBackgroundColor: '#fff',
+			pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+		}
+	];
 	public barChartLabels:string[] = [];
 	public barChartType:string = 'bar';
 	public barChartLegend:boolean = true;
