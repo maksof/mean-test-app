@@ -243,6 +243,8 @@ exports.deleteMovie = function (request, response) {
           tbl_movies.findAll({ where: { id: movieId } }).then(function (res) {
             if(res.length > 0) {
                 tbl_movies.destroy({ where: { 'id': movieId } }).then(function (res) {
+                    tbl_grades.destroy({ where: { 'movieId': movieId } });
+                    tbl_user_favorites.destroy({ where: { 'movieId': movieId } });
                     common.sendResponseBack(response, 'OK', 'Movie is deleted successfully!', null);
                 }, (error) => {
                     common.sendResponseBack(response, 'FAIL', 'Some error occured while processing your request, Please try again later.', null);
