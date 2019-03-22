@@ -58,6 +58,8 @@ export class AdminAddCategoryComponent implements OnInit {
 					this.getAllCategory();
 					this.notificationsService.success('Success','New category created successfully.');
 					this.categoryName = {};
+				} else if(res.status == "FAIL"){
+					this.notificationsService.error('Fail',"This Category is already exist but temporarily  soft deleted in database");
 				}
 			}, (error)=>{
 				this.showLoader = false;
@@ -83,6 +85,7 @@ export class AdminAddCategoryComponent implements OnInit {
 					this.getAllTimePeriod();
 					this.notificationsService.success('Success','New Time Period created successfully.');
 					this.timePeriod = {};
+					this.yearRange = {};
 				}
 			}, (error)=>{
 				this.showLoader = false;
