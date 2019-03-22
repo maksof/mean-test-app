@@ -105,13 +105,14 @@ export class AdminAddMoviesComponent implements OnInit {
 		var deleteDetails : any = {};
 		this.showLoader = true;
 		if (this.commonService.required(this.deleteMovieId)) {
-		if(this.hardDelete) deleteDetails.hardDelete = this.hardDelete;
+			deleteDetails.hardDelete = this.hardDelete;
 			deleteDetails.id = this.deleteMovieId;
 			this.sharedService.deleteMovie(deleteDetails).subscribe(res=>{
 				document.getElementById("closeDeleteMovie").click();
 				this.showLoader = false;
 				if (res.status == "OK") {
 					this.getAllMovies();
+					this.hardDelete =false;
 					this.notificationsService.info("Success","Movie Successfully Deleted.");
 				}
 			},(error)=>{

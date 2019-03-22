@@ -53,8 +53,8 @@ export class SharedService {
 		return this.appService.get("movies/getMovies?userId="+userId);
 	}
 	deleteMovie(obj){
-		var id;
-		var hardDelete;
+		var id ='';
+		var hardDelete ='' ;
 		if(obj.id) id = obj.id;
 		if (obj.hardDelete) hardDelete = "&hardDelete="+obj.hardDelete;
 		return this.appService.get("movies/deleteMovie?movieId="+id+hardDelete);
