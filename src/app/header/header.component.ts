@@ -38,4 +38,10 @@ export class HeaderComponent implements OnInit {
 		localStorage.removeItem("user");
 		this.router.navigateByUrl("login");
 	}
+	goToProfile() {
+		if(this.user) {
+			if(this.user.role == 'ADMIN') this.router.navigateByUrl("admin-profile");	
+			else this.router.navigateByUrl("profile");	
+		}		
+	}
 }

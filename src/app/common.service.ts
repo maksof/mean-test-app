@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
 import { SharedService } from './shared.service';
+import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class CommonService {
-	constructor(private httpService: AppService, public sharedService:SharedService) { }
+	constructor(private router: Router, private httpService: AppService, public sharedService:SharedService) { }
 
 	checkValidEmail(email){
 		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -15,6 +16,14 @@ export class CommonService {
 			return false;
 		}
 	}
+    
+    isEmpty(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
 
 	required(data){
 		if (data == undefined || data == null || data == "") {
@@ -23,6 +32,11 @@ export class CommonService {
 			return true;
 		}
 	}
+
+    logoutUser() {
+        localStorage.removeItem("user");
+        this.router.navigateByUrl('/login');
+    }
 
 	checkValidMobileNumber(mobileNumber) {
 		if(mobileNumber){

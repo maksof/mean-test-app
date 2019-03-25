@@ -12,6 +12,7 @@ export class UserDashComponent implements OnInit {
 	//timeperiodDataTypes
 	defaultTimePeriodId;
 	timeperiod;
+	timeperiodId;
 	selectedTPmovies = [];
 	showLoader:boolean = false;
 
@@ -104,8 +105,10 @@ export class UserDashComponent implements OnInit {
 			for (var i = 0; i < this.categoriesDataWithId.length; i++) {
 				for (var j = 0; j < allCategories.length; j++) {
 					if(this.categoriesDataWithId[i].id == allCategories[j].categoryId){
-						count++;
-						if (allCategories[j].avg != "") temp += allCategories[j].avg;
+						if (allCategories[j].avg != "") {
+							temp += allCategories[j].avg;
+							count++;
+						}
 					}
 				};
 				if(count != 0) temp = (temp/count);
@@ -144,8 +147,10 @@ export class UserDashComponent implements OnInit {
 			for (var i = 0; i < this.barChartLabelsTimePeriod.length; i++) {
 				for (var j = 0; j < this.selectedTPmovies.length; j++) {
 					if(this.barChartLabelsTimePeriod[i] == this.selectedTPmovies[j].year){
-						count++;
-						if (this.selectedTPmovies[j].avg != "") temp += this.selectedTPmovies[j].avg;
+						if (this.selectedTPmovies[j].avg != "") {
+							temp += this.selectedTPmovies[j].avg;
+							count++;
+						}
 					}
 				};
 				if(count != 0) temp = (temp/count);

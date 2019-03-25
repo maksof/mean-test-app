@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md shadow bg-white fixed-top navbar-light" style="z-index: 2">
 	<button mat-icon-button class="mr-3" (click)="toggleSideBar()" style="font-size: 1.25rem;"><i class="fa fa-bars th-text-primary"></i></button>
-	<a class="navbar-brand th-text-primary" href="#">Maksof <span class="text-dark">TestApp</span></a>	
+	<a class="navbar-brand th-text-primary" href="#">Video <span class="text-dark">Rating Site</span></a>	
 	<div class="navbar-collapse collapse show">
 		<ul class="navbar-nav ml-auto text-dark">
 			<li class="nav-item position-relative">
@@ -10,7 +10,7 @@
 				</button>
 				<ul class="UP_ppDropDownCon list-unstyled transition3ms" [ngClass]="{'open': dropState}">
 					<span></span>
-					<li><a class="transition3ms">{{user.first_name}}</a></li>
+					<li><a class="transition3ms" (click)="goToProfile()">{{user.first_name}}</a></li>
 					<li><a class="transition3ms" (click)="logout()">Sign out<i class="fa fa-sign-out float-right mt-1"></i></a></li>
 				</ul>
 			</li>

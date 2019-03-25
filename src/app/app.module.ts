@@ -20,6 +20,7 @@ import { AlphaNumeric } from './directives/alpha.numeric.directive';
 import { AppService } from './app.service';
 import { SharedService } from './shared.service';
 import { CommonService } from './common.service';
+import { AuthGuardService } from './auth.guard.service';
 
 // Components
 import { AppComponent } from './app.component';
@@ -116,21 +117,21 @@ import { AdminPassComponent } from './admin-pass/admin-pass.component';
     { path: 'signUp', component: SignUpComponent },
     { path: 'forgotPassword', component: ForgotPasswordComponent },
     // User
-    { path: 'dashboard', component: UserDashComponent },
-    { path: 'suggest-movie', component: SuggestMovieComponent },
-    { path: 'favorites', component: FavoritesComponent },
-    { path: 'movies', component: MovieListComponent },
-    { path: 'profile', component: SettingComponent },
+    { path: 'dashboard', component: UserDashComponent, canActivate: [AuthGuardService] },
+    { path: 'suggest-movie', component: SuggestMovieComponent, canActivate: [AuthGuardService] },
+    { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuardService] },
+    { path: 'movies', component: MovieListComponent, canActivate: [AuthGuardService] },
+    { path: 'profile', component: SettingComponent, canActivate: [AuthGuardService] },
     // Admin
-    { path: 'admin', component: AdminDashComponent },
-    { path: 'add-categories', component: AdminAddCategoryComponent },
-    { path: 'add-movies', component: AdminAddMoviesComponent },
-    { path: 'suggested-movies', component: UserSuggestionsComponent },
-    { path: 'view-grades', component: ViewGradesComponent },
-    { path: 'admin-profile', component: AdminPassComponent },
+    { path: 'admin', component: AdminDashComponent, canActivate: [AuthGuardService] },
+    { path: 'add-categories', component: AdminAddCategoryComponent, canActivate: [AuthGuardService] },
+    { path: 'add-movies', component: AdminAddMoviesComponent, canActivate: [AuthGuardService] },
+    { path: 'suggested-movies', component: UserSuggestionsComponent, canActivate: [AuthGuardService] },
+    { path: 'view-grades', component: ViewGradesComponent, canActivate: [AuthGuardService] },
+    { path: 'admin-profile', component: AdminPassComponent, canActivate: [AuthGuardService] },
     ]),
   ],
-  providers: [AppService, SharedService, CommonService],
+  providers: [AuthGuardService, AppService, SharedService, CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

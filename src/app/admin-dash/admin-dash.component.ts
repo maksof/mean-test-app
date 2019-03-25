@@ -14,6 +14,7 @@ export class AdminDashComponent implements OnInit {
 	//timeperiodDataTypes
 	defaultTimePeriodId;
 	timeperiod;
+	timeperiodId;
 	selectedTPmovies = [];
 	showLoader:boolean = false;
 
@@ -121,8 +122,10 @@ export class AdminDashComponent implements OnInit {
 			for (var i = 0; i < this.categoriesDataWithId.length; i++) {
 				for (var j = 0; j < allCategories.length; j++) {
 					if(this.categoriesDataWithId[i].id == allCategories[j].categoryId){
-						count++;
-						if (allCategories[j].avg != "") temp += allCategories[j].avg;
+						if (allCategories[j].avg != "") {
+							temp += allCategories[j].avg;
+							count++;
+						}
 					}
 				};
 				if(count != 0) temp = (temp/count);
@@ -161,8 +164,10 @@ export class AdminDashComponent implements OnInit {
 			for (var i = 0; i < this.barChartLabelsTimePeriod.length; i++) {
 				for (var j = 0; j < this.selectedTPmovies.length; j++) {
 					if(this.barChartLabelsTimePeriod[i] == this.selectedTPmovies[j].year){
-						count++;
-						if (this.selectedTPmovies[j].avg != "") temp += this.selectedTPmovies[j].avg;
+						if (this.selectedTPmovies[j].avg != "") {
+							temp += this.selectedTPmovies[j].avg;
+							count++;
+						}
 					}
 				};
 				if(count != 0) temp = (temp/count);
@@ -211,37 +216,39 @@ export class AdminDashComponent implements OnInit {
 		var temp = 0;
 		var count = 0;
 		this.sharedService.getAgeWiseData().subscribe(res=>{
-		data = res.stats;
-		data.sort(this.sortArr);
-		data.forEach(function(row){
-			var index = ages.map(function(item){
-                return item;
-            }).indexOf(row.age);
-            if(index == -1){
-                ages.push(row.age);
-            }
-        });
-        this.barChartLabelsAge = ages;
-        if(data){
-			for (var i = 0; i < this.barChartLabelsAge.length; i++) {
-				for (var j = 0; j < data.length; j++) {
-					if(this.barChartLabelsAge[i] == data[j].age){
-						count++;
-						if (data[j].avg != "") temp += data[j].avg;
-					}
-				};
-				if(count != 0) temp = (temp/count);
-				DataBarChart.push(temp);
-				temp = 0;
-				count = 0;
-			}; 
-		} else{ 
-			this.notificationService.error('No record found');
-		}
+			data = res.stats;
+			data.sort(this.sortArr);
+			data.forEach(function(row){
+				var index = ages.map(function(item){
+                	return item;
+            	}).indexOf(row.age);
+            	if(index == -1){
+                	ages.push(row.age);
+            	}
+        	});
+        	this.barChartLabelsAge = ages;
+	        
+	        if(data){
+				for (var i = 0; i < this.barChartLabelsAge.length; i++) {
+					for (var j = 0; j < data.length; j++) {
+						if(this.barChartLabelsAge[i] == data[j].age){
+							if (data[j].avg != "") {
+								temp += data[j].avg;
+								count++;
+							}
+						}
+					};
+					if(count != 0) temp = (temp/count);
+					DataBarChart.push(temp);
+					temp = 0;
+					count = 0;
+				}; 
+			} else{ 
+				this.notificationService.error('No record found');
+			}
 			this.barChartDataAge[0].data = DataBarChart;
 			var clone = JSON.parse(JSON.stringify(this.barChartDataTimePeriod));
 			this.barChartDataTimePeriod = clone;
-
 		},(error)=>{
 			this.notificationService.error('Internal Server Error', {
 				duration: 2000,
@@ -257,18 +264,18 @@ export class AdminDashComponent implements OnInit {
     	var data = [];
     	var DataBarChart = [];
     	this.sharedService.getAllGenderRec().subscribe(res=>{
-		data = res.data;
-		if(data){
-			DataBarChart[0] = data[0].male;
-			DataBarChart[1] = data[0].female;
-			DataBarChart[2]	= 0;
-			this.barChartDataGender[0].data = DataBarChart;
-			var clone = JSON.parse(JSON.stringify(this.barChartDataGender));
-			this.barChartDataGender = clone;
+			data = res.data;
+			if(data){
+				DataBarChart[0] = data[0].male;
+				DataBarChart[1] = data[0].female;
+				DataBarChart[2]	= 0;
+				this.barChartDataGender[0].data = DataBarChart;
+				var clone = JSON.parse(JSON.stringify(this.barChartDataGender));
+				this.barChartDataGender = clone;
 
-		} else{ 
-			this.notificationService.error('No record found');
-		}			
+			} else{ 
+				this.notificationService.error('No record found');
+			}
 		},(error)=>{
 			this.notificationService.error('Internal Server Error', {
 				duration: 2000,
